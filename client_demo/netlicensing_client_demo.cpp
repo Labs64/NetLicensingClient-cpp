@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
     sc.set_value("xx", "yy");
     std::cout << sc.get_value("xx") << std::endl;
 
-    const std::string res = netlicensing::service::get("http:://ya.ru");
+    const std::string res = netlicensing::service::get("http://netlicensing.io/");
     std::cout << "res " << res << std::endl;
 	return 0;
 }
