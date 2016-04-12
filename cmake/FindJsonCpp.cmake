@@ -1,0 +1,25 @@
+INCLUDE (FindPackageHandleStandardArgs)
+
+FIND_PATH (JSONCPP_ROOT_DIR
+  NAMES json/json.h include/json/json.h
+  PATHS ENV JSONCPP_ROOT
+  DOC "JsonCPP root directory")
+
+# Re-use the previous path:
+FIND_PATH (JSONCPP_INCLUDE_DIR
+  NAMES json/json.h
+  HINTS ${JSONCPP_ROOT_DIR}
+  PATH_SUFFIXES include
+  DOC "JSONCPP include directory")
+
+FIND_LIBRARY (JSONCPP_LIBRARY
+  NAMES jsoncpp
+  HINTS ${JSONCPP_ROOT_DIR}
+  PATH_SUFFIXES lib
+  DOC "JsonCPP library")
+
+set(JSONCPP_INCLUDE_DIRS ${JSONCPP_INCLUDE_DIR})
+set(JSONCPP_LIBRARIES ${JSONCPP_LIBRARY})
+
+find_package_handle_standard_args(jsoncpp REQUIRED_VARS JSONCPP_ROOT_DIR JSONCPP_INCLUDE_DIR JSONCPP_LIBRARY)
+mark_as_advanced (JSONCPP_INCLUDE_DIR JSONCPP_LIBRARY)
