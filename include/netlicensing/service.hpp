@@ -2,6 +2,7 @@
 #define __SERVICE_HPP__
 
 #include <string>
+#include <list>
 #include <stdexcept>
 
 namespace netlicensing {
@@ -13,9 +14,14 @@ namespace netlicensing {
     */
     class service {
         public:
+            typedef std::list<std::pair<std::string, std::string> > request_params;
+
             service();
 
             ~service();
+
+            static std::string send_post(const std::string&, const request_params&);
+            static size_t read_callback2(void *data, size_t size, size_t nmemb, void *userdata);
 
             static std::string get(const std::string &endpoint)  { 
                 return instance().get_(endpoint); 
