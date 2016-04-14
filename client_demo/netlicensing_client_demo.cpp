@@ -21,12 +21,8 @@ struct join_sep {
 
 int main(int argc, char* argv[]) {
 	std::cout << "Hello, this is NetLicensing demo client\n";
-    netlicensing::string_context sc;
-    sc.set_value("xx", "yy");
-    std::cout << sc.get_value("xx") << std::endl;
 
-    //const std::string res = netlicensing::service::get("http://netlicensing.io/");
-
+    // check context direct call 
     std::list<std::pair<std::string, std::string> > params;
     params.push_back(std::make_pair("licenseeNumber", "1"));
     params.push_back(std::make_pair("licenseTemplateNumber", "1"));
@@ -34,12 +30,11 @@ int main(int argc, char* argv[]) {
     params.push_back(std::make_pair("number", "1"));
     params.push_back(std::make_pair("name", "lic"));
 
-    //licenseeNumber = 1 & licenseTemplateNumber = 2 & active = true & number = 1 & name = xxx
-
-    netlicensing::service::set_username("demo");
-    netlicensing::service::set_password("demo");
-    std::string res = netlicensing::service::send_post("https://go.netlicensing.io/core/v2/rest/license", params);
-    std::cout << "res " << res << std::endl;
-
+    netlicensing::context ctx;
+    ctx.set_base_url("https://go.netlicensing.io/core/v2/rest/");
+    ctx.set_username("demo");
+    ctx.set_password("demo");
+    std::string res = ctx.post("license", params);
+    std::cout << "license check answer: " << res << std::endl;
 	return 0;
 }
