@@ -19,3 +19,9 @@ Visit Labs64 NetLicensing at http://netlicensing.io
 3. Setup curl home directory for example using CMAKE_PREFIX_PATH=your_curl_build_directory. Build directory contains bin, include and lib subdirs.
 3. In VC command prompt cd NetLicensingClient-cpp\build and issue cmake .. . To generate VC2015/x64 solution use cmake .. -G""Visual Studio 14 Win64" 
 2. Open solution in VC and build library and demo client.
+
+## Linux build
+1. Install curl dev. For ubuntu sudo apt-get install libcurl4-openssl-dev
+2. Checkout NetLicensingClient-cpp
+3. Run cmake or cmake .. from build sub directory
+4. make
