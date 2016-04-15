@@ -120,12 +120,12 @@ class Context::NetworkService {
     DEL
   };
 
-  NetworkService() : m_handle(NULL) {
-    m_handle = curl_easy_init();
+  NetworkService() : handle_(NULL) {
+    handle_ = curl_easy_init();
   }
 
   ~NetworkService() {
-    if (m_handle) curl_easy_cleanup(m_handle);
+    if (handle_) curl_easy_cleanup(handle_);
   }
 
 #define MAKE_HEADER(name, value) (std::string(name) + ": " + std::string(value)).c_str()
@@ -163,16 +163,16 @@ class Context::NetworkService {
     curl_slist *header = NULL;
 
     // Reset libcurl
-    curl_easy_reset(m_handle);
+    curl_easy_reset(handle_);
 
     // Debug output
-    curl_easy_setopt(m_handle, CURLOPT_VERBOSE, 1);
+    curl_easy_setopt(handle_, CURLOPT_VERBOSE, 1);
 
     // Set user agent
-    curl_easy_setopt(m_handle, CURLOPT_USERAGENT, NetworkService::m_user_agent);
+    curl_easy_setopt(handle_, CURLOPT_USERAGENT, NetworkService::m_user_agent);
 
     // Set query URL
-    curl_easy_setopt(m_handle, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(handle_, CURLOPT_URL, url.c_str());
 
     // Set proxy
     //curl_easy_setopt(m_handle, CURLOPT_PROXY, proxy_.c_str());
@@ -184,49 +184,49 @@ class Context::NetworkService {
       request_body = std::accumulate(joined_params.begin(), joined_params.end(), request_body, join_sep());
       request_body_info = std::make_pair(request_body.c_str(), request_body.length());
 
-      curl_easy_setopt(m_handle, CURLOPT_POST, 1L);      
-      curl_easy_setopt(m_handle, CURLOPT_POSTFIELDSIZE, request_body.length());
+      curl_easy_setopt(handle_, CURLOPT_POST, 1L);      
+      curl_easy_setopt(handle_, CURLOPT_POSTFIELDSIZE, request_body.length());
         
       // Set read callback function and parameter for function
-      curl_easy_setopt(m_handle, CURLOPT_READFUNCTION, &read_callback);
-      curl_easy_setopt(m_handle, CURLOPT_READDATA, &request_body_info);
+      curl_easy_setopt(handle_, CURLOPT_READFUNCTION, &read_callback);
+      curl_easy_setopt(handle_, CURLOPT_READDATA, &request_body_info);
       header = curl_slist_append(header, MAKE_HEADER("Content-Type", NetworkService::m_content_type));
     }
 
     switch (type) {
     case PUT:
-      curl_easy_setopt(m_handle, CURLOPT_CUSTOMREQUEST, "PUT");
+      curl_easy_setopt(handle_, CURLOPT_CUSTOMREQUEST, "PUT");
       break;
     case DEL:
-      curl_easy_setopt(m_handle, CURLOPT_CUSTOMREQUEST, "DELETE");
+      curl_easy_setopt(handle_, CURLOPT_CUSTOMREQUEST, "DELETE");
       break;
     default:
       break;
     }
 
     // Set callback function
-    curl_easy_setopt(m_handle, CURLOPT_WRITEFUNCTION, &write_callback);
+    curl_easy_setopt(handle_, CURLOPT_WRITEFUNCTION, &write_callback);
 
     // Set data object to pass to callback function
-    curl_easy_setopt(m_handle, CURLOPT_WRITEDATA, &response_body);
+    curl_easy_setopt(handle_, CURLOPT_WRITEDATA, &response_body);
 
     // Specify authentication information
     if (!username.empty()) {
-      curl_easy_setopt(m_handle, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-      curl_easy_setopt(m_handle, CURLOPT_USERNAME, username.c_str());
-      curl_easy_setopt(m_handle, CURLOPT_PASSWORD, password.c_str());
+      curl_easy_setopt(handle_, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+      curl_easy_setopt(handle_, CURLOPT_USERNAME, username.c_str());
+      curl_easy_setopt(handle_, CURLOPT_PASSWORD, password.c_str());
     }
 
     // Set content negotiation header
     header = curl_slist_append(header, MAKE_HEADER("Accept", NetworkService::m_accept_type));
-    curl_easy_setopt(m_handle, CURLOPT_HTTPHEADER, header);
+    curl_easy_setopt(handle_, CURLOPT_HTTPHEADER, header);
 
     // Prepare buffer for error messages
     char errors[CURL_ERROR_SIZE];
-    curl_easy_setopt(m_handle, CURLOPT_ERRORBUFFER, &errors);
+    curl_easy_setopt(handle_, CURLOPT_ERRORBUFFER, &errors);
 
     // Perform the actual query
-    CURLcode res = curl_easy_perform(m_handle);
+    CURLcode res = curl_easy_perform(handle_);
 
     // Free header list
     curl_slist_free_all(header);
@@ -239,13 +239,13 @@ class Context::NetworkService {
 
     // Handle server-side erros
     long http_code = 0;
-    curl_easy_getinfo(m_handle, CURLINFO_RESPONSE_CODE, &http_code);
+    curl_easy_getinfo(handle_, CURLINFO_RESPONSE_CODE, &http_code);
     //check_http_error(type, endpoint, http_code, response_body);
     return response_body;
   }
 
  private:
-  CURL*   m_handle;
+  CURL*   handle_;
 };
 
 const char* Context::NetworkService::m_user_agent = "netlicensing_cpp/" NETLICENSING_VERSION;
