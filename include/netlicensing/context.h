@@ -7,7 +7,7 @@
 namespace netlicensing {
 
 /**
-* @brief configure your connection to rest server using this Context class
+* @brief Configure your connection to rest server using this Context class
 *
 */
 class Context {

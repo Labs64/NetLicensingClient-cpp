@@ -1,5 +1,7 @@
 #include "netlicensing/context.h"
 #include "netlicensing/version.h"
+#include "netlicensing/exception.h"
+
 #include <curl/curl.h>
 
 #include <algorithm>
@@ -166,7 +168,7 @@ class Context::NetworkService {
     curl_easy_reset(handle_);
 
     // Debug output
-    curl_easy_setopt(handle_, CURLOPT_VERBOSE, 1);
+    curl_easy_setopt(handle_, CURLOPT_VERBOSE, 0);
 
     // Set user agent
     curl_easy_setopt(handle_, CURLOPT_USERAGENT, NetworkService::m_user_agent);
@@ -228,19 +230,47 @@ class Context::NetworkService {
     // Perform the actual query
     CURLcode res = curl_easy_perform(handle_);
 
-    // Free header list
     curl_slist_free_all(header);
 
-    // Handle unexpected internal errors
-    //if (res != 0)
-    //{
-    //    throw ResponseError(curl_easy_strerror(res), res, errors);
-    //}
+    if (res != 0) throw ServiceException(curl_easy_strerror(res), res, errors);
 
-    // Handle server-side erros
+    // TODO(a-pavlov) validate error handlers from restful-mapper    
     long http_code = 0;
     curl_easy_getinfo(handle_, CURLINFO_RESPONSE_CODE, &http_code);
-    //check_http_error(type, endpoint, http_code, response_body);
+
+    // bad request or validation error
+    if (http_code == 400) {
+      // TODO(a-pavlov) activate this after response parser ready
+      //throw RestException(response_body, http_code);
+      return response_body;
+    }
+
+    if (http_code == 401) throw RestException("Authentication error", http_code);
+
+    bool http_ok = false;
+
+    switch (type) {
+    case GET:
+      http_ok = (http_code == 200);
+      break;
+    case POST:
+      http_ok = (http_code == 201);
+      break;
+    case PUT:
+      http_ok = (http_code == 200 || http_code == 201);
+      break;
+    case DEL:
+      http_ok = (http_code == 204);
+      break;
+    default:
+      break;
+    }
+
+    if (!http_ok) {
+      // TODO(a-pavlov) activate when json parser ready
+      throw RestException(response_body, http_code);
+    }
+
     return response_body;
   }
 
