@@ -43,6 +43,11 @@ class RestException : public std::runtime_error {
   }
 };
 
+class MalformedArgumentsException : public std::runtime_error {
+ public:
+   MalformedArgumentsException(const std::string& msg) : std::runtime_error(msg) {}
+};
+
 };
 
 #endif //__EXCEPTION_H__

@@ -284,7 +284,7 @@ const char* Context::NetworkService::m_content_type = "application/x-www-form-ur
 const char* Context::NetworkService::m_accept_type = "application/json";
 
 
-Context::Context() : network_service_(NULL) {
+Context::Context() : network_service_(NULL), mode_(BASIC_AUTHENTICATION) {
   network_service_ = new NetworkService();
 }
 
@@ -301,35 +301,67 @@ void Context::set_password(const std::string& password) {
 }
 
 void Context::set_base_url(const std::string& url) {
+  if (url.empty()) throw MalformedArgumentsException("Base url can not be empty");
   base_url_ = url;
-  // TODO - check parameters here and throw appropriate exception!
-
   assert(!base_url_.empty());
   if (base_url_.at(base_url_.length() - 1) == '/') {
     base_url_.erase(base_url_.length() - 1, 1);
   }
 }
 
+void Context::set_api_key(const std::string& api_key) {
+  api_key_ = api_key;
+}
+
+void Context::set_vendor_number(const std::string& vendor_number) {
+  vendor_number_ = vendor_number;
+}
+
+void Context::set_security_mode(SecurityMode mode) {
+  mode_ = mode;
+}
+
 std::string Context::username() const { return username_; }
 std::string Context::password() const { return password_; }
 std::string Context::base_url() const { return base_url_; }
+std::string Context::api_key() const { return api_key_; }
+std::string Context::vendor_number() const { return vendor_number_; }
+Context::SecurityMode Context::security_mode() const { return mode_; }
 
 std::string Context::post(const std::string& endpoint, const parameters_type& params) {
   assert(!endpoint.empty());
   assert(network_service_ != NULL);
-  return network_service_->post(base_url_ + "/" + endpoint, params, username_, password_);
+  return network_service_->post(base_url_ + "/" + endpoint, params, user(), pass());
 }
 
 std::string Context::get(const std::string& endpoint, const parameters_type& params) {
   assert(!endpoint.empty());
   assert(network_service_ != NULL);
-  return network_service_->get(base_url_ + "/" + endpoint, params, username_, password_);
+  return network_service_->get(base_url_ + "/" + endpoint, params, user(), pass());
 }
 
 std::string Context::del(const std::string& endpoint, const parameters_type& params) {
   assert(!endpoint.empty());
   assert(network_service_ != NULL);
-  return network_service_->del(base_url_ + "/" + endpoint, params, username_, password_);
+  return network_service_->del(base_url_ + "/" + endpoint, params, user(), pass());
+}
+
+const std::string& Context::user() const {
+  switch (mode_) {
+  case BASIC_AUTHENTICATION: return username_;
+  case APIKEY_IDENTIFICATION: return "apiKey";
+  }
+
+  return "";
+}
+
+const std::string& Context::pass() const {
+  switch (mode_) {
+  case BASIC_AUTHENTICATION: return password_;
+  case APIKEY_IDENTIFICATION: return api_key_;
+  }
+
+  return "";
 }
 
 }
