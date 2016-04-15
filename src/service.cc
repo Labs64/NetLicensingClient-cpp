@@ -1,5 +1,5 @@
-#include "netlicensing/service.hpp"
-#include "netlicensing/version.hpp"
+#include "netlicensing/service.h"
+#include "netlicensing/version.h"
 #include "curl/curl.h"
 
 #include <numeric>
