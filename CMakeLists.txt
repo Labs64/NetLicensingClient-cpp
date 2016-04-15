@@ -3,14 +3,14 @@ project(netlicensing)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
-find_package(JsonCpp REQUIRED)
+#find_package(JsonCpp REQUIRED)
 find_package(CURL REQUIRED)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${CURL_INCLUDE_DIRS})
 include_directories(${JSONCPP_INCLUDE_DIRS})
 
-set(LIBS ${LIBS} ${CURL_LIBRARIES} ${JSONCPP_LIBRARIES})
+set(LIBS ${LIBS} ${CURL_LIBRARIES}) # ${JSONCPP_LIBRARIES})
 
 set(BUILD_SHARED_LIBS OFF)
 

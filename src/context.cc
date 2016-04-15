@@ -8,6 +8,7 @@
 #include <iterator>
 #include <numeric>
 #include <cassert>
+#include <cstring>
 
 namespace netlicensing {
 
