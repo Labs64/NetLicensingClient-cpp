@@ -24,6 +24,8 @@ class Context {
   std::string base_url() const;
 
   std::string post(const std::string& endpoint, const parameters_type& params);
+  std::string get(const std::string& endpoint, const parameters_type& params);
+  std::string del(const std::string& endpoint, const parameters_type& params);
  private:
   Context(const Context&);
   Context& operator=(const Context&);

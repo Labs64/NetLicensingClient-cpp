@@ -113,6 +113,13 @@ class Context::NetworkService {
   static const char*  m_accept_type;
   static const char*  m_content_type;
 
+  enum RequestType {
+    GET,
+    POST,
+    PUT,
+    DEL
+  };
+
   NetworkService() : m_handle(NULL) {
     m_handle = curl_easy_init();
   }
@@ -127,15 +134,33 @@ class Context::NetworkService {
     const Context::parameters_type& params,
     const std::string username,
     const std::string password) {
+    return send_request(POST, url, params, username, password);
+  }
+
+  std::string get(const std::string& url,
+    const Context::parameters_type& params,
+    const std::string username,
+    const std::string password) {
+    return send_request(GET, url, params, username, password);
+  }
+
+  std::string del(const std::string& url,
+    const Context::parameters_type& params,
+    const std::string username,
+    const std::string password) {
+    return send_request(DEL, url, params, username, password);
+  }
+
+  std::string send_request(
+    RequestType type,
+    const std::string& url,
+    const Context::parameters_type& params,
+    const std::string username,
+    const std::string password) {
     std::string response_body;
     std::string request_body;
+    std::pair<const char*, size_t>  request_body_info;
     curl_slist *header = NULL;
-
-    // TODO - move it to dedicated function
-    std::list<std::string>  joined_params;
-    std::transform(params.begin(), params.end(), std::back_inserter(joined_params), pair2string());
-    request_body = std::accumulate(joined_params.begin(), joined_params.end(), request_body, join_sep());
-    std::pair<const char*, size_t>  request_body_info = std::make_pair(request_body.c_str(), request_body.length());
 
     // Reset libcurl
     curl_easy_reset(m_handle);
@@ -152,22 +177,32 @@ class Context::NetworkService {
     // Set proxy
     //curl_easy_setopt(m_handle, CURLOPT_PROXY, proxy_.c_str());
 
-    // Now specify we want to POST data
-    curl_easy_setopt(m_handle, CURLOPT_POST, 1L);
+    // generate request body from parameters list
+    if (type == POST || type == PUT) {
+      std::list<std::string>  joined_params;
+      std::transform(params.begin(), params.end(), std::back_inserter(joined_params), pair2string());
+      request_body = std::accumulate(joined_params.begin(), joined_params.end(), request_body, join_sep());
+      request_body_info = std::make_pair(request_body.c_str(), request_body.length());
 
-    // Set data size
-    curl_easy_setopt(m_handle, CURLOPT_POSTFIELDSIZE, request_body.length());
+      curl_easy_setopt(m_handle, CURLOPT_POST, 1L);      
+      curl_easy_setopt(m_handle, CURLOPT_POSTFIELDSIZE, request_body.length());
+        
+      // Set read callback function and parameter for function
+      curl_easy_setopt(m_handle, CURLOPT_READFUNCTION, &read_callback);
+      curl_easy_setopt(m_handle, CURLOPT_READDATA, &request_body_info);
+      header = curl_slist_append(header, MAKE_HEADER("Content-Type", NetworkService::m_content_type));
+    }
 
-
-    // Set read callback function
-    curl_easy_setopt(m_handle, CURLOPT_READFUNCTION, &read_callback);
-
-    // Set data object to pass to callback function
-    curl_easy_setopt(m_handle, CURLOPT_READDATA, &request_body_info);
-
-    // Set content-type header
-    header = curl_slist_append(header, MAKE_HEADER("Content-Type", NetworkService::m_content_type));
-
+    switch (type) {
+    case PUT:
+      curl_easy_setopt(m_handle, CURLOPT_CUSTOMREQUEST, "PUT");
+      break;
+    case DEL:
+      curl_easy_setopt(m_handle, CURLOPT_CUSTOMREQUEST, "DELETE");
+      break;
+    default:
+      break;
+    }
 
     // Set callback function
     curl_easy_setopt(m_handle, CURLOPT_WRITEFUNCTION, &write_callback);
@@ -252,6 +287,18 @@ std::string Context::post(const std::string& endpoint, const parameters_type& pa
   assert(!endpoint.empty());
   assert(network_service_ != NULL);
   return network_service_->post(base_url_ + "/" + endpoint, params, username_, password_);
+}
+
+std::string Context::get(const std::string& endpoint, const parameters_type& params) {
+  assert(!endpoint.empty());
+  assert(network_service_ != NULL);
+  return network_service_->get(base_url_ + "/" + endpoint, params, username_, password_);
+}
+
+std::string Context::del(const std::string& endpoint, const parameters_type& params) {
+  assert(!endpoint.empty());
+  assert(network_service_ != NULL);
+  return network_service_->del(base_url_ + "/" + endpoint, params, username_, password_);
 }
 
 }

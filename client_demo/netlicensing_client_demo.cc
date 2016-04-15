@@ -13,11 +13,19 @@ int main(int argc, char* argv[]) {
   params.push_back(std::make_pair("number", "1"));
   params.push_back(std::make_pair("name", "lic"));
 
-  netlicensing::Context ctx;
+  using netlicensing::Context;
+
+  Context ctx;
   ctx.set_base_url("https://go.netlicensing.io/core/v2/rest/");
   ctx.set_username("demo");
   ctx.set_password("demo");
   std::string res = ctx.post("license", params);
   std::cout << "license check answer: " << res << std::endl;
+
+  std::string lres = ctx.get("licensetemplate", Context::parameters_type());
+  std::cout << "licensee list " << lres << std::endl;
+
+  std::string ldel = ctx.del("licensetemplate/E00101-DEMO", Context::parameters_type());
+  std::cout << "delete license " << ldel << std::endl;
   return 0;
 }
