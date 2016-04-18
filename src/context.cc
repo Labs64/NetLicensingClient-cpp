@@ -283,6 +283,7 @@ const char* Context::NetworkService::m_user_agent = "netlicensing_cpp/" NETLICEN
 const char* Context::NetworkService::m_content_type = "application/x-www-form-urlencoded";
 const char* Context::NetworkService::m_accept_type = "application/json";
 
+const std::string apiKey("apiKey");
 
 Context::Context() : network_service_(NULL), mode_(BASIC_AUTHENTICATION) {
   network_service_ = new NetworkService();
@@ -348,20 +349,20 @@ std::string Context::del(const std::string& endpoint, const parameters_type& par
 
 const std::string& Context::user() const {
   switch (mode_) {
-  case BASIC_AUTHENTICATION: return username_;
-  case APIKEY_IDENTIFICATION: return "apiKey";
+    case BASIC_AUTHENTICATION: return username_;
+    case APIKEY_IDENTIFICATION: return apiKey;
   }
 
-  return "";
+  throw MalformedArgumentsException("Unknown authentication mode");
 }
 
 const std::string& Context::pass() const {
   switch (mode_) {
-  case BASIC_AUTHENTICATION: return password_;
-  case APIKEY_IDENTIFICATION: return api_key_;
+    case BASIC_AUTHENTICATION: return password_;
+    case APIKEY_IDENTIFICATION: return api_key_;
   }
 
-  return "";
+  throw MalformedArgumentsException("Unknown authentication mode");
 }
 
 }
