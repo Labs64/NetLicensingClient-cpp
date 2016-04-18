@@ -3,18 +3,21 @@ project(netlicensing)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
-#find_package(JsonCpp REQUIRED)
+find_package(JsonCpp REQUIRED)
 find_package(CURL REQUIRED)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${CURL_INCLUDE_DIRS})
 include_directories(${JSONCPP_INCLUDE_DIRS})
 
-set(LIBS ${LIBS} ${CURL_LIBRARIES}) # ${JSONCPP_LIBRARIES})
+set(LIBS ${LIBS} ${CURL_LIBRARIES} ${JSONCPP_LIBRARIES})
 
 set(BUILD_SHARED_LIBS OFF)
 
 add_definitions(-DCURL_STATICLIB)
+if(UNIX)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
+endif()
 
 # enumerate header and source files for library
 file(GLOB headers include/netlicensing/*.h)

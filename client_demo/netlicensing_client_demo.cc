@@ -2,6 +2,7 @@
 #include "netlicensing/context.h"
 #include "netlicensing/service.h"
 #include "netlicensing/exception.h"
+#include "json/json.h"
 
 int main(int argc, char* argv[]) {
   std::cout << "Hello, this is NetLicensing demo client\n";
