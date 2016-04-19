@@ -2,10 +2,14 @@
 #include "netlicensing/context.h"
 #include "netlicensing/service.h"
 #include "netlicensing/exception.h"
+#include "netlicensing/product.h"
 #include "json/json.h"
 
 int main(int argc, char* argv[]) {
+  using netlicensing::Product;
   std::cout << "Hello, this is NetLicensing demo client\n";
+
+  std::cout << "Product endpoint " << netlicensing::endpoint<Product>() << std::endl;
 
   // check context direct call 
   std::list<std::pair<std::string, std::string> > params;
@@ -25,7 +29,7 @@ int main(int argc, char* argv[]) {
     std::cout << "license check answer: " << res << std::endl;
 
     std::string lres = ctx.get("licensetemplate", Context::parameters_type());
-    std::cout << "licensee list " << lres << std::endl;
+    //std::cout << "licensee list " << lres << std::endl;
 
     std::string ldel = ctx.del("licensetemplate/E00101-DEMO", Context::parameters_type());
     std::cout << "delete license " << ldel << std::endl;    
