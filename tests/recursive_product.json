@@ -1,0 +1,92 @@
+{
+  "Signature": null,
+  "infos": {
+    "info": null
+  },
+  "items": {
+    "item": [
+      {
+        "property": [
+          {
+            "value": "101",
+            "name": "number"
+          },
+          {
+            "value": "true",
+            "name": "active"
+          },
+          {
+            "value": "QTPro",
+            "name": "name"
+          }
+        ],
+        "list": [
+          {
+            "property": [
+              {
+                "value": "10.00",
+                "name": "totalPrice"
+              },
+              {
+                "value": "EUR",
+                "name": "currency"
+              },
+              {
+                "value": "0.00",
+                "name": "amountFix"
+              }
+            ],
+            "list": [
+			  {
+				"property": [
+				  {
+					"value": "10.00",
+					"name": "totalPrice"
+				  },
+				  {
+					"value": "EUR",
+					"name": "currency"
+				  },
+				  {
+					"value": "0.00",
+					"name": "amountFix"
+				  }
+				],
+				"list": [
+				  {
+					"property": [
+					  {
+						"value": "10.00",
+						"name": "totalPrice"
+					  },
+					  {
+						"value": "EUR",
+						"name": "currency"
+					  },
+					  {
+						"value": "0.00",
+						"name": "amountFix"
+					  }
+					],
+					"list": null,
+					"name": "discount level 2"
+				  }
+				],
+				"name": "discount level 1"
+			  }
+			],
+            "name": "discount level 0"
+          }
+        ],
+        "type": "Product"
+      }
+    ],
+    "pagenumber": null,
+    "itemsnumber": null,
+    "totalpages": null,
+    "totalitems": null,
+    "hasnext": null
+  },
+  "id": null,
+  "ttl": null
+}

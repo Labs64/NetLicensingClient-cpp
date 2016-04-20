@@ -2,6 +2,7 @@
 #include "netlicensing/product.h"
 
 #include <json/json.h>
+#include <stdexcept>
 
 namespace netlicensing {
 
@@ -26,7 +27,6 @@ void fromJson<Product>(Product& p, const std::string& str) {
     }
   }
 }
-
 
 
 }

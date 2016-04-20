@@ -17,24 +17,33 @@ void traverse(Observer& observer, const std::string& source) {
   if (parsingSuccessful) {
     Json::Value item = root["items"]["item"];
     Json::ArrayIndex items_count = item.size();
+    // traverse over top level array
     for (Json::ArrayIndex i = 0; i != items_count; ++i) {
-      observer.start_item();
-      Json::Value properties = item[i]["property"];
-      traverse(observer, properties);
-      Json::Value list = item[i]["list"];
-      traverse(observer, list);
-      observer.end_item();
+      traverse(observer, item[i], "item");      
     }
   }
 }
 
 template<class Observer>
-void traverse(Observer& observer, const Json::Value& root) {
-  if (root.isNull()) return;
-  if (!root.isArray()) return;  // TODO(a-pavlov) throw exception here
-  for (Json::ValueConstIterator itr = root.begin(); itr != root.end(); ++itr) {
-    observer.add_value(((*itr)["name"]).asString(), ((*itr)["value"]).asString());
+void traverse(Observer& observer, const Json::Value& root, const std::string& name) {
+  assert(!root.isNull());
+  observer.start_item(name);
+
+  // extract properties from current item
+  Json::Value prop = root["property"];
+  for (Json::ValueConstIterator itr = prop.begin(); itr != prop.end(); ++itr) {
+    observer.add_property(((*itr)["name"]).asString(), ((*itr)["value"]).asString());
   }
+
+  // unwind list in recursive manner
+  Json::Value lists = root["list"];
+  if (!lists.isNull()) {
+    for (Json::ArrayIndex list_index = 0; list_index != lists.size(); ++list_index) {
+      traverse(observer, lists[list_index], "list");
+    }
+  }
+
+  observer.end_item();
 }
 
 }
