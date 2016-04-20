@@ -24,8 +24,8 @@ template<>
 void Mapper<Product>::set_property(const Json::Value& elem) {
   if (elem["name"] == "number") items.back().number_ = elem["value"].asString();
   if (elem["name"] == "name") items.back().name_ = elem["value"].asString();
-  if (elem["name"] == "licenseeAutoCreate") items.back().lic_auto_create_ = elem["value"].asBool();
-  if (elem["name"] == "inUse") items.back().in_use_ = elem["value"].asBool();
+  //if (elem["name"] == "licenseeAutoCreate") items.back().lic_auto_create_ = elem["value"].asBool();
+  //if (elem["name"] == "inUse") items.back().in_use_ = elem["value"].asBool();
 }
 
 template<typename T>
