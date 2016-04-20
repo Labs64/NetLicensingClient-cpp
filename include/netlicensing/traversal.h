@@ -19,7 +19,7 @@ void traverse(Observer& observer, const std::string& source) {
     Json::ArrayIndex items_count = item.size();
     // traverse over top level array
     for (Json::ArrayIndex i = 0; i != items_count; ++i) {
-      traverse(observer, item[i], "item");      
+      traverse(observer, item[i], "item");
     }
   }
 }

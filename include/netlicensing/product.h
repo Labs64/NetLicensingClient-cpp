@@ -1,11 +1,11 @@
 #ifndef __PRODUCT_H__
 #define __PRODUCT_H__
 
-#include <string>
+#include "netlicensing/entity.h"
 
 namespace netlicensing {
 
-struct Product {
+struct Product : public Entity {
   std::string number_;
   std::string name_;
   bool lic_auto_create_;

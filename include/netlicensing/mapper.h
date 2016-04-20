@@ -34,7 +34,7 @@ inline void assign(int& target, const std::string& source) {
 
 template<class T>
 class Mapper {
-public:
+ public:
 
   std::list<T> items;
   inline void start_item() {
