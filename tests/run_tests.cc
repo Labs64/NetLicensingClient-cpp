@@ -6,14 +6,14 @@
 
 #include <string>
 #include <deque>
-#include <fstream>
-#include <streambuf>
 #include <boost/test/unit_test.hpp>
 #include <json/json.h>
 
 #include "netlicensing/product.h"
 #include "netlicensing/mapper.h"
 #include "netlicensing/traversal.h"
+
+#include "common.h"
 
 struct TestDiscount {
   std::string currency_;
@@ -30,8 +30,13 @@ class TestObserver {
   std::list<TestProduct> product_;
   std::deque<std::string>  items_stack_;
   size_t max_depth;
+  std::string root_name_;
 
-  TestObserver() : max_depth(0) {}
+  TestObserver(const std::string& root_name) : max_depth(0), root_name_(root_name) {}
+
+  std::string root_name() const {
+    return root_name_;
+  }
 
   void start_item(const std::string& name) {
     items_stack_.push_front(name);
@@ -65,8 +70,7 @@ class TestObserver {
 BOOST_AUTO_TEST_SUITE(test_mapper)
 
 BOOST_AUTO_TEST_CASE(initial_test) {
-  std::ifstream t("../product.json");
-  std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+  std::string str = read_whole_file("../json/product.json");
   BOOST_REQUIRE(!str.empty());
   Json::Value root;
   Json::Reader reader;
@@ -77,8 +81,7 @@ BOOST_AUTO_TEST_CASE(initial_test) {
 }
 
 BOOST_AUTO_TEST_CASE(test_trivial_product_mapper) {
-  std::ifstream t("../product.json");
-  std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+  std::string str = read_whole_file("../json/product.json");
   BOOST_REQUIRE(!str.empty());
   netlicensing::Product p;
   netlicensing::fromJson<netlicensing::Product>(p, str);
@@ -87,8 +90,7 @@ BOOST_AUTO_TEST_CASE(test_trivial_product_mapper) {
 }
 
 BOOST_AUTO_TEST_CASE(test_trivial_mapper) {
-  std::ifstream t("../product.json");
-  std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+  std::string str = read_whole_file("../json/product.json");
   BOOST_REQUIRE(!str.empty());
   using netlicensing::Mapper;
   using netlicensing::Product;
@@ -102,11 +104,10 @@ BOOST_AUTO_TEST_CASE(test_trivial_mapper) {
 }
 
 BOOST_AUTO_TEST_CASE(test_traverse) {
-  std::ifstream t("../product.json");
-  std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+  std::string str = read_whole_file("../json/product.json");
   BOOST_REQUIRE(!str.empty());
 
-  TestObserver observer;
+  TestObserver observer("items");
   netlicensing::traverse(observer, str);
   BOOST_CHECK_EQUAL("101", observer.product_.front().number_);
   BOOST_CHECK_EQUAL("QTPro", observer.product_.front().name_);
@@ -114,10 +115,9 @@ BOOST_AUTO_TEST_CASE(test_traverse) {
 }
 
 BOOST_AUTO_TEST_CASE(test_recursive_list) {
-  std::ifstream t("../recursive_product.json");
-  std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+  std::string str = read_whole_file("../json/recursive_product.json");
   BOOST_REQUIRE(!str.empty());
-  TestObserver observer;
+  TestObserver observer("items");
   netlicensing::traverse(observer, str);
   BOOST_CHECK_EQUAL("101", observer.product_.front().number_);
   BOOST_CHECK_EQUAL("QTPro", observer.product_.front().name_);

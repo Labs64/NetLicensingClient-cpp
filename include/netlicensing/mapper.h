@@ -7,6 +7,7 @@
 #include <sstream>
 
 #include "netlicensing/product.h"
+#include "netlicensing/validation_result.h"
 
 namespace netlicensing {
 
@@ -52,6 +53,32 @@ void Mapper<Product>::set_property(const Json::Value& elem) {
   if (elem["name"] == "licenseeAutoCreate") assign(items.back().lic_auto_create_, elem["value"].asString());
   if (elem["name"] == "inUse") assign(items.back().in_use_, elem["value"].asString());
 }
+
+
+template<>
+class Mapper<ValidationResult> {
+ public:
+  int level;
+  std::list<ValidationResult> validations;
+
+  Mapper(): level(0) {
+  }
+
+  void start_item(const std::string& name) {
+    if (name == "item") {
+      validations.push_back(ValidationResult());
+    }
+  }
+
+  void end_item() {
+
+  }
+
+  void add_property(const std::string& name, const std::string& value) {
+
+  }
+
+};
 
 template<typename T>
 void fromJson(T& t, const std::string&);

@@ -15,11 +15,18 @@ void traverse(Observer& observer, const std::string& source) {
   Json::Reader reader;
   bool parsingSuccessful = reader.parse(source.c_str(), root);
   if (parsingSuccessful) {
-    Json::Value item = root["items"]["item"];
-    Json::ArrayIndex items_count = item.size();
-    // traverse over top level array
-    for (Json::ArrayIndex i = 0; i != items_count; ++i) {
-      traverse(observer, item[i], "item");
+    // get top level element of structure
+    Json::Value item = root[observer.root_name()];
+
+    if (!item.isNull() && item.isObject()) {
+      // TODO(a-pavlov) use something better here
+      std::string staff_name = observer.root_name().substr(0, observer.root_name().length() - 1);
+      Json::Value staff = item[staff_name];
+      Json::ArrayIndex items_count = staff.size();
+      // traverse over top level array
+      for (Json::ArrayIndex i = 0; i != items_count; ++i) {
+        traverse(observer, staff[i], staff_name);
+      }
     }
   }
 }
@@ -44,6 +51,33 @@ void traverse(Observer& observer, const Json::Value& root, const std::string& na
   }
 
   observer.end_item();
+}
+
+template<class Observer>
+void info_traverse(Observer& observer, const std::string& source) {
+  Json::Value root;
+  Json::Reader reader;
+  bool parsingSuccessful = reader.parse(source.c_str(), root);
+
+  if (parsingSuccessful) {
+    // get top level element of structure
+    Json::Value item = root[observer.root_name()];
+
+    if (!item.isNull() && item.isObject()) {
+      // TODO(a-pavlov) use something better here
+      std::string staff_name = observer.root_name().substr(0, observer.root_name().length() - 1);
+      Json::Value staff = item[staff_name];
+      for (Json::ValueConstIterator itr = staff.begin(); itr != staff.end(); ++itr) {
+        observer.start_item(staff_name);
+        std::vector<std::string> v = itr->getMemberNames();
+        for (std::vector<std::string>::const_iterator nm = v.begin(); nm != v.end(); ++nm) {
+          observer.add_property(*nm, ((*itr)[*nm]).asString());
+        }
+
+        observer.end_item();
+      }
+    }
+  }
 }
 
 }

@@ -1,0 +1,15 @@
+{
+  "Signature": null,
+  "infos": {
+    "info": [
+      {
+        "value": "Requested licensee does not exist and the productNumber is not provided",
+        "id": "NotFoundException",
+        "type": "ERROR"
+      }
+    ]
+  },
+  "items": null,
+  "id": null,
+  "ttl": null
+}
