@@ -1,0 +1,93 @@
+{
+  "Signature": null,
+  "infos": {
+    "info": null
+  },
+  "items": {
+    "item": [
+      {
+        "property": [
+          {
+            "value": "MAAV03-DEMO",
+            "name": "productModuleNumber"
+          },
+          {
+            "value": "Module licensed under MultiFeature LM",
+            "name": "productModuleName"
+          },
+          {
+            "value": "MultiFeature",
+            "name": "licensingModel"
+          }
+        ],
+        "list": [
+          {
+            "property": [
+              {
+                "value": "true",
+                "name": "valid"
+              },
+              {
+                "value": "Feature item 1",
+                "name": "featureName"
+              }
+            ],
+			"list": [
+			  {
+				"property": [
+				  {
+					"value": "true",
+					"name": "valid"
+				  },
+				  {
+					"value": "Feature item 1",
+					"name": "featureName"
+				  }
+				],
+				"list": null,
+				"name": "EAAV0301-DEMO"
+			  },
+			  {
+				"property": [
+				  {
+					"value": "true",
+					"name": "valid"
+				  },
+				  {
+					"value": "Feature item 2",
+					"name": "featureName"
+				  }
+				],
+				"list": null,
+				"name": "EAAV0302-DEMO"
+			  }
+			],			
+            "name": "EAAV0301-DEMO"
+          },
+          {
+            "property": [
+              {
+                "value": "true",
+                "name": "valid"
+              },
+              {
+                "value": "Feature item 2",
+                "name": "featureName"
+              }
+            ],
+            "list": null,
+            "name": "EAAV0302-DEMO"
+          }
+        ],
+        "type": "ProductModuleValidation"
+      }
+    ],
+    "pagenumber": null,
+    "itemsnumber": null,
+    "totalpages": null,
+    "totalitems": null,
+    "hasnext": null
+  },
+  "id": null,
+  "ttl": 1461320908648
+}

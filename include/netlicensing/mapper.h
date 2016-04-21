@@ -5,6 +5,7 @@
 #include <list>
 #include <json/json.h>
 #include <sstream>
+#include <cassert>
 
 #include "netlicensing/product.h"
 #include "netlicensing/validation_result.h"
@@ -45,7 +46,6 @@ class Mapper {
   inline void set_property(const Json::Value& elem);
 };
 
-
 template<>
 void Mapper<Product>::set_property(const Json::Value& elem) {
   if (elem["name"] == "number") assign(items.back().number_, elem["value"].asString());
@@ -58,26 +58,51 @@ void Mapper<Product>::set_property(const Json::Value& elem) {
 template<>
 class Mapper<ValidationResult> {
  public:
-  int level;
   std::list<ValidationResult> validations;
+  std::shared_ptr<ValidationProperty> sentinel_;
+  std::deque<std::shared_ptr<ValidationProperty> >  properties_stack_;
+  int level_;
 
-  Mapper(): level(0) {
-  }
+  Mapper() : level_(0) {}
+
+  std::string root_name() const { return "items";  }
 
   void start_item(const std::string& name) {
-    if (name == "item") {
+    if (properties_stack_.empty() && name == "item") {
+      assert(level_ == 0);
       validations.push_back(ValidationResult());
     }
+    else {
+      std::shared_ptr<ValidationProperty> prop(new ValidationProperty());
+      if (properties_stack_.empty()) {
+        validations.back().properties_.push_back(prop);
+      } 
+      else {
+        properties_stack_.front()->next_properties_.push_back(prop);
+      }
+
+      properties_stack_.push_front(prop);
+    }
+
+    ++level_;
   }
 
   void end_item() {
-
+    if (!properties_stack_.empty()) properties_stack_.pop_front();
+    --level_;
   }
 
   void add_property(const std::string& name, const std::string& value) {
-
+    if (properties_stack_.empty()) {
+      // fill direct validation data
+      if (name == "productModuleNumber") validations.back().product_module_number_ = value;
+      else if (name == "productModuleName") validations.back().product_module_name_ = value;
+      else if (name == "licensingModel") validations.back().licensing_model_ = value;
+    }
+    else {
+      properties_stack_.front()->values.add_property(name, value);
+    }
   }
-
 };
 
 template<typename T>

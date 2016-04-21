@@ -2,6 +2,7 @@
 #define __VALIDATION_RESULT_H__
 
 #include "netlicensing/entity.h"
+#include <memory>
 #include <list>
 
 namespace netlicensing {
@@ -9,19 +10,14 @@ namespace netlicensing {
 struct ValidationProperty {
   Entity values;
   std::string name_;
-  std::list<ValidationProperty*> sub_properties_;
-
-  ~ValidationProperty() {
-    for (auto p : sub_properties_) {
-      delete p;
-    }
-  }
+  std::list<std::shared_ptr<ValidationProperty> > next_properties_;  
 };
 
-struct ValidationResult {
-  Entity value;
+struct ValidationResult {  
   std::string product_module_number_;
-  std::list<ValidationProperty> properties;
+  std::string product_module_name_;
+  std::string licensing_model_;
+  std::list<std::shared_ptr<ValidationProperty> > properties_;  
 };
 
 }
