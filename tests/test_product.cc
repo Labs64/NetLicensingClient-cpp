@@ -14,7 +14,7 @@ BOOST_AUTO_TEST_SUITE(test_product)
 
 BOOST_AUTO_TEST_CASE(test_product_with_discount) {
   using namespace netlicensing;
-  std::string answer = read_whole_file("../json/product.json");
+  std::string answer = read_whole_file("product.json");
   BOOST_REQUIRE(!answer.empty());
   Mapper<Product> prod;
   traverse(prod, answer);
@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(test_product_with_discount) {
 
 BOOST_AUTO_TEST_CASE(test_product_list) {
   using namespace netlicensing;
-  std::string answer = read_whole_file("../json/product_list.json");
+  std::string answer = read_whole_file("product_list.json");
   BOOST_REQUIRE(!answer.empty());
   Mapper<Product> prod;
   traverse(prod, answer);

@@ -4,9 +4,14 @@
 
 #define BOOST_TEST_MODULE Main
 
+#ifndef _AIX
+#include <boost/test/included/unit_test.hpp>
+#endif
+
+#include <boost/test/unit_test.hpp>
+
 #include <string>
 #include <deque>
-#include <boost/test/unit_test.hpp>
 #include <json/json.h>
 
 #include "netlicensing/product.h"

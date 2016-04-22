@@ -6,6 +6,32 @@
 
 namespace netlicensing {
 
+template<class Observer>
+void traverse_elements(Observer& observer, const Json::Value& root, const std::string& name) {
+  assert(!root.isNull());
+  Json::Value name_value = root["name"];
+  Json::Value type_value = root["type"];
+  assert(!name_value.isNull() || !type_value.isNull());
+
+  observer.begin_element(name, name_value.isNull()?std::make_pair("type", type_value.asString()):std::make_pair("name", name_value.asString()));
+
+  // extract properties from current item
+  Json::Value prop = root["property"];
+  for (Json::ValueConstIterator itr = prop.begin(); itr != prop.end(); ++itr) {
+    observer.add_property(((*itr)["name"]).asString(), ((*itr)["value"]).asString());
+  }
+
+  // unwind list in recursive manner
+  Json::Value lists = root["list"];
+  if (!lists.isNull()) {
+    for (Json::ArrayIndex list_index = 0; list_index != lists.size(); ++list_index) {
+      traverse_elements(observer, lists[list_index], "list");
+    }
+  }
+
+  observer.end_element();
+}
+
 /**
 *  experemental traverser over json in predefined format
 */
@@ -38,36 +64,10 @@ void traverse(Observer& observer, const std::string& source) {
       Json::ArrayIndex items_count = staff.size();
       // traverse over top level array
       for (Json::ArrayIndex i = 0; i != items_count; ++i) {
-        traverse(observer, staff[i], staff_name);
+        traverse_elements(observer, staff[i], staff_name);
       }
     }
   }
-}
-
-template<class Observer>
-void traverse(Observer& observer, const Json::Value& root, const std::string& name) {
-  assert(!root.isNull());
-  Json::Value name_value = root["name"];
-  Json::Value type_value = root["type"];
-  assert(!name_value.isNull() || !type_value.isNull());
-
-  observer.begin_element(name, name_value.isNull()?std::make_pair("type", type_value.asString()):std::make_pair("name", name_value.asString()));
-
-  // extract properties from current item
-  Json::Value prop = root["property"];
-  for (Json::ValueConstIterator itr = prop.begin(); itr != prop.end(); ++itr) {
-    observer.add_property(((*itr)["name"]).asString(), ((*itr)["value"]).asString());
-  }
-
-  // unwind list in recursive manner
-  Json::Value lists = root["list"];
-  if (!lists.isNull()) {
-    for (Json::ArrayIndex list_index = 0; list_index != lists.size(); ++list_index) {
-      traverse(observer, lists[list_index], "list");
-    }
-  }
-
-  observer.end_element();
 }
 
 }

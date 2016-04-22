@@ -32,7 +32,7 @@ struct TestInfoObserver {
 BOOST_AUTO_TEST_SUITE(test_errors_parsing)
 
 BOOST_AUTO_TEST_CASE(test_licensee_not_found) {
-  std::string answer = read_whole_file("../json/licensee_validate_failed.json");
+  std::string answer = read_whole_file("licensee_validate_failed.json");
   BOOST_REQUIRE(!answer.empty());
   TestInfoObserver observer;
   netlicensing::traverse(observer, answer);
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(test_licensee_not_found) {
 }
 
 BOOST_AUTO_TEST_CASE(test_successfull_answer) {
-  std::string answer = read_whole_file("../json/product.json");
+  std::string answer = read_whole_file("product.json");
   BOOST_REQUIRE(!answer.empty());
   TestInfoObserver observer;
   netlicensing::traverse(observer, answer);

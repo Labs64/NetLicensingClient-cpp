@@ -14,7 +14,8 @@ std::string endpoint();
 template<class T>
 T get(Context& ctx) {
   T res;
-  std::string res = ctx.get();
+  //std::string res = ctx.get();
+  return res;
 };
 
 template<class T>

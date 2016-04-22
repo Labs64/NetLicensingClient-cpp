@@ -14,7 +14,7 @@ BOOST_AUTO_TEST_SUITE(test_licensee_validation)
 
 BOOST_AUTO_TEST_CASE(test_plain_validation_result) {
   using namespace netlicensing;
-  std::string answer = read_whole_file("../json/licensee_validation_result_plain.json");
+  std::string answer = read_whole_file("licensee_validation_result_plain.json");
   BOOST_REQUIRE(!answer.empty());
   Mapper<ValidationResult>  vr;
   traverse(vr, answer);
@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_CASE(test_plain_validation_result) {
 
 BOOST_AUTO_TEST_CASE(test_recursive_validation_result) {
   using namespace netlicensing;
-  std::string answer = read_whole_file("../json/licensee_validation_result_recursive.json");
+  std::string answer = read_whole_file("licensee_validation_result_recursive.json");
   BOOST_REQUIRE(!answer.empty());
   Mapper<ValidationResult>  vr;
   traverse(vr, answer);
