@@ -14,6 +14,8 @@ struct ValidationProperty : public RecursiveList<ValidationProperty> {
     if (RecursiveList<ValidationProperty>::add_property(name, value)) return;
     values.add_property(name, value);
   }
+
+  std::string to_string() const;
 };
 
 
@@ -29,6 +31,7 @@ struct ValidationResult {
   std::list<std::shared_ptr<ValidationProperty> > properties_;
   void add_property(const std::string& name, const std::string& value);
   void add_list(std::shared_ptr<PropertyType> ptr);
+  std::string to_string() const;
 };
 
 }

@@ -42,8 +42,9 @@ int main(int argc, char* argv[]) {
       std::list<netlicensing::ValidationResult> vres = netlicensing::validate(ctx, license_number);
       std::cout << "got validation results: " << vres.size() << std::endl;
       for (auto val_res : vres) {
-        std::cout << "lic model: {" << val_res.licensing_model_ << "} prod mod name {" << val_res.product_module_name_ << "}"
-          << " properties size{" << val_res.properties_.size() << "}\n";
+        std::cout << val_res.to_string() << std::endl;
+        //std::cout << "lic model: {" << val_res.licensing_model_ << "} prod mod name {" << val_res.product_module_name_ << "}"
+        //  << " properties size{" << val_res.properties_.size() << "}\n";
       }
     }
   }

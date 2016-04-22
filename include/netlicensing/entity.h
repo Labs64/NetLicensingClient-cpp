@@ -26,7 +26,6 @@ struct NamedList {
 
 template<class T>
 struct RecursiveList : public NamedList {
-  std::string name_;
   std::list<std::shared_ptr<RecursiveList<T> > >  nested_lists_;
 
   void add_list(std::shared_ptr<RecursiveList<T> > ptr) {
@@ -70,6 +69,7 @@ private:
 public:
   bool add_property(const std::string& key, const std::string& value);
   std::string get_property(const std::string& key) const;
+  std::string to_string() const;
 };
 
 struct Info {
