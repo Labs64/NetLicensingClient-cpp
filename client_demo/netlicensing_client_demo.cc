@@ -7,6 +7,10 @@
 
 int main(int argc, char* argv[]) {
   using netlicensing::Product;
+  std::string license_number;
+  if (argc > 1) {
+    license_number = argv[1];
+  }
   std::cout << "Hello, this is NetLicensing demo client\n";
 
   std::cout << "Product endpoint " << netlicensing::endpoint<Product>() << std::endl;
@@ -28,11 +32,20 @@ int main(int argc, char* argv[]) {
     std::string res = ctx.post("license", params);
     std::cout << "license check answer: " << res << std::endl;
 
-    std::string lres = ctx.get("licensetemplate", Context::parameters_type());
+    //std::string lres = ctx.get("licensetemplate", Context::parameters_type());
     //std::cout << "licensee list " << lres << std::endl;
 
-    std::string ldel = ctx.del("licensetemplate/E00101-DEMO", Context::parameters_type());
-    std::cout << "delete license " << ldel << std::endl;    
+    //std::string ldel = ctx.del("licensetemplate/E00101-DEMO", Context::parameters_type());
+    //std::cout << "delete license " << ldel << std::endl;
+    if (!license_number.empty()) {
+      std::cout << "start validation for " << license_number << std::endl;
+      std::list<netlicensing::ValidationResult> vres = netlicensing::validate(ctx, license_number);
+      std::cout << "got validation results: " << vres.size() << std::endl;
+      for (auto val_res : vres) {
+        std::cout << "lic model: {" << val_res.licensing_model_ << "} prod mod name {" << val_res.product_module_name_ << "}"
+          << " properties size{" << val_res.properties_.size() << "}\n";
+      }
+    }
   }
   catch (const netlicensing::RestException& e) {
     std::cerr << "REST error: " << e.what() << std::endl;

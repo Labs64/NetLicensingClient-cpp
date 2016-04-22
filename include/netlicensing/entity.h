@@ -31,7 +31,7 @@ struct RecursiveList : public NamedList {
 
   void add_list(std::shared_ptr<RecursiveList<T> > ptr) {
     nested_lists_.push_back(ptr);
-  }  
+  }
 };
 
 template<class T>
