@@ -35,7 +35,7 @@ std::string escape_string(const char* str, size_t len, size_t offset = 11) {
   assert(offset < size_t(sizeof(unreserved_chars)) - 1);
 
   std::string ret;
-  for (int i = 0; i < len; ++i) {
+  for (size_t i = 0; i < len; ++i) {
     if (std::strchr(unreserved_chars + offset, *str) && *str != 0) {
       ret += *str;
     }

@@ -5,7 +5,7 @@ option (BUILD_TESTS "Build unit tests." TRUE)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
-find_package(JsonCpp REQUIRED)
+#find_package(JsonCpp REQUIRED)
 find_package(CURL REQUIRED)
 
 if (BUILD_TESTS)
