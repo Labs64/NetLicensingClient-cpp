@@ -18,6 +18,11 @@ Visit Labs64 NetLicensing at http://netlicensing.io
 4. In VC command prompt run command like nmake /f Makefile.vc VC=your_vc MACHINE=your_machine ENABLE_WINSSL=yes
 5. curl builds will be in sub directory \builds
 
+### Build jsoncpp
+1. Download or checkout [jsoncpp](https://github.com/open-source-parsers/jsoncpp)
+2. Build using CMake and copy headers and sources into directory with dependencies
+3. Setup JSONCPP_ROOT environment variable
+
 ### Build NetLicensing C++ client
 1. Checkout project
 2. In NetLicensingClient-cpp create build directory
@@ -27,13 +32,13 @@ Visit Labs64 NetLicensing at http://netlicensing.io
 
 ## Linux build
 
-### Building jsoncpp
+### Build jsoncpp
 1. Go to link above and clone or download release
 2. Follow instructions in jsoncpp README
 3. Prepare root directory with include and lib sub directories
 4. Set JSONCPP_ROOT (or CMAKE_PREFIX_PATH) path to root directory with include/lib 
 
-### Building NetLincesing-cpp
+### Build NetLincesing-cpp
 1. Install curl dev. For ubuntu sudo apt-get install libcurl4-openssl-dev
 2. Checkout NetLicensingClient-cpp
 3. Run cmake or cmake .. from build sub directory
