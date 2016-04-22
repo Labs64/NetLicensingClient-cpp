@@ -1,0 +1,308 @@
+{
+  "Signature": null,
+  "infos": {
+    "info": null
+  },
+  "items": {
+    "item": [
+      {
+        "property": [
+          {
+            "value": "101",
+            "name": "number"
+          },
+          {
+            "value": "true",
+            "name": "active"
+          },
+          {
+            "value": "QTPro",
+            "name": "name"
+          },
+          {
+            "value": "7.1.1.23",
+            "name": "version"
+          },
+          {
+            "value": "false",
+            "name": "licenseeAutoCreate"
+          },
+          {
+            "value": "<p>This is a test licence for QTPro product</p>\r\n",
+            "name": "description"
+          },
+          {
+            "value": "<p>Take the licence and enjoy</p>\r\n",
+            "name": "licensingInfo"
+          },
+          {
+            "value": "true",
+            "name": "inUse"
+          }
+        ],
+        "list": [
+          {
+            "property": [
+              {
+                "value": "10.00",
+                "name": "totalPrice"
+              },
+              {
+                "value": "EUR",
+                "name": "currency"
+              },
+              {
+                "value": "0.00",
+                "name": "amountFix"
+              }
+            ],
+            "list": null,
+            "name": "discount"
+          }
+        ],
+        "type": "Product"
+      },
+      {
+        "property": [
+          {
+            "value": "123",
+            "name": "number"
+          },
+          {
+            "value": "true",
+            "name": "active"
+          },
+          {
+            "value": "x1",
+            "name": "name"
+          },
+          {
+            "value": "y1",
+            "name": "version"
+          },
+          {
+            "value": "true",
+            "name": "licenseeAutoCreate"
+          },
+          {
+            "value": "false",
+            "name": "inUse"
+          }
+        ],
+        "list": null,
+        "type": "Product"
+      },
+      {
+        "property": [
+          {
+            "value": "1234",
+            "name": "number"
+          },
+          {
+            "value": "true",
+            "name": "active"
+          },
+          {
+            "value": "x1",
+            "name": "name"
+          },
+          {
+            "value": "y1",
+            "name": "version"
+          },
+          {
+            "value": "true",
+            "name": "licenseeAutoCreate"
+          },
+          {
+            "value": "false",
+            "name": "inUse"
+          }
+        ],
+        "list": null,
+        "type": "Product"
+      },
+      {
+        "property": [
+          {
+            "value": "12345",
+            "name": "number"
+          },
+          {
+            "value": "true",
+            "name": "active"
+          },
+          {
+            "value": "x1",
+            "name": "name"
+          },
+          {
+            "value": "y1",
+            "name": "version"
+          },
+          {
+            "value": "true",
+            "name": "licenseeAutoCreate"
+          },
+          {
+            "value": "ааавава",
+            "name": "description"
+          },
+          {
+            "value": "ааававававав",
+            "name": "licensingInfo"
+          },
+          {
+            "value": "false",
+            "name": "inUse"
+          }
+        ],
+        "list": null,
+        "type": "Product"
+      },
+      {
+        "property": [
+          {
+            "value": "31415",
+            "name": "number"
+          },
+          {
+            "value": "true",
+            "name": "active"
+          },
+          {
+            "value": "Test Windows App",
+            "name": "name"
+          },
+          {
+            "value": "5.5",
+            "name": "version"
+          },
+          {
+            "value": "false",
+            "name": "licenseeAutoCreate"
+          },
+          {
+            "value": "<p>Test application</p>\r\n",
+            "name": "description"
+          },
+          {
+            "value": "<p>Subscription</p>\r\n",
+            "name": "licensingInfo"
+          },
+          {
+            "value": "false",
+            "name": "inUse"
+          }
+        ],
+        "list": [
+          {
+            "property": [
+              {
+                "value": "35.00",
+                "name": "totalPrice"
+              },
+              {
+                "value": "EUR",
+                "name": "currency"
+              },
+              {
+                "value": "0.00",
+                "name": "amountFix"
+              }
+            ],
+            "list": null,
+            "name": "discount"
+          }
+        ],
+        "type": "Product"
+      },
+      {
+        "property": [
+          {
+            "value": "P001-DEMO",
+            "name": "number"
+          },
+          {
+            "value": "true",
+            "name": "active"
+          },
+          {
+            "value": "Try & Buy demo product",
+            "name": "name"
+          },
+          {
+            "value": "1.0",
+            "name": "version"
+          },
+          {
+            "value": "true",
+            "name": "licenseeAutoCreate"
+          },
+          {
+            "value": "<p>The product contains sample data for demonstration of the 'Try & Buy' licensing model.</p>",
+            "name": "description"
+          },
+          {
+            "value": "<p>Here you may put your EULA.</p>",
+            "name": "licensingInfo"
+          },
+          {
+            "value": "true",
+            "name": "inUse"
+          },
+          {
+            "value": "You may add arbitrary properties to your product, e.g. ERP reference.",
+            "name": "customProperty"
+          }
+        ],
+        "list": [
+          {
+            "property": [
+              {
+                "value": "10.00",
+                "name": "totalPrice"
+              },
+              {
+                "value": "EUR",
+                "name": "currency"
+              },
+              {
+                "value": "9.00",
+                "name": "amountFix"
+              }
+            ],
+            "list": null,
+            "name": "discount"
+          },
+          {
+            "property": [
+              {
+                "value": "100.00",
+                "name": "totalPrice"
+              },
+              {
+                "value": "EUR",
+                "name": "currency"
+              },
+              {
+                "value": "10",
+                "name": "amountPercent"
+              }
+            ],
+            "list": null,
+            "name": "discount"
+          }
+        ],
+        "type": "Product"
+     }
+    ],
+    "pagenumber": "0",
+    "itemsnumber": "53",
+    "totalpages": "1",
+    "totalitems": "53",
+    "hasnext": "false"
+  },
+  "id": null,
+  "ttl": null
+}

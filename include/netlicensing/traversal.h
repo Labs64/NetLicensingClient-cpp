@@ -15,6 +15,19 @@ void traverse(Observer& observer, const std::string& source) {
   Json::Reader reader;
   bool parsingSuccessful = reader.parse(source.c_str(), root);
   if (parsingSuccessful) {
+    // parse info stucture
+    Json::Value info = root["infos"];
+    if (!info.isNull() && info.isObject()) {
+      Json::Value info_element = info["info"];
+      for (Json::ValueConstIterator itr = info_element.begin(); itr != info_element.end(); ++itr) {
+        observer.begin_info();
+        std::vector<std::string> v = itr->getMemberNames();
+        for (std::vector<std::string>::const_iterator nm = v.begin(); nm != v.end(); ++nm) {
+          observer.add_info_property(*nm, ((*itr)[*nm]).asString());
+        }        
+      }
+    }
+
     // get top level element of structure
     Json::Value item = root[observer.root_name()];
 
@@ -34,7 +47,11 @@ void traverse(Observer& observer, const std::string& source) {
 template<class Observer>
 void traverse(Observer& observer, const Json::Value& root, const std::string& name) {
   assert(!root.isNull());
-  observer.start_item(name);
+  Json::Value name_value = root["name"];
+  Json::Value type_value = root["type"];
+  assert(!name_value.isNull() || !type_value.isNull());
+
+  observer.begin_element(name, name_value.isNull()?std::make_pair("type", type_value.asString()):std::make_pair("name", name_value.asString()));
 
   // extract properties from current item
   Json::Value prop = root["property"];
@@ -50,34 +67,7 @@ void traverse(Observer& observer, const Json::Value& root, const std::string& na
     }
   }
 
-  observer.end_item();
-}
-
-template<class Observer>
-void info_traverse(Observer& observer, const std::string& source) {
-  Json::Value root;
-  Json::Reader reader;
-  bool parsingSuccessful = reader.parse(source.c_str(), root);
-
-  if (parsingSuccessful) {
-    // get top level element of structure
-    Json::Value item = root[observer.root_name()];
-
-    if (!item.isNull() && item.isObject()) {
-      // TODO(a-pavlov) use something better here
-      std::string staff_name = observer.root_name().substr(0, observer.root_name().length() - 1);
-      Json::Value staff = item[staff_name];
-      for (Json::ValueConstIterator itr = staff.begin(); itr != staff.end(); ++itr) {
-        observer.start_item(staff_name);
-        std::vector<std::string> v = itr->getMemberNames();
-        for (std::vector<std::string>::const_iterator nm = v.begin(); nm != v.end(); ++nm) {
-          observer.add_property(*nm, ((*itr)[*nm]).asString());
-        }
-
-        observer.end_item();
-      }
-    }
-  }
+  observer.end_element();
 }
 
 }
