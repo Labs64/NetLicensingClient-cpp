@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[]) {
   using netlicensing::Product;
-  std::string license_number;
+  std::string license_number = "I2C3VN7NA-DEMO";
   if (argc > 1) {
     license_number = argv[1];
   }
@@ -29,7 +29,8 @@ int main(int argc, char* argv[]) {
     ctx.set_base_url("https://go.netlicensing.io/core/v2/rest/");
     ctx.set_username("demo");
     ctx.set_password("demo");
-    std::string res = ctx.post("license", params);
+    long http_code;
+    std::string res = ctx.post("license", params, http_code);
     std::cout << "license check answer: " << res << std::endl;
 
     //std::string lres = ctx.get("licensetemplate", Context::parameters_type());
@@ -43,8 +44,6 @@ int main(int argc, char* argv[]) {
       std::cout << "got validation results: " << vres.size() << std::endl;
       for (auto val_res : vres) {
         std::cout << val_res.to_string() << std::endl;
-        //std::cout << "lic model: {" << val_res.licensing_model_ << "} prod mod name {" << val_res.product_module_name_ << "}"
-        //  << " properties size{" << val_res.properties_.size() << "}\n";
       }
     }
   }

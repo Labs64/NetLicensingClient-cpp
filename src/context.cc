@@ -55,6 +55,24 @@ std::string escape_string(const std::string& s) {
   return escape_string(s.c_str(), s.length());
 }
 
+
+std::string url_with_parameters(const std::string& url, const Context::parameters_type& params) {    
+
+  std::string query_part;
+
+  char prefix = '?';
+
+  if (url.find('?') != std::string::npos) prefix = '&';
+
+  for (auto pval : params) {
+    query_part += prefix;
+    query_part += pval.first + "=" + escape_string(pval.second);
+    prefix = '&';
+  }  
+
+  return url + query_part;
+}
+
 // pair to string functor
 struct pair2string {
   std::string operator()(const std::pair<std::string, std::string>& p) {
@@ -136,22 +154,25 @@ class Context::NetworkService {
   std::string post(const std::string& url,
     const Context::parameters_type& params,
     const std::string username,
-    const std::string password) {
-    return send_request(POST, url, params, username, password);
+    const std::string password,
+    long& http_code) {
+    return send_request(POST, url, params, username, password, http_code);
   }
 
   std::string get(const std::string& url,
     const Context::parameters_type& params,
     const std::string username,
-    const std::string password) {
-    return send_request(GET, url, params, username, password);
+    const std::string password,
+    long& http_code) {
+    return send_request(GET, url_with_parameters(url, params), Context::parameters_type(), username, password, http_code);
   }
 
   std::string del(const std::string& url,
     const Context::parameters_type& params,
     const std::string username,
-    const std::string password) {
-    return send_request(DEL, url, params, username, password);
+    const std::string password,
+    long& http_code) {
+    return send_request(DEL, url, params, username, password, http_code);
   }
 
   std::string send_request(
@@ -159,7 +180,8 @@ class Context::NetworkService {
     const std::string& url,
     const Context::parameters_type& params,
     const std::string username,
-    const std::string password) {
+    const std::string password,
+    long& http_code) {
     std::string response_body;
     std::string request_body;
     std::pair<const char*, size_t>  request_body_info;
@@ -235,43 +257,7 @@ class Context::NetworkService {
 
     if (res != 0) throw ServiceException(curl_easy_strerror(res), res, errors);
 
-    // TODO(a-pavlov) validate error handlers from restful-mapper    
-    long http_code = 0;
     curl_easy_getinfo(handle_, CURLINFO_RESPONSE_CODE, &http_code);
-
-    // bad request or validation error
-    if (http_code == 400) {
-      // TODO(a-pavlov) activate this after response parser ready
-      //throw RestException(response_body, http_code);
-      return response_body;
-    }
-
-    if (http_code == 401) throw RestException("Authentication error", http_code);
-
-    bool http_ok = false;
-
-    switch (type) {
-    case GET:
-      http_ok = (http_code == 200);
-      break;
-    case POST:
-      http_ok = (http_code == 201);
-      break;
-    case PUT:
-      http_ok = (http_code == 200 || http_code == 201);
-      break;
-    case DEL:
-      http_ok = (http_code == 204);
-      break;
-    default:
-      break;
-    }
-
-    if (!http_ok) {
-      // TODO(a-pavlov) activate when json parser ready
-      throw RestException(response_body, http_code);
-    }
-
     return response_body;
   }
 
@@ -329,22 +315,22 @@ std::string Context::api_key() const { return api_key_; }
 std::string Context::vendor_number() const { return vendor_number_; }
 Context::SecurityMode Context::security_mode() const { return mode_; }
 
-std::string Context::post(const std::string& endpoint, const parameters_type& params) {
+std::string Context::post(const std::string& endpoint, const parameters_type& params, long& http_code) {
   assert(!endpoint.empty());
   assert(network_service_ != NULL);
-  return network_service_->post(base_url_ + "/" + endpoint, params, user(), pass());
+  return network_service_->post(base_url_ + "/" + endpoint, params, user(), pass(), http_code);
 }
 
-std::string Context::get(const std::string& endpoint, const parameters_type& params) {
+std::string Context::get(const std::string& endpoint, const parameters_type& params, long& http_code) {
   assert(!endpoint.empty());
   assert(network_service_ != NULL);
-  return network_service_->get(base_url_ + "/" + endpoint, params, user(), pass());
+  return network_service_->get(base_url_ + "/" + endpoint, params, user(), pass(), http_code);
 }
 
-std::string Context::del(const std::string& endpoint, const parameters_type& params) {
+std::string Context::del(const std::string& endpoint, const parameters_type& params, long& http_code) {
   assert(!endpoint.empty());
   assert(network_service_ != NULL);
-  return network_service_->del(base_url_ + "/" + endpoint, params, user(), pass());
+  return network_service_->del(base_url_ + "/" + endpoint, params, user(), pass(), http_code);
 }
 
 const std::string& Context::user() const {

@@ -35,9 +35,9 @@ class Context {
   std::string vendor_number() const;
   SecurityMode security_mode() const;
 
-  std::string post(const std::string& endpoint, const parameters_type& params);
-  std::string get(const std::string& endpoint, const parameters_type& params);
-  std::string del(const std::string& endpoint, const parameters_type& params);
+  std::string post(const std::string& endpoint, const parameters_type& params, long& http_code);
+  std::string get(const std::string& endpoint, const parameters_type& params, long& http_code);
+  std::string del(const std::string& endpoint, const parameters_type& params, long& http_code);
  private:
   const std::string& user() const;
   const std::string& pass() const;
@@ -53,6 +53,9 @@ class Context {
   std::string vendor_number_;
   SecurityMode mode_;
 };
+
+// for unit testing
+extern std::string url_with_parameters(const std::string& url, const Context::parameters_type& params);
 }
 
 #endif //__CONTEXT_H__
