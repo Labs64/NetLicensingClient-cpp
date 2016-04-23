@@ -8,6 +8,7 @@
 
 #include "netlicensing/entity.h"
 #include "netlicensing/traversal.h"
+#include "netlicensing/info.h"
 
 using netlicensing::Info;
 

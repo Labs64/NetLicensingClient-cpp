@@ -5,6 +5,7 @@
 #include "netlicensing/validation_result.h"
 #include "netlicensing/mapper.h"
 #include "netlicensing/traversal.h"
+#include "netlicensing/exception.h"
 
 namespace netlicensing {
 
@@ -36,6 +37,11 @@ inline std::list<ValidationResult> validate(Context& ctx,
   std::string res = ctx.get(endpoint, params, http_code);
   Mapper<ValidationResult> mp;
   traverse(mp, res);
+
+  if (http_code != 200) {
+    throw RestException(mp.info_, http_code);
+  }
+  
   return mp.items;
 }
 

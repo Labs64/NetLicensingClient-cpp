@@ -2,6 +2,7 @@
 #define __EXCEPTION_H__
 
 #include <stdexcept>
+#include "netlicensing/info.h"
 
 namespace netlicensing {
 
@@ -35,11 +36,17 @@ class ServiceException : public std::runtime_error {
 class RestException : public std::runtime_error {
  private:
   int code_;
+  std::list<Info> details_;
  public:
-  RestException(const std::string& msg, int code) : std::runtime_error(msg), code_(code) {}
+  RestException(const std::list<Info>& details, int code) : 
+    std::runtime_error("REST error"), code_(code), details_(details) {}
 
   int http_code() const {
     return code_;
+  }
+
+  const std::list<Info> get_details() const {
+    return details_;
   }
 };
 

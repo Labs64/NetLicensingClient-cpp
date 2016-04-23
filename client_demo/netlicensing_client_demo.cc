@@ -48,7 +48,10 @@ int main(int argc, char* argv[]) {
     }
   }
   catch (const netlicensing::RestException& e) {
-    std::cerr << "REST error: " << e.what() << std::endl;
+    std::cerr << e.what() << " code " << e.http_code() << std::endl;
+    for (auto det : e.get_details()) {
+      std::cerr << det.to_string() << std::endl;
+    }
     return 2;
   }
   catch (const std::runtime_error& err) {

@@ -2,6 +2,7 @@
 #define __VALIDATION_RESULT_H__
 
 #include "netlicensing/entity.h"
+#include "netlicensing/info.h"
 
 namespace netlicensing {
 

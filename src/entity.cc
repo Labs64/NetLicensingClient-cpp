@@ -23,10 +23,4 @@ std::string Entity::to_string() const {
   return ss.str();
 }
 
-void Info::add_property(const std::string& name, const std::string& value) {
-  if (name == "value") value_ = value;
-  else if (name == "id") id_ = value;
-  else if (name == "type") type_ = value;
-}
-
 }

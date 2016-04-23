@@ -72,14 +72,6 @@ public:
   std::string to_string() const;
 };
 
-struct Info {
-  std::string value_;
-  std::string id_;
-  std::string type_;
-
-  void add_property(const std::string& name, const std::string& value);
-};
-
 }
 
 #endif //__ENTITY_H__
