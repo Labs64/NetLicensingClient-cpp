@@ -32,3 +32,8 @@ Visit Labs64 NetLicensing at http://netlicensing.io
 2. Checkout NetLicensingClient-cpp
 3. Run cmake or cmake .. from build sub directory
 4. make
+
+### Unit tests
+
+For unit tests you need installed boost unit test library. To build project with unit tests activated use cmake option -DBUILD_TESTS=yes. For example cmake -DBUILD_TESTS=yes .. . Run tests exactly from tests directory in linux or tests/Debug on windows because of expected positions of json source files.
+
