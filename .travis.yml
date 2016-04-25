@@ -1,0 +1,2 @@
+before_script: mkdir build
+scripts: cd build && cmake .. && make

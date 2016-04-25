@@ -1,3 +1,6 @@
+# OS X files
+.DS_Store
+
 # Compiled Object files
 *.slo
 *.lo
@@ -26,3 +29,7 @@
 *.exe
 *.out
 *.app
+
+# Generated and working files and directories
+tests/run_tests
+build
