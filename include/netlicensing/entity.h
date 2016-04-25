@@ -1,8 +1,7 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include <string>
-#include <list>
+#include "netlicensing/constants.h"
 #include <map>
 #include <memory>
 #include <stdexcept>
@@ -70,6 +69,7 @@ public:
   bool add_property(const std::string& key, const std::string& value);
   std::string get_property(const std::string& key) const;
   std::string to_string() const;
+  parameters_type to_parameters_list() const;
 };
 
 }

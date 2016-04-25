@@ -2,6 +2,7 @@
 #define __PRODUCT_H__
 
 #include "netlicensing/entity.h"
+#include "netlicensing/constants.h"
 
 namespace netlicensing {
 
@@ -26,6 +27,7 @@ struct Product : public Entity {
 
   void add_list(std::shared_ptr<PropertyType> ptr);
   void add_property(const std::string& name, const std::string& value);
+  parameters_type to_parameters_list() const;
 };
 
 }

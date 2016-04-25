@@ -56,7 +56,7 @@ std::string escape_string(const std::string& s) {
 }
 
 
-std::string url_with_parameters(const std::string& url, const Context::parameters_type& params) {    
+std::string url_with_parameters(const std::string& url, const parameters_type& params) {    
 
   std::string query_part;
 
@@ -152,7 +152,7 @@ class Context::NetworkService {
 #define MAKE_HEADER(name, value) (std::string(name) + ": " + std::string(value)).c_str()
 
   std::string post(const std::string& url,
-    const Context::parameters_type& params,
+    const parameters_type& params,
     const std::string username,
     const std::string password,
     long& http_code) {
@@ -160,15 +160,15 @@ class Context::NetworkService {
   }
 
   std::string get(const std::string& url,
-    const Context::parameters_type& params,
+    const parameters_type& params,
     const std::string username,
     const std::string password,
     long& http_code) {
-    return send_request(GET, url_with_parameters(url, params), Context::parameters_type(), username, password, http_code);
+    return send_request(GET, url_with_parameters(url, params), parameters_type(), username, password, http_code);
   }
 
   std::string del(const std::string& url,
-    const Context::parameters_type& params,
+    const parameters_type& params,
     const std::string username,
     const std::string password,
     long& http_code) {
@@ -178,7 +178,7 @@ class Context::NetworkService {
   std::string send_request(
     RequestType type,
     const std::string& url,
-    const Context::parameters_type& params,
+    const parameters_type& params,
     const std::string username,
     const std::string password,
     long& http_code) {

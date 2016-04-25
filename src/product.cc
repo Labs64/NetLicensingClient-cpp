@@ -21,4 +21,12 @@ void Product::add_property(const std::string& name, const std::string& value) {
   else Entity::add_property(name, value);
 }
 
+parameters_type Product::to_parameters_list() const {
+  parameters_type params;
+  params.push_back(std::make_pair("number", number_));
+  params.push_back(std::make_pair("name", name_));
+  params.splice(params.end(), Entity::to_parameters_list());
+  return params;
+}
+
 }

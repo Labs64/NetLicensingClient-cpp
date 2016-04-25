@@ -1,8 +1,7 @@
 #ifndef __CONTEXT_H__
 #define __CONTEXT_H__
 
-#include <string>
-#include <list>
+#include "netlicensing/constants.h"
 
 namespace netlicensing {
 
@@ -16,8 +15,7 @@ class Context {
     BASIC_AUTHENTICATION,
     APIKEY_IDENTIFICATION
   };
-
-  typedef std::list<std::pair<std::string, std::string> > parameters_type;
+  
   Context();
   ~Context();
 
@@ -55,7 +53,12 @@ class Context {
 };
 
 // for unit testing
-extern std::string url_with_parameters(const std::string& url, const Context::parameters_type& params);
+extern std::string url_with_parameters(const std::string& url, const parameters_type& params);
+
+/**
+ * @brief returns url encoded string
+*/
+extern std::string escape_string(const std::string& s);
 }
 
 #endif //__CONTEXT_H__

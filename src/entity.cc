@@ -23,4 +23,13 @@ std::string Entity::to_string() const {
   return ss.str();
 }
 
+parameters_type Entity::to_parameters_list() const {
+  parameters_type res;
+  for (auto p : user_defined_properties_) {
+    res.push_back(std::make_pair(p.first, p.second));
+  }
+
+  return res;
+}
+
 }

@@ -28,16 +28,25 @@ int main(int argc, char* argv[]) {
     Context ctx;
     ctx.set_base_url("https://go.netlicensing.io/core/v2/rest/");
     ctx.set_username("demo");
-    ctx.set_password("demo");
-    long http_code;
-    std::string res = ctx.post("license", params, http_code);
-    std::cout << "license check answer: " << res << std::endl;
+    ctx.set_password("demo");    
 
-    //std::string lres = ctx.get("licensetemplate", Context::parameters_type());
-    //std::cout << "licensee list " << lres << std::endl;
+    // product section 
+    netlicensing::Product p;
+    p.name_ = "Test name";
+    p.number_ = "Some number 5";
+    netlicensing::Product newp = netlicensing::create(ctx, p);
 
-    //std::string ldel = ctx.del("licensetemplate/E00101-DEMO", Context::parameters_type());
-    //std::cout << "delete license " << ldel << std::endl;
+    newp.name_ = "Updated name";
+    netlicensing::Product newp2 = netlicensing::update(ctx, newp.number_, newp);
+
+    std::list<netlicensing::Product> products = netlicensing::list<netlicensing::Product>(ctx, "");
+    std::cout << "before delete products count " << products.size() << std::endl;
+
+    netlicensing::del<netlicensing::Product>(ctx, newp2.number_, false);
+
+    products = netlicensing::list<netlicensing::Product>(ctx, "");
+    std::cout << "after delete products count " << products.size() << std::endl;
+    
     if (!license_number.empty()) {
       std::cout << "start validation for " << license_number << std::endl;
       std::list<netlicensing::ValidationResult> vres = netlicensing::validate(ctx, license_number);
