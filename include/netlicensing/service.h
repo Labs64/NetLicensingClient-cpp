@@ -84,27 +84,6 @@ std::list<T> list(Context& ctx, const std::string& filter) {
   return mp.items;
 }
 
-inline std::list<ValidationResult> validate(Context& ctx, 
-  const std::string& licensee_number,
-  const std::string& product_number = std::string(),
-  const std::string& licensee_name = std::string()) {
-  std::string endpoint = "licensee/" + escape_string(licensee_number) + "/validate";
-  parameters_type params;
-  if (!product_number.empty()) params.push_back(std::make_pair("productNumber", escape_string(product_number)));
-  if (!licensee_name.empty()) params.push_back(std::make_pair("licenseeName", escape_string(licensee_name)));
-
-  long http_code;
-  std::string res = ctx.get(endpoint, params, http_code);
-  Mapper<ValidationResult> mp;
-  traverse(mp, res);
-
-  if (http_code != 200) {
-    throw RestException(mp.info_, http_code);
-  }
-  
-  return mp.items;
-}
-
 };
 
 #endif //__SERVICE_HPP__

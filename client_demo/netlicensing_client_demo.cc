@@ -1,9 +1,8 @@
 #include <iostream>
-#include "netlicensing/context.h"
-#include "netlicensing/service.h"
-#include "netlicensing/exception.h"
-#include "netlicensing/product.h"
-#include "json/json.h"
+#include <random>  
+#include <ctime> 
+#include <sstream>
+#include "netlicensing/netlicensing.h"
 
 int main(int argc, char* argv[]) {
   using netlicensing::Product;
@@ -11,45 +10,44 @@ int main(int argc, char* argv[]) {
   if (argc > 1) {
     license_number = argv[1];
   }
+
+  std::mt19937 gen;
+  gen.seed(time(0));
+  std::stringstream ss;
+  ss << "P" << gen();
+  std::string productNumber = ss.str();
+
   std::cout << "Hello, this is NetLicensing demo client\n";
-
   std::cout << "Product endpoint " << netlicensing::endpoint<Product>() << std::endl;
-
-  // check context direct call 
-  std::list<std::pair<std::string, std::string> > params;
-  params.push_back(std::make_pair("licenseeNumber", "1"));
-  params.push_back(std::make_pair("licenseTemplateNumber", "1"));
-  params.push_back(std::make_pair("active", "true"));
-  params.push_back(std::make_pair("number", "1"));
-  params.push_back(std::make_pair("name", "lic"));
+  std::cout << "Product test number " << productNumber << std::endl;
 
   using netlicensing::Context;
   try {
     Context ctx;
     ctx.set_base_url("https://go.netlicensing.io/core/v2/rest/");
     ctx.set_username("demo");
-    ctx.set_password("demo");    
+    ctx.set_password("demo");
 
-    // product section 
+    // product section
     netlicensing::Product p;
-    p.name_ = "Test name";
-    p.number_ = "Some number 5";
-    netlicensing::Product newp = netlicensing::create(ctx, p);
+    p.setName("Test name");
+    p.setNumber(productNumber);
+    netlicensing::Product newp = netlicensing::ProductService::create(ctx, p);
 
-    newp.name_ = "Updated name";
-    netlicensing::Product newp2 = netlicensing::update(ctx, newp.number_, newp);
+    newp.setName("Updated name");
+    netlicensing::Product newp2 = netlicensing::ProductService::update(ctx, newp.getNumber(), newp);
 
-    std::list<netlicensing::Product> products = netlicensing::list<netlicensing::Product>(ctx, "");
+    std::list<netlicensing::Product> products = netlicensing::ProductService::list(ctx, "");
     std::cout << "before delete products count " << products.size() << std::endl;
 
-    netlicensing::del<netlicensing::Product>(ctx, newp2.number_, false);
+    netlicensing::ProductService::del(ctx, newp2.getNumber(), false);
 
-    products = netlicensing::list<netlicensing::Product>(ctx, "");
+    products = netlicensing::ProductService::list(ctx, "");
     std::cout << "after delete products count " << products.size() << std::endl;
     
     if (!license_number.empty()) {
       std::cout << "start validation for " << license_number << std::endl;
-      std::list<netlicensing::ValidationResult> vres = netlicensing::validate(ctx, license_number);
+      std::list<netlicensing::ValidationResult> vres = netlicensing::ValidationService::validate(ctx, license_number);
       std::cout << "got validation results: " << vres.size() << std::endl;
       for (auto val_res : vres) {
         std::cout << val_res.to_string() << std::endl;

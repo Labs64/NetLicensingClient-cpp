@@ -19,9 +19,9 @@ BOOST_AUTO_TEST_CASE(test_plain_validation_result) {
   Mapper<ValidationResult>  vr;
   traverse(vr, answer);
   BOOST_REQUIRE_EQUAL(1u, vr.items.size());
-  BOOST_CHECK_EQUAL(2u, vr.items.back().properties_.size());
+  BOOST_CHECK_EQUAL(2u, vr.items.back().getProperties().size());
   BOOST_CHECK_EQUAL(0, vr.level_);
-  BOOST_CHECK_EQUAL("MAAV03-DEMO", vr.items.back().product_module_number_);
+  BOOST_CHECK_EQUAL("MAAV03-DEMO", vr.items.back().getProductModuleNumber());
 }
 
 BOOST_AUTO_TEST_CASE(test_recursive_validation_result) {
@@ -31,10 +31,10 @@ BOOST_AUTO_TEST_CASE(test_recursive_validation_result) {
   Mapper<ValidationResult>  vr;
   traverse(vr, answer);
   BOOST_REQUIRE_EQUAL(1u, vr.items.size());
-  BOOST_CHECK_EQUAL(2u, vr.items.back().properties_.size());
-  BOOST_CHECK_EQUAL(2u, vr.items.back().properties_.front()->nested_lists_.size());
+  BOOST_CHECK_EQUAL(2u, vr.items.back().getProperties().size());
+  BOOST_CHECK_EQUAL(2u, vr.items.back().getProperties().front()->nested_lists_.size());
   BOOST_CHECK_EQUAL(0, vr.level_);
-  BOOST_CHECK_EQUAL("MAAV03-DEMO", vr.items.back().product_module_number_);
+  BOOST_CHECK_EQUAL("MAAV03-DEMO", vr.items.back().getProductModuleNumber());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

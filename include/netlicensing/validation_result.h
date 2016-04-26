@@ -24,15 +24,23 @@ struct ValidationProperty : public RecursiveList<ValidationProperty> {
 * main validation result
 */
 struct ValidationResult {
+ public:
+   typedef ValidationProperty PropertyType;
+ private:
   std::string product_module_number_;
   std::string product_module_name_;
   std::string licensing_model_;
 
-  typedef ValidationProperty PropertyType;
   std::list<std::shared_ptr<ValidationProperty> > properties_;
+ public:
   void add_property(const std::string& name, const std::string& value);
   void add_list(std::shared_ptr<PropertyType> ptr);
   std::string to_string() const;
+
+  std::string getProductModuleNumber() const { return product_module_number_; }
+  std::string getProductModuleName() const { return product_module_name_; }
+  std::string getLicensingModel() const { return licensing_model_; }
+  std::list<std::shared_ptr<ValidationProperty> > getProperties() const { return properties_; }
 };
 
 }

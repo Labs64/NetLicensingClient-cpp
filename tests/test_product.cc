@@ -19,11 +19,11 @@ BOOST_AUTO_TEST_CASE(test_product_with_discount) {
   Mapper<Product> prod;
   traverse(prod, answer);
   BOOST_REQUIRE_EQUAL(1u, prod.items.size());
-  BOOST_REQUIRE_EQUAL(1u, prod.items.back().discounts_.size());
-  BOOST_CHECK_EQUAL("discount", prod.items.back().discounts_.back()->name_);
+  BOOST_REQUIRE_EQUAL(1u, prod.items.back().getDiscounts().size());
+  BOOST_CHECK_EQUAL("discount", prod.items.back().getDiscounts().back()->name_);
 
-  BOOST_CHECK_EQUAL("101", prod.items.front().number_);
-  BOOST_CHECK_EQUAL("QTPro", prod.items.front().name_);
+  BOOST_CHECK_EQUAL("101", prod.items.front().getNumber());
+  BOOST_CHECK_EQUAL("QTPro", prod.items.front().getName());
 }
 
 BOOST_AUTO_TEST_CASE(test_product_list) {
