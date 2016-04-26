@@ -40,6 +40,8 @@ class RestException : public std::runtime_error {
  public:
   RestException(const std::list<Info>& details, int code) : 
     std::runtime_error("REST error"), code_(code), details_(details) {}
+ 
+  virtual ~RestException() throw() {}
 
   int http_code() const {
     return code_;

@@ -17,7 +17,7 @@ void traverse_elements(Observer& observer, const Json::Value& root, const std::s
 
   // extract properties from current item
   Json::Value prop = root["property"];
-  for (Json::ValueConstIterator itr = prop.begin(); itr != prop.end(); ++itr) {
+  for (Json::ValueIterator itr = prop.begin(); itr != prop.end(); ++itr) {
     observer.add_property(((*itr)["name"]).asString(), ((*itr)["value"]).asString());
   }
 
@@ -45,12 +45,12 @@ void traverse(Observer& observer, const std::string& source) {
     Json::Value info = root["infos"];
     if (!info.isNull() && info.isObject()) {
       Json::Value info_element = info["info"];
-      for (Json::ValueConstIterator itr = info_element.begin(); itr != info_element.end(); ++itr) {
+      for (Json::ValueIterator itr = info_element.begin(); itr != info_element.end(); ++itr) {
         observer.begin_info();
         std::vector<std::string> v = itr->getMemberNames();
         for (std::vector<std::string>::const_iterator nm = v.begin(); nm != v.end(); ++nm) {
           observer.add_info_property(*nm, ((*itr)[*nm]).asString());
-        }        
+        }
       }
     }
 

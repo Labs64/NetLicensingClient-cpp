@@ -1,0 +1,3 @@
+language: cpp
+before_script: mkdir build
+script: cd build && cmake .. && make
