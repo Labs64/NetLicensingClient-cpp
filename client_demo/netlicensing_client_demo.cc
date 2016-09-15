@@ -6,9 +6,9 @@
 
 int main(int argc, char* argv[]) {
   using netlicensing::Product;
-  std::string license_number = "I2C3VN7NA-DEMO";
+  std::string licensee_number = "I2C3VN7NA-DEMO";
   if (argc > 1) {
-    license_number = argv[1];
+    licensee_number = argv[1];
   }
 
   std::mt19937 gen;
@@ -45,9 +45,9 @@ int main(int argc, char* argv[]) {
     products = netlicensing::ProductService::list(ctx, "");
     std::cout << "after delete products count " << products.size() << std::endl;
     
-    if (!license_number.empty()) {
-      std::cout << "start validation for " << license_number << std::endl;
-      std::list<netlicensing::ValidationResult> vres = netlicensing::ValidationService::validate(ctx, license_number);
+    if (!licensee_number.empty()) {
+      std::cout << "start validation for " << licensee_number << std::endl;
+      std::list<netlicensing::ValidationResult> vres = netlicensing::ValidationService::validate(ctx, licensee_number);
       std::cout << "got validation results: " << vres.size() << std::endl;
       for (auto val_res : vres) {
         std::cout << val_res.to_string() << std::endl;
