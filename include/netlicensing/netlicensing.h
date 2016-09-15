@@ -10,7 +10,7 @@ namespace netlicensing {
 
 class ValidationService {
  public:
-  static std::list<ValidationResult> validate(Context& ctx, const std::string& licenseNumber, 
+  static std::list<ValidationResult> validate(Context& ctx, const std::string& licenseeNumber, 
     const std::string& productNumber = std::string(),
     const std::string& licenseeName = std::string());
 };
