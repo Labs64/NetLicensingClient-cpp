@@ -3,10 +3,10 @@
 namespace netlicensing {
 
   std::list<ValidationResult> ValidationService::validate(Context& ctx, 
-    const std::string& licensseNumber,
+    const std::string& licenseeNumber,
     const std::string& productNumber/* = std::string()*/,
     const std::string& licenseeName/* = std::string()*/) {
-      std::string endpoint = "licensee/" + escape_string(licensseNumber) + "/validate";
+      std::string endpoint = "licensee/" + escape_string(licenseeNumber) + "/validate";
       parameters_type params;
       if (!productNumber.empty()) params.push_back(std::make_pair("productNumber", escape_string(productNumber)));
       if (!licenseeName.empty()) params.push_back(std::make_pair("licenseeName", escape_string(licenseeName)));
