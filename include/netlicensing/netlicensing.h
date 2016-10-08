@@ -6,19 +6,12 @@
 #include "netlicensing/product.h"
 #include "netlicensing/licensee.h"
 #include "netlicensing/exception.h"
+#include "netlicensing/validation_result.h"
 
 namespace netlicensing {
 
-class ValidationService {
- public:
-  static std::list<ValidationResult> validate(Context& ctx, const std::string& licenseeNumber, 
-    const std::string& productNumber = std::string(),
-    const std::string& licenseeName = std::string(),
-	const parameters_type additionalAttributes = parameters_type());
-};
-
 class ProductService {
-public:
+ public:
   static Product create(Context& ctx, const Product&);
   static Product update(Context& ctx, const std::string& productNumber, const Product&);
   static void del(Context& ctx, const std::string& productNumber, bool forceCascade);
@@ -26,11 +19,15 @@ public:
 };
 
 class LicenseeService {
-public:
-	static Licensee create(Context& ctx, const Licensee&);
-	static Licensee update(Context& ctx, const std::string& licenseeNumber, const Licensee&);
-	static void del(Context& ctx, const std::string& licenseeNumber, bool forceCascade);
-	static std::list<Licensee> list(Context& ctx, const std::string& filter);
+ public:
+  static Licensee create(Context& ctx, const Licensee&);
+  static Licensee update(Context& ctx, const std::string& licenseeNumber, const Licensee&);
+  static void del(Context& ctx, const std::string& licenseeNumber, bool forceCascade);
+  static std::list<Licensee> list(Context& ctx, const std::string& filter);
+  static ValidationResult validate(Context& ctx, const std::string& licenseeNumber, 
+    const std::string& productNumber = std::string(),
+    const std::string& licenseeName = std::string(),
+    const parameters_type& validationParameters = parameters_type());
 };
 
 

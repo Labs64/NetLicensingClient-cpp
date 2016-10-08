@@ -1,6 +1,7 @@
 #ifndef __EXCEPTION_H__
 #define __EXCEPTION_H__
 
+#include <list>
 #include <stdexcept>
 #include "netlicensing/info.h"
 
@@ -57,6 +58,6 @@ class MalformedArgumentsException : public std::runtime_error {
    MalformedArgumentsException(const std::string& msg) : std::runtime_error(msg) {}
 };
 
-};
+}  // namespace netlicensing
 
-#endif //__EXCEPTION_H__
+#endif  // __EXCEPTION_H__

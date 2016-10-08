@@ -1,7 +1,7 @@
 #ifndef __CONTEXT_H__
 #define __CONTEXT_H__
 
-#include "netlicensing/constants.h"
+#include "netlicensing/converters.h"
 
 namespace netlicensing {
 

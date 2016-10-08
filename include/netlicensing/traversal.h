@@ -4,73 +4,59 @@
 #include <json/json.h>
 #include <string>
 
+#include "netlicensing/mapper.h"
+
 namespace netlicensing {
 
-template<class Observer>
-void traverse_elements(Observer& observer, const Json::Value& root, const std::string& name) {
-  assert(!root.isNull());
-  Json::Value name_value = root["name"];
-  Json::Value type_value = root["type"];
-  assert(!name_value.isNull() || !type_value.isNull());
-
-  observer.begin_element(name, name_value.isNull()?std::make_pair("type", type_value.asString()):std::make_pair("name", name_value.asString()));
-
-  // extract properties from current item
-  Json::Value prop = root["property"];
-  for (Json::ValueIterator itr = prop.begin(); itr != prop.end(); ++itr) {
-    observer.add_property(((*itr)["name"]).asString(), ((*itr)["value"]).asString());
-  }
-
-  // unwind list in recursive manner
-  Json::Value lists = root["list"];
-  if (!lists.isNull()) {
-    for (Json::ArrayIndex list_index = 0; list_index != lists.size(); ++list_index) {
-      traverse_elements(observer, lists[list_index], "list");
+  inline void traverse_elements(ItemWrapper::Ptr_t& currentItem, const Json::ValueIterator& item) {
+    if (!currentItem) {  // skip level if no container was provided
+      return;
+    }
+    // extract properties from current item
+    const Json::Value& props = (*item)["property"];
+    for (Json::ValueIterator prop = props.begin(); prop != props.end(); ++prop) {
+      currentItem->addProperty((*prop)["name"].asString(), (*prop)["value"].asString());
+    }
+    // unwind lists recursively
+    const Json::Value& list = (*item)["list"];
+    if (!list.isNull()) {
+      for (Json::ValueIterator entry = list.begin(); entry != list.end(); ++entry) {
+        ItemWrapper::Ptr_t nestedItem = currentItem->createNested();
+        traverse_elements(nestedItem, entry);
+        currentItem->addNested((*entry)["name"].asString(), nestedItem);
+      }
     }
   }
 
-  observer.end_element();
-}
+  /**
+  *  experemental traverser over json in predefined format
+  */
+  template<typename T>
+  inline void traverse(T& mapper, const std::string& source) {
+    Json::Value root;
+    Json::Reader reader;
+    bool parsingSuccessful = reader.parse(source.c_str(), root);
+    if (parsingSuccessful) {
+      // parse info stucture
+      const Json::Value& infos = root["infos"]["info"];
+      if (!infos.isNull()) {
+        for (Json::ValueIterator info = infos.begin(); info != infos.end(); ++info) {
+          mapper.addInfo((*info)["id"].asString(), (*info)["type"].asString(), (*info)["value"].asString());
+        }
+      }
 
-/**
-*  experemental traverser over json in predefined format
-*/
-template<class Observer>
-void traverse(Observer& observer, const std::string& source) {
-  Json::Value root;
-  Json::Reader reader;
-  bool parsingSuccessful = reader.parse(source.c_str(), root);
-  if (parsingSuccessful) {
-    // parse info stucture
-    Json::Value info = root["infos"];
-    if (!info.isNull() && info.isObject()) {
-      Json::Value info_element = info["info"];
-      for (Json::ValueIterator itr = info_element.begin(); itr != info_element.end(); ++itr) {
-        observer.begin_info();
-        std::vector<std::string> v = itr->getMemberNames();
-        for (std::vector<std::string>::const_iterator nm = v.begin(); nm != v.end(); ++nm) {
-          observer.add_info_property(*nm, ((*itr)[*nm]).asString());
+      // get top level element of structure
+      const Json::Value& items = root["items"]["item"];
+      if (!items.isNull()) {
+        for (Json::ValueIterator item = items.begin(); item != items.end(); ++item) {
+          ItemWrapper::Ptr_t resultItem = mapper.createItem((*item)["type"].asString());
+          traverse_elements(resultItem, item);
+          mapper.addItem(resultItem);
         }
       }
     }
-
-    // get top level element of structure
-    Json::Value item = root[observer.root_name()];
-
-    if (!item.isNull() && item.isObject()) {
-      // TODO(a-pavlov) use something better here
-      std::string staff_name = observer.root_name().substr(0, observer.root_name().length() - 1);
-      Json::Value staff = item[staff_name];
-      Json::ArrayIndex items_count = staff.size();
-      // traverse over top level array
-      for (Json::ArrayIndex i = 0; i != items_count; ++i) {
-        traverse_elements(observer, staff[i], staff_name);
-      }
-    }
   }
-}
 
-}
+}  // namespace netlicensing
 
-
-#endif //__TRAVERSAL_H__
+#endif  // __TRAVERSAL_H__

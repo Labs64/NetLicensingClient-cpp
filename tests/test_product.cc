@@ -16,24 +16,23 @@ BOOST_AUTO_TEST_CASE(test_product_with_discount) {
   using namespace netlicensing;
   std::string answer = read_whole_file("product.json");
   BOOST_REQUIRE(!answer.empty());
-  Mapper<Product> prod;
+  StandardMapper<Product> prod;
   traverse(prod, answer);
-  BOOST_REQUIRE_EQUAL(1u, prod.items.size());
-  BOOST_REQUIRE_EQUAL(1u, prod.items.back().getDiscounts().size());
-  BOOST_CHECK_EQUAL("discount", prod.items.back().getDiscounts().back()->name_);
-
-  BOOST_CHECK_EQUAL("101", prod.items.front().getNumber());
-  BOOST_CHECK_EQUAL("QTPro", prod.items.front().getName());
+  BOOST_REQUIRE_EQUAL(1u, prod.getItems().size());
+  BOOST_REQUIRE_EQUAL(1u, prod.getItems().back().getDiscounts().size());
+  BOOST_CHECK_EQUAL("10.00", prod.getItems().back().getDiscounts().back().getTotalPrice().toString());
+  BOOST_CHECK_EQUAL("101", prod.getItems().front().getNumber().toString());
+  BOOST_CHECK_EQUAL("QTPro", prod.getItems().front().getName().toString());
 }
 
 BOOST_AUTO_TEST_CASE(test_product_list) {
   using namespace netlicensing;
   std::string answer = read_whole_file("product_list.json");
   BOOST_REQUIRE(!answer.empty());
-  Mapper<Product> prod;
+  StandardMapper<Product> prod;
   traverse(prod, answer);
-  BOOST_CHECK(!prod.items.empty());
-  BOOST_CHECK(prod.items.size() > 1u);
+  BOOST_CHECK(!prod.getItems().empty());
+  BOOST_CHECK(prod.getItems().size() > 1u);
 }
 
 
