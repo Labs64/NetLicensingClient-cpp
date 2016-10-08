@@ -2,30 +2,26 @@
 #define __SERVICE_HPP__
 
 #include "netlicensing/context.h"
-#include "netlicensing/validation_result.h"
 #include "netlicensing/mapper.h"
 #include "netlicensing/traversal.h"
-#include "netlicensing/exception.h"
 
 namespace netlicensing {
 
-template<class T>
-std::string endpoint();
+template<class T> std::string endpoint();
+template<> inline std::string endpoint<Product>() { return std::string("product"); }
+template<> inline std::string endpoint<Licensee>() { return std::string("licensee"); }
 
-template<class T>
-T get(Context& ctx, const std::string& number) {
+template<typename M, typename T>
+void get(Context& ctx, M& mapper, const std::string& number) {
   long http_code;
   std::string res = ctx.get(endpoint<T>() + "/" + escape_string(number), parameters_type(), http_code);
-  Mapper<T> mp;
-  traverse(mp, res);
+  traverse(mapper, res);
   if (http_code != 200) {
-    throw RestException(mp.info_, http_code);
+    throw RestException(mapper.getInfos(), http_code);
   }
-
-  return mp.info_.front();
 };
 
-template<class T>
+template<typename T>
 void del(Context& ctx, const std::string& number, bool force_cascade) {
   parameters_type params;
   if (force_cascade) {
@@ -39,49 +35,42 @@ void del(Context& ctx, const std::string& number, bool force_cascade) {
   }
 };
 
-template<class T>
-T update_create(Context& ctx, const std::string& number, const T& value) {
+template<typename M, typename T>
+void update_create(Context& ctx, M& mapper, const std::string& number, const T& value) {
   long http_code;
   std::string ep = endpoint<T>() + (number.empty()?"":("/" + escape_string(number)));
-  std::string res = ctx.post(ep, value.to_parameters_list(), http_code);
-  Mapper<T> mp;
-  traverse(mp, res);
-  
+  std::string res = ctx.post(ep, toParametersList(value), http_code);
+  traverse(mapper, res);
   if (http_code != 200) {
-    throw RestException(mp.info_, http_code);
+    throw RestException(mapper.getInfos(), http_code);
   }
-
-  return mp.items.front();
 };
 
-template<class T>
-T update(Context& ctx, const std::string& number, const T& value) {
-  return update_create(ctx, number, value);
+template<typename M, typename T>
+void update(Context& ctx, M& mapper, const std::string& number, const T& value) {
+  return update_create(ctx, mapper, number, value);
 }
 
-template<class T>
-T create(Context& ctx, const T& value) {
-  return update_create(ctx, std::string(), value);
+template<typename M, typename T>
+void create(Context& ctx, M& mapper, const T& value) {
+  return update_create(ctx, mapper, std::string(), value);
 }
 
-template<class T>
-std::list<T> list(Context& ctx, const std::string& filter) {
+template<typename M>
+void list(Context& ctx, M& mapper, const std::string& filter) {
   parameters_type params;
   if (!filter.empty()) {
     params.push_back(std::make_pair(FILTER, escape_string(filter)));
   }
 
   long http_code;
-  std::string res = ctx.get(endpoint<T>(), params, http_code);
-  Mapper<T> mp;
-  traverse(mp, res);
+  std::string res = ctx.get(endpoint<typename M::Item_t>(), params, http_code);
+  traverse(mapper, res);
   
   // TODO(a-pavlov) fix code checking
   if (http_code != 200) {
-    throw RestException(mp.info_, http_code);
+    throw RestException(mapper.getInfos(), http_code);
   }
-
-  return mp.items;
 }
 
 };

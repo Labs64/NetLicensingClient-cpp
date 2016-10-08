@@ -1,44 +1,15 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include "netlicensing/constants.h"
 #include <map>
-#include <memory>
-#include <stdexcept>
 #include <sstream>
-#include <cassert>
+#include <string>
+
+#include "netlicensing/datatypes.h"
 
 namespace netlicensing {
 
-struct NamedList {
-  std::string name_;
-
-  bool add_property(const std::string& name, const std::string& value) {
-    if (name == "name") {
-      name_ = value;
-      return true;
-    }
-
-    return false;
-  }
-};
-
-template<class T>
-struct RecursiveList : public NamedList {
-  std::list<std::shared_ptr<RecursiveList<T> > >  nested_lists_;
-
-  void add_list(std::shared_ptr<RecursiveList<T> > ptr) {
-    nested_lists_.push_back(ptr);
-  }
-};
-
-template<class T>
-struct FlatList : public NamedList {
-  void add_list(std::shared_ptr<FlatList<T> > ptr) {
-    throw std::logic_error("Flat list is not support nested levels");
-  }
-};
-
+/*
 template<typename S, typename T>
 void lexical_cast(T& t, const S& s) {
   std::stringstream stream;
@@ -60,17 +31,67 @@ inline void assign(bool& target, const std::string& source) {
 inline void assign(int& target, const std::string& source) {
   lexical_cast(target, source);
 }
+*/
 
-class Entity {
+class BaseEntity {
 private:
-  typedef std::map<std::string, std::string> user_properties_map;
-  user_properties_map user_defined_properties_;
+  String_t number_i;
+  Boolean_t active_i;
+  std::map<std::string, String_t> properties_i;
+
 public:
-  bool add_property(const std::string& key, const std::string& value);
-  std::string get_property(const std::string& key) const;
-  std::string to_string() const;
-  parameters_type to_parameters_list() const;
+  void setNumber(const String_t& number) {
+    number_i = number;
+  }
+
+  const String_t& getNumber() const {
+    return number_i;
+  }
+  
+  void setActive(Boolean_t active) {
+    active_i = active;
+  }
+
+  Boolean_t getActive() const {
+    return active_i;
+  }
+
+  // Methods for working with custom properties
+
+  const std::map<std::string, String_t>& getProperties() const {
+    return properties_i;
+  }
+
+  void addProperty(const std::string& property, String_t value) {
+    properties_i[property] = value;
+  }
+
+  void removeProperty(const std::string& property) {
+    properties_i.erase(property);
+  }
 };
+
+/*
+class BaseEntityConverter {
+  BaseEntity& baseEntity_i;
+public:
+  BaseEntityConverter(BaseEntity& baseEntity) : baseEntity_i(baseEntity) {}
+  bool convert(const std::string& property, const std::string value) {
+    if (property == "number") {
+      baseEntity_i.setNumber(value);
+      return true;
+    } else if (property == "active") {
+      baseEntity_i.setActive(value == "true");
+      return true;
+    }
+    return false;
+  }
+};
+
+template<typename E>
+class EntityConverter : public BaseEntityConverter {
+};
+*/
 
 }
 

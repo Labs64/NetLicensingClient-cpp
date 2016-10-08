@@ -8,11 +8,11 @@
       {
         "property": [
           {
-            "value": "MAAV03-DEMO",
+            "value": "M5-DEMO",
             "name": "productModuleNumber"
           },
           {
-            "value": "Module licensed under MultiFeature LM",
+            "value": "Module licensed under Multi-Feature licensing model",
             "name": "productModuleName"
           },
           {
@@ -24,59 +24,30 @@
           {
             "property": [
               {
-                "value": "true",
+                "value": "false",
                 "name": "valid"
               },
               {
-                "value": "Feature item 1",
-                "name": "featureName"
-              }
-            ],
-			"list": [
-			  {
-				"property": [
-				  {
-					"value": "true",
-					"name": "valid"
-				  },
-				  {
-					"value": "Feature item 1",
-					"name": "featureName"
-				  }
-				],
-				"list": null,
-				"name": "EAAV0301-DEMO"
-			  },
-			  {
-				"property": [
-				  {
-					"value": "true",
-					"name": "valid"
-				  },
-				  {
-					"value": "Feature item 2",
-					"name": "featureName"
-				  }
-				],
-				"list": null,
-				"name": "EAAV0302-DEMO"
-			  }
-			],			
-            "name": "EAAV0301-DEMO"
-          },
-          {
-            "property": [
-              {
-                "value": "true",
-                "name": "valid"
-              },
-              {
-                "value": "Feature item 2",
+                "value": "Feature 2",
                 "name": "featureName"
               }
             ],
             "list": null,
-            "name": "EAAV0302-DEMO"
+            "name": "E502-DEMO"
+          },
+          {
+            "property": [
+              {
+                "value": "false",
+                "name": "valid"
+              },
+              {
+                "value": "Feature 1",
+                "name": "featureName"
+              }
+            ],
+            "list": null,
+            "name": "E501-DEMO"
           }
         ],
         "type": "ProductModuleValidation"
@@ -89,5 +60,5 @@
     "hasnext": null
   },
   "id": null,
-  "ttl": 1461320908648
+  "ttl": 1475010680342
 }

@@ -10,6 +10,9 @@ namespace netlicensing {
     static const char* NUMBER  = "number";
     static const char* NAME    = "name";
     static const char* VERSION = "version";
+    static const char* LICENSEE_AUTOCREATE = "licenseeAutoCreate";
+    static const char* DESCRIPTION = "description";
+    static const char* LICENSING_INFO = "licensingInfo";
     static const char* DELETED = "deleted";
     static const char* CASCADE = "forceCascade";
     static const char* PRICE   = "price";
@@ -23,8 +26,6 @@ namespace netlicensing {
     static const char* SECURITY_MODE = "securityMode";
     static const char* PROP_ID     = "ID";
     static const char* PROP_TTL    = "TTL";
-
-    typedef std::list<std::pair<std::string, std::string> > parameters_type;
 }
 
 #endif //__CONSTANTS_H__

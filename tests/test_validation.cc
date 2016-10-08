@@ -16,25 +16,25 @@ BOOST_AUTO_TEST_CASE(test_plain_validation_result) {
   using namespace netlicensing;
   std::string answer = read_whole_file("licensee_validation_result_plain.json");
   BOOST_REQUIRE(!answer.empty());
-  Mapper<ValidationResult>  vr;
-  traverse(vr, answer);
-  BOOST_REQUIRE_EQUAL(1u, vr.items.size());
-  BOOST_CHECK_EQUAL(2u, vr.items.back().getProperties().size());
-  BOOST_CHECK_EQUAL(0, vr.level_);
-  BOOST_CHECK_EQUAL("MAAV03-DEMO", vr.items.back().getProductModuleNumber());
+  ValidationResult vr;
+  ValidationResultMapper mvr(vr);
+  traverse(mvr, answer);
+  BOOST_REQUIRE_EQUAL(2u, vr.getValidations().size());
+  //BOOST_CHECK_EQUAL(2u, vr.getProperties().size());
+  BOOST_CHECK_EQUAL("MM3M9XN63", *vr.getValidations().begin()->second.get("productModuleNumber"));
 }
 
 BOOST_AUTO_TEST_CASE(test_recursive_validation_result) {
   using namespace netlicensing;
   std::string answer = read_whole_file("licensee_validation_result_recursive.json");
   BOOST_REQUIRE(!answer.empty());
-  Mapper<ValidationResult>  vr;
-  traverse(vr, answer);
-  BOOST_REQUIRE_EQUAL(1u, vr.items.size());
-  BOOST_CHECK_EQUAL(2u, vr.items.back().getProperties().size());
-  BOOST_CHECK_EQUAL(2u, vr.items.back().getProperties().front()->nested_lists_.size());
-  BOOST_CHECK_EQUAL(0, vr.level_);
-  BOOST_CHECK_EQUAL("MAAV03-DEMO", vr.items.back().getProductModuleNumber());
+  ValidationResult vr;
+  ValidationResultMapper mvr(vr);
+  traverse(mvr, answer);
+  BOOST_REQUIRE_EQUAL(1u, vr.getValidations().size());
+  //BOOST_CHECK_EQUAL(2u, vr.getValidations().back().getProperties().size());
+  //BOOST_CHECK_EQUAL(2u, vr.getValidations().back().getProperties().front()->nested_lists_.size());
+  BOOST_CHECK_EQUAL("M5-DEMO", *vr.getValidations().begin()->second.get("productModuleNumber"));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -1,48 +1,80 @@
 #ifndef __VALIDATION_RESULT_H__
 #define __VALIDATION_RESULT_H__
 
-#include "netlicensing/entity.h"
-#include "netlicensing/info.h"
+#include <map>
+#include <memory>
+#include <string>
 
 namespace netlicensing {
 
 /**
-*   validation nested property- can be recursive
-*/
-struct ValidationProperty : public RecursiveList<ValidationProperty> {
-  Entity values;
-  void add_property(const std::string& name, const std::string& value) {
-    if (RecursiveList<ValidationProperty>::add_property(name, value)) return;
-    values.add_property(name, value);
+ *   validation nested property- can be recursive
+ */
+class Composition {
+  std::shared_ptr<std::string> value_i;
+  std::map<std::string, Composition> properties_i;
+
+public:
+  Composition() : value_i() { }
+  Composition(const std::string& value) : value_i(std::make_shared<std::string>(value)) { }
+  
+  std::shared_ptr<std::string> getValue() const { return value_i; }
+
+  const std::map<std::string, Composition>& getProperties() {
+    return properties_i;
   }
 
-  std::string to_string() const;
+  void put(const std::string& name, const std::string& value) {
+    properties_i.insert(std::make_pair(name, Composition(value)));
+  }
+
+  void put(const std::string& name, const Composition& value) {
+    properties_i.insert(std::make_pair(name, value));
+  }
+  
+  std::shared_ptr<std::string> get(const std::string& name) const {
+    auto prop = properties_i.find(name);
+    if (prop == properties_i.end()) {
+      return std::shared_ptr<std::string>();
+    }
+    return prop->second.getValue();
+  }
+
+  std::string toString() const;
 };
 
 
 /*
 * main validation result
 */
-struct ValidationResult {
- public:
-   typedef ValidationProperty PropertyType;
- private:
-  std::string product_module_number_;
-  std::string product_module_name_;
-  std::string licensing_model_;
+class ValidationResult {
+  std::map<std::string, Composition> validations_i;
 
-  std::list<std::shared_ptr<ValidationProperty> > properties_;
- public:
-  void add_property(const std::string& name, const std::string& value);
-  void add_list(std::shared_ptr<PropertyType> ptr);
-  std::string to_string() const;
+public:
+  ValidationResult() { }
+  
 
-  std::string getProductModuleNumber() const { return product_module_number_; }
-  std::string getProductModuleName() const { return product_module_name_; }
-  std::string getLicensingModel() const { return licensing_model_; }
-  std::list<std::shared_ptr<ValidationProperty> > getProperties() const { return properties_; }
+  const std::map<std::string, Composition>& getValidations() {
+    return validations_i;
+  }
+
+  const Composition& getProductModuleValidation(const std::string& productModuleNumber) {
+    static Composition empty;
+    auto validation = validations_i.find(productModuleNumber);
+    if (validation == validations_i.end()) {
+      return empty;
+    }
+    return validation->second;
+  }
+  
+  void setProductModuleValidation(const std::string& productModuleNumber,
+                                  const Composition& productModuleValidation) {
+    validations_i.insert(std::make_pair(productModuleNumber, productModuleValidation));
+  }
+
+  std::string toString() const;
 };
 
 }
 
-#endif //__VALIDATION_RESULT_H__
+#endif  // __VALIDATION_RESULT_H__

@@ -8,48 +8,53 @@
       {
         "property": [
           {
-            "value": "MAAV03-DEMO",
+            "value": "MOD-101",
             "name": "productModuleNumber"
           },
           {
-            "value": "Module licensed under MultiFeature LM",
+            "value": "true",
+            "name": "evaluation"
+          },
+          {
+            "value": "true",
+            "name": "valid"
+          },
+          {
+            "value": "QTPro ",
             "name": "productModuleName"
           },
           {
-            "value": "MultiFeature",
+            "value": "2016-10-05T10:36:44.642Z",
+            "name": "evaluationExpires"
+          },
+          {
+            "value": "TryAndBuy",
             "name": "licensingModel"
           }
         ],
-        "list": [
+        "list": null,
+        "type": "ProductModuleValidation"
+      },
+      {
+        "property": [
           {
-            "property": [
-              {
-                "value": "true",
-                "name": "valid"
-              },
-              {
-                "value": "Feature item 1",
-                "name": "featureName"
-              }
-            ],
-            "list": null,
-            "name": "EAAV0301-DEMO"
+            "value": "MM3M9XN63",
+            "name": "productModuleNumber"
           },
           {
-            "property": [
-              {
-                "value": "true",
-                "name": "valid"
-              },
-              {
-                "value": "Feature item 2",
-                "name": "featureName"
-              }
-            ],
-            "list": null,
-            "name": "EAAV0302-DEMO"
+            "value": "false",
+            "name": "valid"
+          },
+          {
+            "value": "test-floating-cm",
+            "name": "productModuleName"
+          },
+          {
+            "value": "Subscription",
+            "name": "licensingModel"
           }
         ],
+        "list": null,
         "type": "ProductModuleValidation"
       }
     ],
@@ -60,5 +65,5 @@
     "hasnext": null
   },
   "id": null,
-  "ttl": 1461320908648
+  "ttl": 1475044960966
 }

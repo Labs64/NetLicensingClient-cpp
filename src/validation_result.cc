@@ -1,35 +1,49 @@
 #include "netlicensing/validation_result.h"
 #include <sstream>
+#include <iostream>
 
 namespace netlicensing {
 
-std::string ValidationProperty::to_string() const {
+std::string Composition::toString() const {
   std::stringstream ss;
-  ss << "ProductModule <" << name_ << "\n";
-  ss << values.to_string();
-  //for (auto nested : nested_lists_) {
-  //  ss << nested->nested_lists_.;
-  //}
-  ss << ">\n";
+  if (!value_i) {
+    ss << "{";
+    if (properties_i.empty()) {
+      ss << "<null>";
+    } else {
+      bool first = true;
+      for (auto prop : properties_i) {
+        if (first) {
+          first = false;
+        } else {
+          ss << ", ";
+        }
+        ss << prop.first << "=" << prop.second.toString();
+      }
+    }
+    ss << "}";
+  } else {
+    ss << *value_i;
+  }
   return ss.str();
 }
 
-void ValidationResult::add_property(const std::string& name, const std::string& value) {
-  if (name == "productModuleNumber") product_module_number_ = value;
-  else if (name == "productModuleName") product_module_name_ = value;
-  else if (name == "licensingModel") licensing_model_ = value;
-}
-
-void ValidationResult::add_list(std::shared_ptr<PropertyType> ptr) {
-  properties_.push_back(ptr);
-}
-
-std::string ValidationResult::to_string() const {
+std::string ValidationResult::toString() const {
   std::stringstream ss;
-  for (auto vp : properties_) {
-    ss << vp->to_string();
+  ss << "ValidationResult [";
+  bool first = true;
+  for (auto validationEntry : validations_i) {
+    if (first) {
+      first = false;
+    } else {
+      ss << ", ";
+    }
+    ss << "ProductModule<";
+    ss << validationEntry.first;
+    ss << ">";
+    ss << validationEntry.second.toString();
   }
-
+  ss << "]";
   return ss.str();
 }
 

@@ -5,13 +5,30 @@
 
 namespace netlicensing {
 
-struct Info {
-  std::string value_;
-  std::string id_;
-  std::string type_;
+class Info {
+  std::string id_i;
+  std::string type_i;
+  std::string value_i;
+  
+public:
+  Info(const std::string& id, const std::string& type, const std::string& value)
+    : id_i(id), type_i(type), value_i(value) { }
 
-  void add_property(const std::string& name, const std::string& value);
-  std::string to_string() const;
+  const std::string& getId() const {
+    return id_i;
+  }
+
+  const std::string& getType() const {
+    return type_i;
+  }
+
+  const std::string& getValue() const {
+    return value_i;
+  }
+
+  std::string to_string() const {
+    return id_i + "[" + type_i + "]: " + value_i;
+  }
 };
 
 }
