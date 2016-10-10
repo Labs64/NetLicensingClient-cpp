@@ -22,7 +22,7 @@ namespace netlicensing {
     }
     return params;
   }
-  
+
   template<>
   inline parameters_type toParametersList<Product>(Product value) {
     parameters_type params = toParametersList<BaseEntity>(value);
@@ -37,14 +37,14 @@ namespace netlicensing {
       // ...
     }
     */
-    return params;    
+    return params;
   }
 
   template<>
   inline parameters_type toParametersList<Licensee>(Licensee value) {
     parameters_type params = toParametersList<BaseEntity>(value);
     params.push_back(std::make_pair(NAME, value.getName()));
-    return params;    
+    return params;
   }
 
 }  // namespace netlicensing

@@ -41,7 +41,7 @@ namespace netlicensing {
         // TODO(2K): too primitive parsing - improve
         std::string rawValue = value;
         rawValue.erase(value.length() - 3, 1);
-        auto is = std::istringstream(rawValue);
+        std::istringstream is(rawValue);
         is >> value_i;
       } else {
         throw MalformedArgumentsException("Not supported formatting for fixed point value");
