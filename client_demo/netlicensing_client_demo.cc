@@ -3,11 +3,12 @@
 #include <ctime> 
 #include <sstream>
 #include "netlicensing/netlicensing.h"
+#include "netlicensing/constants.h"
 
 int main(int argc, char* argv[]) {
   using namespace netlicensing;
-  
-  std::string licensee_number = "I5-DEMO";
+
+  std::string licensee_number = "IR2Q7A5P3";
   if (argc > 1) {
     licensee_number = argv[1];
   }
