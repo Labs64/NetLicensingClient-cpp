@@ -4,6 +4,7 @@
 #include <sstream>
 #include "netlicensing/netlicensing.h"
 #include "netlicensing/constants.h"
+#include "netlicensing/validation_parameters.h"
 
 int main(int argc, char* argv[]) {
   using namespace netlicensing;
@@ -48,7 +49,8 @@ int main(int argc, char* argv[]) {
     
     if (!licensee_number.empty()) {
       std::cout << "start validation for " << licensee_number << std::endl;
-      ValidationResult vres = LicenseeService::validate(ctx, licensee_number);
+	  ValidationParameters vParams = ValidationParameters();
+      ValidationResult vres = LicenseeService::validate(ctx, licensee_number, vParams);
       std::cout << "got validation results:\n" << vres.toString() << std::endl;
     }
   }
