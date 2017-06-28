@@ -191,7 +191,7 @@ namespace netlicensing {
 
 	/**
 	* Transfer licenses between licensees.:
-	* TODO(AY): Wiki Link
+	* https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services#LicenseeServices-Transferlicensee
 	*/
 	void LicenseeService::transfer(Context& ctx, const std::string& licenseeNumber, const std::string& sourceLicenseeNumber) {
 		std::string endpoint = "licensee/" + escape_string(licenseeNumber) + "/transfer";
