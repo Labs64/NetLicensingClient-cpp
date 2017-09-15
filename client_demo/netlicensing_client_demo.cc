@@ -18,14 +18,12 @@ int main(int argc, char* argv[]) {
 	gen.seed(time(0));
 	std::stringstream ss;
 
-	std::cout << "Hello, this is NetLicensing demo client\n";
+	std::cout << "Hello, this is Labs64 NetLicensing Client (C++) demo\n";
 
 	try {
 		Context ctx;
 		ctx.set_base_url("https://go.netlicensing.io/core/v2/rest/");
-		std::cout << "NetLicensing URL: https://go.netlicensing.io/core/v2/rest/" << std::endl;;
 		ctx.set_username("demo");
-		std::cout << "Account:demo" << std::endl;;
 		ctx.set_password("demo");
 
 		if (licensee_number.empty()) {
@@ -36,11 +34,13 @@ int main(int argc, char* argv[]) {
 
 			} while (licensee_number.empty());
 
-			std::cout << "start validation for " << licensee_number << std::endl;
+			std::cout << "Start validation for " << licensee_number << std::endl;
+			std::cout << " NetLicensing URL: https://go.netlicensing.io/core/v2/rest/" << std::endl;
+			std::cout << " NetLicensing Account: demo" << std::endl;
 			ValidationResult vres = LicenseeService::validate(ctx, licensee_number);
-			std::cout << "got validation results:\n" << vres.toString() << std::endl;
+			std::cout << "Got validation results:\n" << vres.toString() << std::endl;
 
-			std::cout << "Please press enter key for exit"  << std::endl;
+			std::cout << "\nPress any key to exit..."  << std::endl;
 			std::cin.ignore();
 		}
 	}
@@ -49,13 +49,13 @@ int main(int argc, char* argv[]) {
 		for (auto det : e.get_details()) {
 			std::cerr << det.to_string() << std::endl;
 		}
-		std::cout << "Please press enter key for exit"  << std::endl;
+		std::cout << "\nPress any key to exit..."  << std::endl;
 		std::cin.ignore();
 		return 2;
 	}
 	catch (const std::runtime_error& err) {
 		std::cerr << err.what() << std::endl;
-		std::cout << "Please press enter key for exit"  << std::endl;
+		std::cout << "\nPress any key to exit..."  << std::endl;
 		std::cin.ignore();
 		return 1;
 	}
