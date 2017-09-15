@@ -22,14 +22,17 @@ int main(int argc, char* argv[]) {
 
 	try {
 		Context ctx;
-		ctx.set_base_url("https://go.netlicensing.io/core/v2/rest/");
-		ctx.set_username("demo");
-		ctx.set_password("demo");
+		ctx.set_base_url("https://go.netlicensing.io/core/v2/rest/");  // NetLicensing base URL
+		ctx.set_username("demo");                                      // Vendor username at netlicensing.io
+		ctx.set_password("demo");                                      // Vendor password at netlicensing.io
 
 		if (licensee_number.empty()) {
 			do
 			{
-				std::cout << "Please enter a valid licensee number for validation (choose licensee in demo account): " << std::endl;
+				// Licensee is a holder of licenses. This can be an individual or organisation, but not necessarily the end-user.
+				// LicenseeNumber  - arbitrary sequence of printable ASCII characters that uniquely identify an licensee within NetLicensing
+				// e.g. Licensee number can be email ID, hardware tocken, IMEI number, etc.
+				std::cout << "Please enter a valid licensee number: " << std::endl;
 				std::getline(std::cin, licensee_number);
 
 			} while (licensee_number.empty());
