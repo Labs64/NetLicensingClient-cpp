@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
 		int i = 0;
 		for (ProductDiscount newpDiscount : newpDiscounts) {
 			std::string newpDiscountStr = newpDiscount.toString();
-			std::cout << "product disount #" << i << ":" << newpDiscountStr << std::endl;
+			std::cout << "product disount #" << i << ": " << newpDiscountStr << std::endl;
 			i++;
 		}
 
@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
 
 		std::list<ProductDiscount> newp2Discounts = newp2.getDiscounts();
 
-		std::cout << "product disounts size " << newp2Discounts.size() << std::endl;
+		std::cout << "product disounts size: " << newp2Discounts.size() << std::endl;
 		std::cin.ignore();
 		std::list<Product> products = ProductService::list(ctx, "");
 		std::cout << "before delete products count " << products.size() << std::endl;
