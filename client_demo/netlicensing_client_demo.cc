@@ -2,66 +2,69 @@
 #include <random>  
 #include <ctime> 
 #include <sstream>
-#include <string>
 #include "netlicensing/netlicensing.h"
 #include "netlicensing/constants.h"
+#include "netlicensing/validation_parameters.h"
 
 int main(int argc, char* argv[]) {
-	using namespace netlicensing;
+  using namespace netlicensing;
 
-	std::string licensee_number;
-	if (argc > 1) {
-		licensee_number = argv[1];
-	}
+  std::string licensee_number = "IR2Q7A5P3";
+  if (argc > 1) {
+    licensee_number = argv[1];
+  }
 
-	std::mt19937 gen;
-	gen.seed(time(0));
-	std::stringstream ss;
+  std::mt19937 gen;
+  gen.seed(time(0));
+  std::stringstream ss;
+  ss << "P" << gen();
+  std::string productNumber = ss.str();
 
-	std::cout << "Hello, this is Labs64 NetLicensing Client (C++) demo\n";
+  std::cout << "Hello, this is NetLicensing demo client\n";
+  std::cout << "Product endpoint " << endpoint<Product>() << std::endl;
+  std::cout << "Product test number " << productNumber << std::endl;
 
-	try {
-		Context ctx;
-		ctx.set_base_url("https://go.netlicensing.io/core/v2/rest/");  // NetLicensing base URL
-		ctx.set_username("demo");                                      // Vendor username at netlicensing.io
-		ctx.set_password("demo");                                      // Vendor password at netlicensing.io
+  try {
+    Context ctx;
+    ctx.set_base_url("https://go.netlicensing.io/core/v2/rest/");
+    ctx.set_username("demo");
+    ctx.set_password("demo");
 
-		if (licensee_number.empty()) {
-			do
-			{
-				// Licensee is a holder of licenses. This can be an individual or organisation, but not necessarily the end-user.
-				// LicenseeNumber  - arbitrary sequence of printable ASCII characters that uniquely identify an licensee within NetLicensing
-				// e.g. Licensee number can be email ID, hardware tocken, IMEI number, etc.
-				std::cout << "Please enter a valid licensee number: " << std::endl;
-				std::getline(std::cin, licensee_number);
+    // product section
+    Product p;
+    p.setName("Test name");
+    p.setNumber(productNumber);
+    Product newp = ProductService::create(ctx, p);
 
-			} while (licensee_number.empty());
+    newp.setName("Updated name");
+    Product newp2 = ProductService::update(ctx, newp.getNumber(), newp);
 
-			std::cout << "Start validation for " << licensee_number << std::endl;
-			std::cout << " NetLicensing URL: https://go.netlicensing.io/core/v2/rest/" << std::endl;
-			std::cout << " NetLicensing Account: demo" << std::endl;
-			ValidationResult vres = LicenseeService::validate(ctx, licensee_number);
-			std::cout << "Got validation results:\n" << vres.toString() << std::endl;
+    std::list<Product> products = ProductService::list(ctx, "");
+    std::cout << "before delete products count " << products.size() << std::endl;
 
-			std::cout << "\nPress any key to exit..."  << std::endl;
-			std::cin.ignore();
-		}
-	}
-	catch (const RestException& e) {
-		std::cerr << e.what() << " code " << e.http_code() << std::endl;
-		for (auto det : e.get_details()) {
-			std::cerr << det.to_string() << std::endl;
-		}
-		std::cout << "\nPress any key to exit..."  << std::endl;
-		std::cin.ignore();
-		return 2;
-	}
-	catch (const std::runtime_error& err) {
-		std::cerr << err.what() << std::endl;
-		std::cout << "\nPress any key to exit..."  << std::endl;
-		std::cin.ignore();
-		return 1;
-	}
+    ProductService::del(ctx, newp2.getNumber(), false);
 
-	return 0;
+    products = ProductService::list(ctx, "");
+    std::cout << "after delete products count " << products.size() << std::endl;
+    
+    if (!licensee_number.empty()) {
+      std::cout << "start validation for " << licensee_number << std::endl;
+	  ValidationParameters vParams = ValidationParameters();
+      ValidationResult vres = LicenseeService::validate(ctx, licensee_number, vParams);
+      std::cout << "got validation results:\n" << vres.toString() << std::endl;
+    }
+  }
+  catch (const RestException& e) {
+    std::cerr << e.what() << " code " << e.http_code() << std::endl;
+    for (auto det : e.get_details()) {
+      std::cerr << det.to_string() << std::endl;
+    }
+    return 2;
+  }
+  catch (const std::runtime_error& err) {
+    std::cerr << err.what() << std::endl;
+    return 1;
+  }
+
+  return 0;
 }

@@ -7,6 +7,16 @@
 #include "netlicensing/licensee.h"
 #include "netlicensing/exception.h"
 #include "netlicensing/validation_result.h"
+#include "netlicensing/validation_parameters.h"
+
+#ifdef __GNUC__
+  #define DEPRECATED(decl) decl __attribute__ ((deprecated))
+#elif defined(_MSC_VER)
+  #define DEPRECATED(decl) __declspec(deprecated) decl
+#else
+  #pragma message("WARNING: DEPRECATED declaration for this compiler is not defined")
+  #define DEPRECATED(decl) decl
+#endif
 
 namespace netlicensing {
 
@@ -24,10 +34,13 @@ class LicenseeService {
   static Licensee update(Context& ctx, const std::string& licenseeNumber, const Licensee&);
   static void del(Context& ctx, const std::string& licenseeNumber, bool forceCascade);
   static std::list<Licensee> list(Context& ctx, const std::string& filter);
-  static ValidationResult validate(Context& ctx, const std::string& licenseeNumber, 
+  DEPRECATED(static ValidationResult validate(Context& ctx, const std::string& licenseeNumber, 
     const std::string& productNumber = std::string(),
     const std::string& licenseeName = std::string(),
-    const parameters_type& validationParameters = parameters_type());
+    const parameters_type& validationParameters = parameters_type()));
+  static ValidationResult validate(Context& ctx, const std::string& licenseeNumber,
+    const ValidationParameters& validationParameters);
+  static void transfer(Context& ctx, const std::string& licenseeNumber, const std::string& sourceLicenseeNumber);
 };
 
 
