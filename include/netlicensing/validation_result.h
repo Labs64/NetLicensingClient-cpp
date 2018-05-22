@@ -49,6 +49,7 @@ public:
 */
 class ValidationResult {
   std::map<std::string, Composition> validations_i;
+  time_t ttl;
 
 public:
   ValidationResult() { }
@@ -56,6 +57,14 @@ public:
 
   const std::map<std::string, Composition>& getValidations() {
     return validations_i;
+  }
+
+  const time_t& getTtl() {
+    return ttl;
+  }
+
+  void setTtl(const time_t& resTtl) {
+    ttl = resTtl;
   }
 
   const Composition& getProductModuleValidation(const std::string& productModuleNumber) {

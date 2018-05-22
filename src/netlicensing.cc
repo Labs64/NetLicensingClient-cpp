@@ -166,6 +166,22 @@ namespace netlicensing {
 			ValidationResultMapper vrm(validationResult);
 			traverse(vrm, res);
 
+            //convert ttl in time_t
+			Json::Value root;
+			Json::Reader reader;
+			bool parsingSuccessful = reader.parse(res.c_str(), root);
+			if (parsingSuccessful) {
+				Json::FastWriter fastWriter;
+				std::string ttl = fastWriter.write(root["ttl"]);
+                const char *time_details = ttl.c_str();
+                
+                struct tm tm;
+                strptime(time_details, "%Y-%m-%d %H:%M:%S", &tm);
+                time_t rawtime = mktime(&tm);
+                
+				validationResult.setTtl(rawtime);
+			}
+
 			if (http_code != 200) {
 				throw RestException(vrm.getInfos(), http_code);
 			}
@@ -175,7 +191,7 @@ namespace netlicensing {
 
 	/**
 	* Transfer licenses between licensees.:
-	* TODO(AY): Wiki Link
+	* https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services#LicenseeServices-Transferlicensee
 	*/
 	void LicenseeService::transfer(Context& ctx, const std::string& licenseeNumber, const std::string& sourceLicenseeNumber) {
 		std::string endpoint = "licensee/" + escape_string(licenseeNumber) + "/transfer";
