@@ -159,7 +159,7 @@ namespace netlicensing {
       }
 
       // Add licensing model specific validation parameters
-      for(auto const &ent3 : validationParameters.getCustomParameter()) {
+      for(auto const &ent3 : validationParameters.getCustomParameters()) {
         params.push_back(std::make_pair(escape_string(ent3.first), escape_string(ent3.second)));
       }
 

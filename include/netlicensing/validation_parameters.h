@@ -71,7 +71,7 @@ namespace netlicensing {
       parameters_i[productModuleNumber][productModuleKey] = productModuleValue;
     }
 
-    const std::map<std::string, std::string>& getCustomParameter() const {
+    const std::map<std::string, std::string>& getCustomParameters() const {
       return customParameters_i;
     }
 
