@@ -175,13 +175,18 @@ namespace netlicensing {
       bool parsingSuccessful = reader.parse(res.c_str(), root);
       if (parsingSuccessful) {
         Json::FastWriter fastWriter;
+        //ttl returns with new line character ("\n") is appended at the end of the string and "\" at the begin of string.
         std::string ttl = fastWriter.write(root["ttl"]);
-                const char *time_details = ttl.c_str();
-                
-                struct tm tm;
-                strptime(time_details, "%Y-%m-%d %H:%M:%S", &tm);
-                time_t rawtime = mktime(&tm);
-                
+
+        struct tm tm = {0};
+        tm.tm_year = atoi(ttl.substr(1,4).c_str()) - 1900; /* years since 1900 */
+        tm.tm_mon = atoi(ttl.substr(6, 2).c_str()) - 1;
+        tm.tm_mday = atoi(ttl.substr(9, 2).c_str());
+        tm.tm_hour = atoi(ttl.substr(12, 2).c_str());
+        tm.tm_min = atoi(ttl.substr(15, 2).c_str());
+        tm.tm_sec = atoi(ttl.substr(18, 2).c_str());
+
+        time_t rawtime = mktime(&tm);
         validationResult.setTtl(rawtime);
       }
 
