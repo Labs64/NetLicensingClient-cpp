@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
     
     if (!licensee_number.empty()) {
       std::cout << "start validation for " << licensee_number << std::endl;
-	  ValidationParameters vParams = ValidationParameters();
+    ValidationParameters vParams = ValidationParameters();
       ValidationResult vres = LicenseeService::validate(ctx, licensee_number, vParams);
       std::cout << "got validation results:\n" << vres.toString() << std::endl;
     }
