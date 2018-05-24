@@ -1,6 +1,7 @@
 #include "netlicensing/netlicensing.h"
 #include "netlicensing/service.h"
 #include "netlicensing/validation_parameters.h"
+#include <ctype.h>
 
 namespace netlicensing {
   /**
@@ -94,34 +95,36 @@ namespace netlicensing {
   }
 
   /**
-  * Validates active licenses of the licensee. See NetLicensingAPI for details:
-  * https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services#LicenseeServices-Validatelicensee
-  */
+   * Validates active licenses of the licensee. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services#LicenseeServices-Validatelicensee
+   */
   ValidationResult LicenseeService::validate(Context& ctx,
     const std::string& licenseeNumber,
     const std::string& productNumber/* = std::string()*/,
     const std::string& licenseeName/* = std::string()*/,
     const parameters_type& validationParameters) {
+      std::string endpoint = "licensee/" + escape_string(licenseeNumber) + "/validate";
+      parameters_type params;
+      if (!productNumber.empty()) params.push_back(std::make_pair("productNumber", escape_string(productNumber)));
+      if (!licenseeName.empty()) params.push_back(std::make_pair("licenseeName", escape_string(licenseeName)));
 
-    ValidationParameters vParams = ValidationParameters();
-    if (!productNumber.empty()) {
-      vParams.setProductNumber(productNumber);
-    }
-    if (!licenseeName.empty()) {
-      vParams.setLicenseeName(licenseeName);
-    }
-
-    for (parameters_type::const_iterator paramIt = validationParameters.begin();
-         paramIt != validationParameters.end(); ++paramIt) {
-
-      if (escape_string(paramIt->first) == "licenseeSecret") {
-        vParams.setLicenseeSecret(escape_string(paramIt->second));
-      } else {
-        vParams.setCustomParameter(escape_string(paramIt->first), escape_string(paramIt->second));
+      // Add licensing model specific validation parameters
+      for (parameters_type::const_iterator paramIt = validationParameters.begin();
+           paramIt != validationParameters.end(); ++paramIt) {
+        params.push_back(std::make_pair(escape_string(paramIt->first), escape_string(paramIt->second)));
       }
-    }
 
-    return LicenseeService::validate(ctx, licenseeNumber, vParams);
+      long http_code;
+      std::string res = ctx.post(endpoint, params, http_code);
+      ValidationResult validationResult;
+      ValidationResultMapper vrm(validationResult);
+      traverse(vrm, res);
+
+      if (http_code != 200) {
+        throw RestException(vrm.getInfos(), http_code);
+      }
+
+      return validationResult;
   }
 
   /**
@@ -156,11 +159,6 @@ namespace netlicensing {
           params.push_back(std::make_pair(escape_string(inner_key) + std::to_string(paramIt), escape_string(inner_value)));
         }
         paramIt++;
-      }
-
-      // Add licensing model specific validation parameters
-      for(auto const &ent3 : validationParameters.getCustomParameters()) {
-        params.push_back(std::make_pair(escape_string(ent3.first), escape_string(ent3.second)));
       }
 
       long http_code;

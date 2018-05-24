@@ -16,7 +16,6 @@ namespace netlicensing {
     String_t licenseeName_i;
     String_t licenseeSecret_i;
     std::map<std::string, std::map<std::string, std::string>> parameters_i;
-    std::map<std::string, std::string> customParameters_i;
 
   public:
     /**
@@ -70,15 +69,6 @@ namespace netlicensing {
     void setProductModuleValidationParameters(const String_t& productModuleNumber, const String_t& productModuleKey, const String_t& productModuleValue) {
       parameters_i[productModuleNumber][productModuleKey] = productModuleValue;
     }
-
-    const std::map<std::string, std::string>& getCustomParameters() const {
-      return customParameters_i;
-    }
-
-    void setCustomParameter(const String_t& key, const String_t& value) {
-      customParameters_i[key] = value;
-    }
-
   };
 }
 
