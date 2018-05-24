@@ -1,7 +1,7 @@
 #include "netlicensing/netlicensing.h"
 #include "netlicensing/service.h"
 #include "netlicensing/validation_parameters.h"
-#include <ctype.h>
+#include <time.h>
 
 namespace netlicensing {
   /**
