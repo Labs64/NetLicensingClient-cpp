@@ -178,15 +178,15 @@ namespace netlicensing {
         //ttl returns with new line character ("\n") is appended at the end of the string and "\" at the begin of string.
         std::string ttl = fastWriter.write(root["ttl"]);
 
-        struct tm tm = {0};
-        tm.tm_year = atoi(ttl.substr(1,4).c_str()) - 1900; /* years since 1900 */
-        tm.tm_mon = atoi(ttl.substr(6, 2).c_str()) - 1;
-        tm.tm_mday = atoi(ttl.substr(9, 2).c_str());
-        tm.tm_hour = atoi(ttl.substr(12, 2).c_str());
-        tm.tm_min = atoi(ttl.substr(15, 2).c_str());
-        tm.tm_sec = atoi(ttl.substr(18, 2).c_str());
+        struct tm ttlTime;
+        ttlTime.tm_year = atoi(ttl.substr(1,4).c_str()) - 1900; /* years since 1900 */
+        ttlTime.tm_mon = atoi(ttl.substr(6, 2).c_str()) - 1;
+        ttlTime.tm_mday = atoi(ttl.substr(9, 2).c_str());
+        ttlTime.tm_hour = atoi(ttl.substr(12, 2).c_str());
+        ttlTime.tm_min = atoi(ttl.substr(15, 2).c_str());
+        ttlTime.tm_sec = atoi(ttl.substr(18, 2).c_str());
 
-        time_t rawtime = mktime(&tm);
+        time_t rawtime = mktime(&ttlTime);
         validationResult.setTtl(rawtime);
       }
 
