@@ -17,17 +17,31 @@ Visit Labs64 NetLicensing at https://netlicensing.io
 
 ### Build curl
 1. Download curl from https://github.com/curl/curl/releases
-2. cd curl_directory\winbuild
-3. Read BUILD_WINDOWS.txt for building instructions
-4. In VC command prompt run command like nmake /f Makefile.vc VC=your_vc MACHINE=your_machine ENABLE_WINSSL=yes
-5. curl builds will be in sub directory \builds
+2. <code>cd curl_directory\winbuild</code>
+3. Read <code>BUILD_WINDOWS.txt</code> for building instructions
+4. In VC command prompt run command like
+    <pre>
+        <code>
+    nmake /f Makefile.vc VC=&#60;VC versions&#62; MACHINE=&#60;x86 or x64&#62; ENABLE_WINSSL=<b>yes</b> MODE=<b>dll</b>
+        </code>
+    </pre>
+5. If you get the error "U1073" or "U1077" - execute <code>curl_directory\buildconf.bat</code> first and repeat command
+6. Your curl build directory will be in sub directory <code>\builds</code>
 
 ### Build NetLicensing C++ client
 1. Checkout project
 2. In NetLicensingClient-cpp create build directory
-3. Setup curl home directory for example using CMAKE_PREFIX_PATH=your_curl_build_directory. Build directory contains bin, include and lib subdirs.
-3. In VC command prompt cd NetLicensingClient-cpp\build and issue cmake .. . To generate VC2015/x64 solution use cmake .. -G""Visual Studio 14 Win64" 
-2. Open solution in VC and build library and demo client.
+3. Setup curl home directory for example using CMAKE_PREFIX_PATH=your_curl_build_directory. Build directory contains <b>bin</b>, <b>include</b> and <b>lib</b> subdirs.
+3. In VC Command prompt:
+
+    <pre>
+        <code>
+    cd NetLicensingClient-cpp\build
+    cmake .. -G "Visual Studio <VC versions> Win&#60;86 or 64&#62;" -DCMAKE_PREFIX_PATH=your_curl_build_directory
+        </code>
+    </pre>
+2. Open solution from "<b>NetLicensingClient-cpp\build</b>" directory in VC and build library and demo client.
+
 
 ## Linux build
 
