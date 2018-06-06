@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
   }
 
   std::mt19937 gen;
-  gen.seed(time(0));
+  gen.seed((unsigned int) time(0));
   std::stringstream ss;
   ss << "P" << gen();
   std::string productNumber = ss.str();
