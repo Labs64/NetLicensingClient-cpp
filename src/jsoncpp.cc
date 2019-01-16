@@ -205,7 +205,9 @@ static inline void fixNumericLocale(char* begin, char* end) {
 #include <memory>
 #include <set>
 #include <limits>
-
+#if defined(__BORLANDC__)
+#include <stdio.h>
+#endif
 #if defined(_MSC_VER)
 #if !defined(WINCE) && defined(__STDC_SECURE_LIB__) && _MSC_VER >= 1500 // VC++ 9.0 and above 
 #define snprintf sprintf_s
@@ -230,8 +232,8 @@ static int       stackDepth_g = 0;  // see readValue()
 
 namespace Json {
 
-#if __GNUC__ >= 6
-typedef std::scoped_ptr<CharReader> const  CharReaderPtr;
+#if JSON_HAS_UNIQUE_PTR
+typedef std::unique_ptr<CharReader> const  CharReaderPtr;
 #else
 typedef std::auto_ptr<CharReader>          CharReaderPtr;
 #endif
@@ -2233,7 +2235,9 @@ ValueIterator& ValueIterator::operator=(const SelfType& other) {
 #endif
 #include <cstddef> // size_t
 #include <algorithm> // min()
-
+#if defined(__BORLANDC__)
+#include <mem.h>
+#endif
 #define JSON_ASSERT_UNREACHABLE assert(false)
 
 namespace Json {
@@ -3761,6 +3765,9 @@ Value& Path::make(Value& root) const {
 #include <cstring>
 #include <cstdio>
 
+#if defined(__BORLANDC__)
+#include <stdio.h>
+#endif
 #if defined(_MSC_VER) && _MSC_VER >= 1200 && _MSC_VER < 1800 // Between VC++ 6.0 and VC++ 11.0
 #include <float.h>
 #define isfinite _finite
@@ -3799,8 +3806,8 @@ Value& Path::make(Value& root) const {
 
 namespace Json {
 
-#if __GNUC__ >= 6
-typedef std::scoped_ptr<StreamWriter> const  StreamWriterPtr;
+#if JSON_HAS_UNIQUE_PTR
+typedef std::unique_ptr<StreamWriter> const  StreamWriterPtr;
 #else
 typedef std::auto_ptr<StreamWriter>          StreamWriterPtr;
 #endif
