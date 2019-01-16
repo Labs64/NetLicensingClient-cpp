@@ -8,6 +8,7 @@
 #include "netlicensing/info.h"
 #include "netlicensing/licensee.h"
 #include "netlicensing/product.h"
+#include "netlicensing/country.h"
 #include "netlicensing/validation_result.h"
 
 namespace netlicensing {
@@ -130,6 +131,27 @@ namespace netlicensing {
     }
   };
 
+  class CountryWrapper : public ItemWrapper {
+    Country item_i;
+
+  public:
+    const Country& getItem() {
+      return item_i;
+    }
+
+    virtual void addProperty(const std::string& key, const std::string& value) {
+      if (key == "isEu") {
+        item_i.setIsEu(value == "true");
+      } else if (key == "code") {
+        item_i.setCode(value);
+      } else if (key == "name") {
+        item_i.setName(value);
+      } else if (key == "vatPercent") {
+      item_i.setVatPercent(value);
+      }
+    }
+  };
+
   template<class T>
   struct ItemTraits;
 
@@ -143,6 +165,12 @@ namespace netlicensing {
   struct ItemTraits<Licensee> {
     typedef LicenseeWrapper Wrapper_t;
     static std::string getType() { return "Licensee"; }
+  };
+
+  template<>
+  struct ItemTraits<Country> {
+    typedef CountryWrapper Wrapper_t;
+    static std::string getType() { return "Country"; }
   };
 
   template<typename T>

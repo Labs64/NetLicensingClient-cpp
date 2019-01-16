@@ -208,4 +208,20 @@ namespace netlicensing {
     long http_code;
     std::string res = ctx.post(endpoint, params, http_code);
   }
+
+  /**
+   * C++ representation of the Utility Service. See NetLicensingAPI JavaDoc for details:
+   * https://go.netlicensing.io/javadoc/v2/com/labs64/netlicensing/service/UtilityService.html
+   */
+
+
+  /**
+   * Returns all countries. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Utility+Services
+   */
+  std::list<Country> UtilityService::listCountries(Context& ctx) {
+    StandardMapper<Country> countryMapper;
+    netlicensing::list(ctx, countryMapper, "");
+    return countryMapper.getItems();
+  }
 }

@@ -5,6 +5,7 @@
 #include "netlicensing/service.h"
 #include "netlicensing/product.h"
 #include "netlicensing/licensee.h"
+#include "netlicensing/country.h"
 #include "netlicensing/exception.h"
 #include "netlicensing/validation_result.h"
 #include "netlicensing/validation_parameters.h"
@@ -41,6 +42,13 @@ class LicenseeService {
   static ValidationResult validate(Context& ctx, const std::string& licenseeNumber,
     const ValidationParameters& validationParameters);
   static void transfer(Context& ctx, const std::string& licenseeNumber, const std::string& sourceLicenseeNumber);
+};
+
+class UtilityService {
+public:
+  static std::list<Country> listCountries(Context& ctx);
+  //static std::list<Product> listLicenseTypes(Context& ctx);
+  //static std::list<Product> listLicensingModels(Context& ctx);
 };
 
 
