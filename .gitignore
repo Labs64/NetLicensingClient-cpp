@@ -3,6 +3,8 @@
 
 # IDE files
 .project
+.vs
+.idea
 
 # Compiled Object files
 *.slo
