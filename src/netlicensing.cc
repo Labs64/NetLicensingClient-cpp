@@ -177,9 +177,6 @@ namespace netlicensing {
         std::string ttl = fastWriter.write(root["ttl"]);
         struct tm ttlTime;
         std::size_t isNull = ttl.find("null");
-        if (isNull!=std::string::npos) {
-          printf("%s\n",ttl.c_str());
-        }
         if (isNull==std::string::npos) {
           ttlTime.tm_year = atoi(ttl.substr(1,4).c_str()) - 1900; /* years since 1900 */
           ttlTime.tm_mon = atoi(ttl.substr(6, 2).c_str()) - 1;
