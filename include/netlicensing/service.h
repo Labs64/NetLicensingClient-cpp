@@ -12,10 +12,10 @@ template<> inline std::string endpoint<Product>() { return std::string("product"
 template<> inline std::string endpoint<Licensee>() { return std::string("licensee"); }
 template<> inline std::string endpoint<Country>() { return std::string("utility/countries"); }
 
-template<typename M, typename T>
-void get(Context& ctx, M& mapper, const std::string& number) {
+template<typename M>
+void getEntity(Context& ctx, M& mapper, const std::string& number) {
   long http_code;
-  std::string res = ctx.get(endpoint<T>() + "/" + escape_string(number), parameters_type(), http_code);
+  std::string res = ctx.get(endpoint<typename M::Item_t>() + "/" + escape_string(number), parameters_type(), http_code);
   traverse(mapper, res);
   if (http_code != 200) {
     throw RestException(mapper.getInfos(), http_code);
@@ -46,6 +46,11 @@ void update_create(Context& ctx, M& mapper, const std::string& number, const T& 
     throw RestException(mapper.getInfos(), http_code);
   }
 };
+
+template<typename M>
+void get(Context& ctx, M& mapper, const std::string& number) {
+  return getEntity(ctx, mapper, number);
+}
 
 template<typename M, typename T>
 void update(Context& ctx, M& mapper, const std::string& number, const T& value) {

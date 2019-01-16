@@ -16,7 +16,16 @@ namespace netlicensing {
   Product ProductService::create(Context& ctx, const Product& product) {
     StandardMapper<Product> productMapper;
     netlicensing::create(ctx, productMapper, product);
-    // assert(productMapper.getItems().size() == 1);
+    return productMapper.getItems().front();
+  }
+
+  /**
+   * Get product object with. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Product+Services#ProductServices-Getproduct
+   */
+  Product ProductService::get(Context& ctx, const std::string& productNumber) {
+    StandardMapper<Product> productMapper;
+    netlicensing::get(ctx, productMapper, productNumber);
     return productMapper.getItems().front();
   }
 
@@ -27,7 +36,6 @@ namespace netlicensing {
   Product ProductService::update(Context& ctx, const std::string& productNumber, const Product& product) {
     StandardMapper<Product> productMapper;
     netlicensing::update(ctx, productMapper, productNumber, product);
-    // assert(productMapper.getItems().size() == 1);
     return productMapper.getItems().front();
   }
 

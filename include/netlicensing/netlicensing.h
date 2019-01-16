@@ -23,6 +23,7 @@ namespace netlicensing {
 
 class ProductService {
  public:
+  static Product get(Context& ctx, const std::string& productNumber);
   static Product create(Context& ctx, const Product&);
   static Product update(Context& ctx, const std::string& productNumber, const Product&);
   static void del(Context& ctx, const std::string& productNumber, bool forceCascade);

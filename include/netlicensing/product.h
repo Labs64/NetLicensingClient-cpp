@@ -151,6 +151,37 @@ namespace netlicensing {
     bool isProductDiscountsToched() {
       return productDiscountsToched;
     }
+
+    String_t toString() const {
+      std::string name(this->getName());
+      std::string number(this->getNumber());
+      std::string version(this->getVersion());
+      std::string licenseeAutoCreate(this->getLicenseeAutoCreate() == true?"true":"false");
+      std::string description(this->getDescription());
+      std::string licensingInfo(this->getLicensingInfo());
+
+      std::stringstream ss;
+        ss << "Product [";
+        ss << "name: ";
+        ss << name;
+        ss << ", ";
+        ss << "number: ";
+        ss << number;
+        ss << ", ";
+        ss << "version: ";
+        ss << version;
+        ss << ", ";
+        ss << "licenseeAutoCreate: ";
+        ss << licenseeAutoCreate;
+        ss << ", ";
+        ss << "description: ";
+        ss << description;
+        ss << ", ";
+        ss << "licensingInfo: ";
+        ss << licensingInfo;
+        ss << "]";
+      return ss.str();
+    }
   };
 
 }
