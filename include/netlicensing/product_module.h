@@ -43,6 +43,7 @@ namespace netlicensing {
     String_t toString() const {
       std::string name(this->getName());
       std::string number(this->getNumber());
+      Boolean_t active(this->getActive());
       std::string licensingModel(this->getLicensingModel());
       std::string productNumber(this->getProductNumber());
 
@@ -53,6 +54,9 @@ namespace netlicensing {
       ss << ", ";
       ss << "number: ";
       ss << number;
+      ss << ", ";
+      ss << "active: ";
+      ss << active.toString();
       ss << ", ";
       ss << "licensingModel: ";
       ss << licensingModel;

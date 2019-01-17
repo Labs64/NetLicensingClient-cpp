@@ -5,6 +5,7 @@
 #include "netlicensing/service.h"
 #include "netlicensing/product.h"
 #include "netlicensing/product_module.h"
+#include "netlicensing/license_template.h"
 #include "netlicensing/licensee.h"
 #include "netlicensing/country.h"
 #include "netlicensing/exception.h"
@@ -38,6 +39,15 @@ public:
   static ProductModule update(Context& ctx, const std::string& number, const ProductModule&);
   static void del(Context& ctx, const std::string& number, bool forceCascade);
   static std::list<ProductModule> list(Context& ctx, const std::string& filter);
+};
+
+class LicenseTemplateService {
+public:
+  static LicenseTemplate get(Context& ctx, const std::string& number);
+  static LicenseTemplate create(Context& ctx, const LicenseTemplate&);
+  static LicenseTemplate update(Context& ctx, const std::string& number, const LicenseTemplate&);
+  static void del(Context& ctx, const std::string& number, bool forceCascade);
+  static std::list<LicenseTemplate> list(Context& ctx, const std::string& filter);
 };
 
 class LicenseeService {

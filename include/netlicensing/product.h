@@ -155,6 +155,7 @@ namespace netlicensing {
     String_t toString() const {
       std::string name(this->getName());
       std::string number(this->getNumber());
+      Boolean_t active(this->getActive());
       std::string version(this->getVersion());
       std::string licenseeAutoCreate(this->getLicenseeAutoCreate() == true?"true":"false");
       std::string description(this->getDescription());
@@ -167,6 +168,9 @@ namespace netlicensing {
         ss << ", ";
         ss << "number: ";
         ss << number;
+        ss << ", ";
+        ss << "active: ";
+        ss << active.toString();
         ss << ", ";
         ss << "version: ";
         ss << version;

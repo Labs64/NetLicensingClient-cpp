@@ -30,6 +30,11 @@ namespace netlicensing {
 
   static const char* const PRODUCT_NUMBER    = "productNumber";
   static const char* const LICENSING_MODEL    = "licensingModel";
+  static const char* const PRODUCT_MODULE_NUMBER    = "productModuleNumber";
+  static const char* const LICENSE_TYPE    = "licenseType";
+  static const char* const AUTOMATIC    = "automatic";
+  static const char* const HIDDEN    = "hidden";
+  static const char* const HIDE_LICENSES    = "hideLicenses";
 
 }  // namespace netlicensing
 

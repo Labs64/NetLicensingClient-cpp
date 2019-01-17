@@ -7,6 +7,7 @@
 #include "netlicensing/licensee.h"
 #include "netlicensing/product.h"
 #include "netlicensing/product_module.h"
+#include "netlicensing/license_template.h"
 
 namespace netlicensing {
 
@@ -53,6 +54,21 @@ namespace netlicensing {
     params.push_back(std::make_pair(NAME, value.getName()));
     params.push_back(std::make_pair(PRODUCT_NUMBER, value.getProductNumber()));
     params.push_back(std::make_pair(LICENSING_MODEL, value.getLicensingModel()));
+
+    return params;
+  }
+
+  template<>
+  inline parameters_type toParametersList<LicenseTemplate>(LicenseTemplate value) {
+    parameters_type params = toParametersList<BaseEntity>(value);
+    params.push_back(std::make_pair(NAME, value.getName()));
+    params.push_back(std::make_pair(PRODUCT_MODULE_NUMBER, value.getProductModuleNumber()));
+    params.push_back(std::make_pair(LICENSE_TYPE, value.getLicenseType()));
+    params.push_back(std::make_pair(PRICE, value.getPrice()));
+    params.push_back(std::make_pair(CURRENCY, value.getCurrency()));
+    params.push_back(std::make_pair(AUTOMATIC, value.getAutomatic().toString()));
+    params.push_back(std::make_pair(HIDDEN, value.getHidden().toString()));
+    params.push_back(std::make_pair(HIDE_LICENSES, value.getHideLicenses().toString()));
 
     return params;
   }

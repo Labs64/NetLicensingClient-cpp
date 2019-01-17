@@ -10,6 +10,7 @@ namespace netlicensing {
 template<class T> std::string endpoint();
 template<> inline std::string endpoint<Product>() { return std::string("product"); }
 template<> inline std::string endpoint<ProductModule>() { return std::string("productmodule"); }
+template<> inline std::string endpoint<LicenseTemplate>() { return std::string("licensetemplate"); }
 template<> inline std::string endpoint<Licensee>() { return std::string("licensee"); }
 template<> inline std::string endpoint<Country>() { return std::string("utility/countries"); }
 

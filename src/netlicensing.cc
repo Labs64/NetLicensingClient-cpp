@@ -81,6 +81,7 @@ namespace netlicensing {
     netlicensing::get(ctx, productModuleMapper, productModuleNumber);
     return productModuleMapper.getItems().front();
   }
+
   /**
    * Returns all product modules of a vendor. See NetLicensingAPI for details:
    * https://www.labs64.de/confluence/display/NLICPUB/Product+Module+Services#ProductModuleServices-Productmoduleslist
@@ -107,6 +108,59 @@ namespace netlicensing {
    */
   void ProductModuleService::del(Context& ctx, const std::string& productModuleNumber, bool forceCascade) {
     netlicensing::del<ProductModule>(ctx, productModuleNumber, forceCascade);
+  }
+
+  /**
+   * C++ representation of the License Template Service. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Template+Services
+   */
+
+  /**
+   * Creates new license template object with given properties. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Template+Services#LicenseTemplateServices-Createlicensetemplate
+   */
+  LicenseTemplate LicenseTemplateService::create(Context& ctx, const LicenseTemplate& licenseTemplate) {
+    StandardMapper<LicenseTemplate> licenseTemplateMapper;
+    netlicensing::create(ctx, licenseTemplateMapper, licenseTemplate);
+    return licenseTemplateMapper.getItems().front();
+  }
+
+  /**
+   * Get license template object with. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Template+Services#LicenseTemplateServices-Getlicensetemplate
+   */
+  LicenseTemplate LicenseTemplateService::get(Context& ctx, const std::string& licenseTemplateNumber) {
+    StandardMapper<LicenseTemplate> licenseTemplateMapper;
+    netlicensing::get(ctx, licenseTemplateMapper, licenseTemplateNumber);
+    return licenseTemplateMapper.getItems().front();
+  }
+
+  /**
+   * Returns all license templates of a vendor. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Template+Services#LicenseTemplateServices-Licensetemplateslist
+   */
+  std::list<LicenseTemplate> LicenseTemplateService::list(Context& ctx, const std::string& filter) {
+    StandardMapper<LicenseTemplate> licenseTemplateMapper;
+    netlicensing::list(ctx, licenseTemplateMapper, filter);
+    return licenseTemplateMapper.getItems();
+  }
+
+  /**
+   * Updates license template properties. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Template+Services#LicenseTemplateServices-Updatelicensetemplate
+   */
+  LicenseTemplate LicenseTemplateService::update(Context& ctx, const std::string& licenseTemplateNumber, const LicenseTemplate& licenseTemplate) {
+    StandardMapper<LicenseTemplate> licenseTemplateMapper;
+    netlicensing::update(ctx, licenseTemplateMapper, licenseTemplateNumber, licenseTemplate);
+    return licenseTemplateMapper.getItems().front();
+  }
+
+  /**
+   * Deletes license template. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Template+Services#LicenseTemplateServices-Deletelicensetemplate
+   */
+  void LicenseTemplateService::del(Context& ctx, const std::string& licenseTemplateNumber, bool forceCascade) {
+    netlicensing::del<LicenseTemplate>(ctx, licenseTemplateNumber, forceCascade);
   }
 
   /**

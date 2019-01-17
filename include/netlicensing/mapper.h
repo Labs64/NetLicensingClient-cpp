@@ -136,6 +136,39 @@ namespace netlicensing {
     }
   };
 
+  class LicenseTemplateWrapper : public ItemWrapper {
+    LicenseTemplate item_i;
+
+  public:
+    const LicenseTemplate& getItem() {
+      return item_i;
+    }
+
+    virtual void addProperty(const std::string& key, const std::string& value) {
+      if (key == "number") {
+        item_i.setNumber(value);
+      } else if (key == "active") {
+        item_i.setActive(value.c_str());
+      } else if (key == "name") {
+        item_i.setName(value);
+      } else if (key == "licenseType") {
+        item_i.setLicenseType(value);
+      } else if (key == "productModuleNumber") {
+        item_i.setProductModuleNumber(value);
+      } else if (key == "price") {
+        item_i.setPrice(value);
+      } else if (key == "currency") {
+        item_i.setCurrency(value);
+      } else if (key == "automatic") {
+        item_i.setAutomatic((value == "true"?true:false));
+      } else if (key == "hidden") {
+        item_i.setHidden((value == "true"?true:false));
+      } else if (key == "hideLicenses") {
+        item_i.setHideLicenses((value == "true"?true:false));
+      }
+    }
+  };
+
   class LicenseeWrapper : public ItemWrapper {
     Licensee item_i;
 
@@ -189,6 +222,12 @@ namespace netlicensing {
   struct ItemTraits<ProductModule> {
     typedef ProductModuleWrapper Wrapper_t;
     static std::string getType() { return "ProductModule"; }
+  };
+
+  template<>
+  struct ItemTraits<LicenseTemplate> {
+    typedef LicenseTemplateWrapper Wrapper_t;
+    static std::string getType() { return "LicenseTemplate"; }
   };
 
   template<>
