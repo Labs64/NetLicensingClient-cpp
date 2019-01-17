@@ -35,6 +35,8 @@ namespace netlicensing {
   static const char* const AUTOMATIC    = "automatic";
   static const char* const HIDDEN    = "hidden";
   static const char* const HIDE_LICENSES    = "hideLicenses";
+  static const char* const LICENSEE_NUMBER    = "licenseeNumber";
+  static const char* const LICENSE_TEMPLATE_NUMBER    = "licenseTemplateNumber";
 
 }  // namespace netlicensing
 

@@ -9,6 +9,7 @@
 #include "netlicensing/licensee.h"
 #include "netlicensing/product.h"
 #include "netlicensing/product_module.h"
+#include "netlicensing/license.h"
 #include "netlicensing/country.h"
 #include "netlicensing/validation_result.h"
 
@@ -190,6 +191,35 @@ namespace netlicensing {
     }
   };
 
+  class LicenseWrapper : public ItemWrapper {
+    License item_i;
+
+  public:
+    const License& getItem() {
+      return item_i;
+    }
+
+    virtual void addProperty(const std::string& key, const std::string& value) {
+      if (key == "number") {
+        item_i.setNumber(value);
+      } else if (key == "active") {
+        item_i.setActive(value.c_str());
+      } else if (key == "name") {
+        item_i.setName(value);
+      } else if (key == "price") {
+        item_i.setPrice(value);
+      } else if (key == "currency") {
+        item_i.setCurrency(value);
+      } else if (key == "hidden") {
+        item_i.setHidden((value == "true"?true:false));
+      } else if (key == "licenseeNumber") {
+        item_i.setLicenseeNumber(value);
+      } else if (key == "licenseTemplateNumber") {
+        item_i.setLicenseTemplateNumber(value);
+      }
+    }
+  };
+
   class CountryWrapper : public ItemWrapper {
     Country item_i;
 
@@ -236,6 +266,12 @@ namespace netlicensing {
   struct ItemTraits<Licensee> {
     typedef LicenseeWrapper Wrapper_t;
     static std::string getType() { return "Licensee"; }
+  };
+
+  template<>
+  struct ItemTraits<License> {
+    typedef LicenseWrapper Wrapper_t;
+    static std::string getType() { return "License"; }
   };
 
   template<>

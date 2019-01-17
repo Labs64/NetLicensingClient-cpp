@@ -66,6 +66,15 @@ class LicenseeService {
   static void transfer(Context& ctx, const std::string& licenseeNumber, const std::string& sourceLicenseeNumber);
 };
 
+class LicenseService {
+public:
+  static License get(Context& ctx, const std::string& number);
+  static License create(Context& ctx, const License&);
+  static License update(Context& ctx, const std::string& number, const License&);
+  static void del(Context& ctx, const std::string& number, bool forceCascade);
+  static std::list<License> list(Context& ctx, const std::string& filter);
+};
+
 class UtilityService {
 public:
   static std::list<Country> listCountries(Context& ctx);

@@ -192,9 +192,9 @@ namespace netlicensing {
   * Updates licensee properties. See NetLicensingAPI for details:
   * https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services#LicenseeServices-Updatelicensee
   */
-  Licensee LicenseeService::update(Context& ctx, const std::string& productNumber, const Licensee& licensee) {
+  Licensee LicenseeService::update(Context& ctx, const std::string& number, const Licensee& licensee) {
     StandardMapper<Licensee> licenseeMapper;
-    netlicensing::update(ctx, licenseeMapper, productNumber, licensee);
+    netlicensing::update(ctx, licenseeMapper, number, licensee);
     return licenseeMapper.getItems().front();
   }
 
@@ -329,6 +329,59 @@ namespace netlicensing {
 
     long http_code;
     std::string res = ctx.post(endpoint, params, http_code);
+  }
+
+  /**
+   * C++ representation of the License. See NetLicensingAPI JavaDoc for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Services
+   */
+
+  /**
+   * Creates new license object with given properties. See NetLicensingAPI JavaDoc for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Services#LicenseServices-Createlicense
+   */
+  License LicenseService::create(Context& ctx, const License& license) {
+    StandardMapper<License> licenseMapper;
+    netlicensing::create(ctx, licenseMapper, license);
+    return licenseMapper.getItems().front();
+  }
+
+  /**
+   * Get license object with. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Services#LicenseServices-Getlicense
+   */
+  License LicenseService::get(Context& ctx, const std::string& licenseNumber) {
+    StandardMapper<License> licenseMapper;
+    netlicensing::get(ctx, licenseMapper, licenseNumber);
+    return licenseMapper.getItems().front();
+  }
+
+  /**
+   * Updates license properties. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Services#LicenseServices-Updatelicense
+   */
+  License LicenseService::update(Context& ctx, const std::string& number, const License& license) {
+    StandardMapper<License> licenseMapper;
+    netlicensing::update(ctx, licenseMapper, number, license);
+    return licenseMapper.getItems().front();
+  }
+
+  /**
+   * Deletes license. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Services#LicenseServices-Deletelicense
+   */
+  void LicenseService::del(Context& ctx, const std::string& licenseNumber, bool forceCascade) {
+    netlicensing::del<License>(ctx, licenseNumber, forceCascade);
+  }
+
+  /**
+   * Returns all licenses of a vendor. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/License+Services#LicenseServices-Licenseslist
+   */
+  std::list<License> LicenseService::list(Context& ctx, const std::string& filter) {
+    StandardMapper<License> licenseMapper;
+    netlicensing::list(ctx, licenseMapper, filter);
+    return licenseMapper.getItems();
   }
 
   /**
