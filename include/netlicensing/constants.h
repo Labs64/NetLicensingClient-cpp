@@ -28,6 +28,9 @@ namespace netlicensing {
   static const char* const PROP_ID     = "ID";
   static const char* const PROP_TTL    = "TTL";
 
+  static const char* const PRODUCT_NUMBER    = "productNumber";
+  static const char* const LICENSING_MODEL    = "licensingModel";
+
 }  // namespace netlicensing
 
 #endif  // __CONSTANTS_H__

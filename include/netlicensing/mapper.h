@@ -8,6 +8,7 @@
 #include "netlicensing/info.h"
 #include "netlicensing/licensee.h"
 #include "netlicensing/product.h"
+#include "netlicensing/product_module.h"
 #include "netlicensing/country.h"
 #include "netlicensing/validation_result.h"
 
@@ -112,6 +113,29 @@ namespace netlicensing {
     }
   };
 
+  class ProductModuleWrapper : public ItemWrapper {
+    ProductModule item_i;
+
+  public:
+    const ProductModule& getItem() {
+      return item_i;
+    }
+
+    virtual void addProperty(const std::string& key, const std::string& value) {
+        if (key == "number") {
+          item_i.setNumber(value);
+        } else if (key == "active") {
+          item_i.setActive(value.c_str());
+        } else if (key == "name") {
+          item_i.setName(value);
+        } else if (key == "licensingModel") {
+          item_i.setLicensingModel(value);
+        } else if (key == "productNumber") {
+          item_i.setProductNumber(value);
+        }
+    }
+  };
+
   class LicenseeWrapper : public ItemWrapper {
     Licensee item_i;
 
@@ -147,7 +171,7 @@ namespace netlicensing {
       } else if (key == "name") {
         item_i.setName(value);
       } else if (key == "vatPercent") {
-      item_i.setVatPercent(value);
+        item_i.setVatPercent(value);
       }
     }
   };
@@ -159,6 +183,12 @@ namespace netlicensing {
   struct ItemTraits<Product> {
     typedef ProductWrapper Wrapper_t;
     static std::string getType() { return "Product"; }
+  };
+
+  template<>
+  struct ItemTraits<ProductModule> {
+    typedef ProductModuleWrapper Wrapper_t;
+    static std::string getType() { return "ProductModule"; }
   };
 
   template<>

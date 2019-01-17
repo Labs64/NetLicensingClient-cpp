@@ -58,6 +58,58 @@ namespace netlicensing {
   }
 
   /**
+   * C++ representation of the Product Module Service. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Product+Module+Services
+   */
+
+  /**
+   * Creates new product module object with given properties. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Product+Module+Services#ProductModuleServices-Createproductmodule
+   */
+  ProductModule ProductModuleService::create(Context& ctx, const ProductModule& productModule) {
+    StandardMapper<ProductModule> productModuleMapper;
+    netlicensing::create(ctx, productModuleMapper, productModule);
+    return productModuleMapper.getItems().front();
+  }
+
+  /**
+   * Get product module object with. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Product+Module+Services#ProductModuleServices-Getproductmodule
+   */
+  ProductModule ProductModuleService::get(Context& ctx, const std::string& productModuleNumber) {
+    StandardMapper<ProductModule> productModuleMapper;
+    netlicensing::get(ctx, productModuleMapper, productModuleNumber);
+    return productModuleMapper.getItems().front();
+  }
+  /**
+   * Returns all product modules of a vendor. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Product+Module+Services#ProductModuleServices-Productmoduleslist
+   */
+  std::list<ProductModule> ProductModuleService::list(Context& ctx, const std::string& filter) {
+    StandardMapper<ProductModule> productModuleMapper;
+    netlicensing::list(ctx, productModuleMapper, filter);
+    return productModuleMapper.getItems();
+  }
+
+  /**
+   * Updates product module properties. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Product+Module+Services#ProductModuleServices-Updateproductmodule
+   */
+  ProductModule ProductModuleService::update(Context& ctx, const std::string& productModuleNumber, const ProductModule& productModule) {
+    StandardMapper<ProductModule> productModuleMapper;
+    netlicensing::update(ctx, productModuleMapper, productModuleNumber, productModule);
+    return productModuleMapper.getItems().front();
+  }
+
+  /**
+   * Deletes product module. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Product+Module+Services#ProductModuleServices-Deleteproductmodule
+   */
+  void ProductModuleService::del(Context& ctx, const std::string& productModuleNumber, bool forceCascade) {
+    netlicensing::del<ProductModule>(ctx, productModuleNumber, forceCascade);
+  }
+
+  /**
   * C++ representation of the Licensee Service. See NetLicensingAPI JavaDoc for details:
   * http://netlicensing.labs64.com/javadoc/v2/com/labs64/netlicensing/core/service/LicenseeService.html
   */
@@ -69,7 +121,6 @@ namespace netlicensing {
   Licensee LicenseeService::create(Context& ctx, const Licensee& licensee) {
     StandardMapper<Licensee> licenseeMapper;
     netlicensing::create(ctx, licenseeMapper, licensee);
-    // assert(licenseeMapper.getItems().size() == 1);
     return licenseeMapper.getItems().front();
   }
 
@@ -80,7 +131,6 @@ namespace netlicensing {
   Licensee LicenseeService::update(Context& ctx, const std::string& productNumber, const Licensee& licensee) {
     StandardMapper<Licensee> licenseeMapper;
     netlicensing::update(ctx, licenseeMapper, productNumber, licensee);
-    // assert(licenseeMapper.getItems().size() == 1);
     return licenseeMapper.getItems().front();
   }
 
