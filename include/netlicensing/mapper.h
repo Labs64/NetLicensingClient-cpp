@@ -184,6 +184,8 @@ namespace netlicensing {
         item_i.setActive(value.c_str());
       } else if (key == "name") {
         item_i.setName(value);
+      } else if (key == "productNumber") {
+        item_i.setProductNumber(value);
       }
     }
   };

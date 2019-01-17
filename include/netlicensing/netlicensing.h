@@ -52,6 +52,7 @@ public:
 
 class LicenseeService {
  public:
+  static Licensee get(Context& ctx, const std::string& licenseeNumber);
   static Licensee create(Context& ctx, const Licensee&);
   static Licensee update(Context& ctx, const std::string& licenseeNumber, const Licensee&);
   static void del(Context& ctx, const std::string& licenseeNumber, bool forceCascade);

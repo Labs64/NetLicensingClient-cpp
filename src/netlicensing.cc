@@ -165,7 +165,7 @@ namespace netlicensing {
 
   /**
   * C++ representation of the Licensee Service. See NetLicensingAPI JavaDoc for details:
-  * http://netlicensing.labs64.com/javadoc/v2/com/labs64/netlicensing/core/service/LicenseeService.html
+  * https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services
   */
 
   /**
@@ -175,6 +175,16 @@ namespace netlicensing {
   Licensee LicenseeService::create(Context& ctx, const Licensee& licensee) {
     StandardMapper<Licensee> licenseeMapper;
     netlicensing::create(ctx, licenseeMapper, licensee);
+    return licenseeMapper.getItems().front();
+  }
+
+  /**
+   * Get licensee object with. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services#LicenseeServices-Getlicensee
+   */
+  Licensee LicenseeService::get(Context& ctx, const std::string& licenseeNumber) {
+    StandardMapper<Licensee> licenseeMapper;
+    netlicensing::get(ctx, licenseeMapper, licenseeNumber);
     return licenseeMapper.getItems().front();
   }
 
@@ -310,7 +320,7 @@ namespace netlicensing {
 
   /**
   * Transfer licenses between licensees.:
-  * https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services#LicenseeServices-Transferlicensee
+  * https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services#LicenseeServices-Transferlicenses
   */
   void LicenseeService::transfer(Context& ctx, const std::string& licenseeNumber, const std::string& sourceLicenseeNumber) {
     std::string endpoint = "licensee/" + escape_string(licenseeNumber) + "/transfer";

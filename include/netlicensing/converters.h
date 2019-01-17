@@ -77,6 +77,7 @@ namespace netlicensing {
   inline parameters_type toParametersList<Licensee>(Licensee value) {
     parameters_type params = toParametersList<BaseEntity>(value);
     params.push_back(std::make_pair(NAME, value.getName()));
+    params.push_back(std::make_pair(PRODUCT_NUMBER, value.getProductNumber()));
     return params;
   }
 
