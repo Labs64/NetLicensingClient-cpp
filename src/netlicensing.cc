@@ -449,7 +449,7 @@ namespace netlicensing {
    * https://www.labs64.de/confluence/display/NLICPUB/Token+Services#TokenServices-Deletetoken
    */
   void TokenService::del(Context& ctx, const std::string& number, bool forceCascade) {
-    netlicensing::del<License>(ctx, number, forceCascade);
+    netlicensing::del<Token>(ctx, number, forceCascade);
   }
 
   /**
