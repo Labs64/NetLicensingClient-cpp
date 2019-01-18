@@ -13,6 +13,7 @@
 #include "netlicensing/country.h"
 #include "netlicensing/validation_result.h"
 #include "netlicensing/payment_method.h"
+#include "netlicensing/token.h"
 
 namespace netlicensing {
 
@@ -259,6 +260,29 @@ namespace netlicensing {
     }
   };
 
+  class TokenWrapper : public ItemWrapper {
+    Token item_i;
+
+  public:
+    const Token& getItem() {
+      return item_i;
+    }
+
+    virtual void addProperty(const std::string& key, const std::string& value) {
+      if (key == "number") {
+        item_i.setNumber(value);
+      } else if (key == "active") {
+        item_i.setActive(value.c_str());
+      } else if (key == "vendorNumber") {
+        item_i.setVendorNumber(value);
+      } else if (key == "expirationTime") {
+        item_i.setExpirationTime(value);
+      } else if (key == "tokenType") {
+        item_i.setTokenType(value);
+      }
+    }
+  };
+
   template<class T>
   struct ItemTraits;
 
@@ -303,6 +327,13 @@ namespace netlicensing {
     typedef PaymentMethodWrapper Wrapper_t;
     static std::string getType() { return "PaymentMethod"; }
   };
+
+  template<>
+  struct ItemTraits<Token> {
+    typedef TokenWrapper Wrapper_t;
+    static std::string getType() { return "Token"; }
+  };
+
 
   template<typename T>
   class StandardMapper : public MapperBase {

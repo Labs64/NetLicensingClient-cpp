@@ -12,6 +12,7 @@
 #include "netlicensing/exception.h"
 #include "netlicensing/validation_result.h"
 #include "netlicensing/validation_parameters.h"
+#include "netlicensing/token.h"
 
 #ifdef __GNUC__
   #define DEPRECATED(decl) decl __attribute__ ((deprecated))
@@ -81,6 +82,14 @@ public:
   static PaymentMethod get(Context& ctx, const std::string& number);
   static PaymentMethod update(Context& ctx, const std::string& number, const PaymentMethod&);
   static std::list<PaymentMethod> list(Context& ctx, const std::string& filter);
+};
+
+class TokenService {
+public:
+  static Token get(Context& ctx, const std::string& number);
+  static Token create(Context& ctx, const Token&);
+  static void del(Context& ctx, const std::string& number, bool forceCascade);
+  static std::list<Token> list(Context& ctx, const std::string& filter);
 };
 
 class UtilityService {

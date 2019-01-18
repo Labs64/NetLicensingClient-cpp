@@ -420,6 +420,49 @@ namespace netlicensing {
   }
 
   /**
+   * C++ representation of the Token. See NetLicensingAPI JavaDoc for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Token+Services
+   */
+
+  /**
+   * Creates new token object with given properties. See NetLicensingAPI JavaDoc for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Token+Services#TokenServices-Createtoken
+   */
+  Token TokenService::create(Context& ctx, const Token& token) {
+    StandardMapper<Token> tokenMapper;
+    netlicensing::create(ctx, tokenMapper, token);
+    return tokenMapper.getItems().front();
+  }
+
+  /**
+   * Get token object with. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Token+Services#TokenServices-Gettoken
+   */
+  Token TokenService::get(Context& ctx, const std::string& number) {
+    StandardMapper<Token> tokenMapper;
+    netlicensing::get(ctx, tokenMapper, number);
+    return tokenMapper.getItems().front();
+  }
+
+  /**
+   * Deletes token. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Token+Services#TokenServices-Deletetoken
+   */
+  void TokenService::del(Context& ctx, const std::string& number, bool forceCascade) {
+    netlicensing::del<License>(ctx, number, forceCascade);
+  }
+
+  /**
+   * Returns all tokens. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Token+Services#TokenServices-Tokenslist
+   */
+  std::list<Token> TokenService::list(Context& ctx, const std::string& filter) {
+    StandardMapper<Token> tokenMapper;
+    netlicensing::list(ctx, tokenMapper, filter);
+    return tokenMapper.getItems();
+  }
+
+  /**
    * C++ representation of the Utility Service. See NetLicensingAPI JavaDoc for details:
    * https://go.netlicensing.io/javadoc/v2/com/labs64/netlicensing/service/UtilityService.html
    */
