@@ -9,6 +9,7 @@
 #include "netlicensing/product_module.h"
 #include "netlicensing/license_template.h"
 #include "netlicensing/license.h"
+#include "netlicensing/payment_method.h"
 
 namespace netlicensing {
 
@@ -79,6 +80,12 @@ namespace netlicensing {
     parameters_type params = toParametersList<BaseEntity>(value);
     params.push_back(std::make_pair(NAME, value.getName()));
     params.push_back(std::make_pair(PRODUCT_NUMBER, value.getProductNumber()));
+    return params;
+  }
+
+  template<>
+  inline parameters_type toParametersList<PaymentMethod>(PaymentMethod value) {
+    parameters_type params = toParametersList<BaseEntity>(value);
     return params;
   }
 

@@ -8,6 +8,7 @@
 #include "netlicensing/license_template.h"
 #include "netlicensing/licensee.h"
 #include "netlicensing/country.h"
+#include "netlicensing/payment_method.h"
 #include "netlicensing/exception.h"
 #include "netlicensing/validation_result.h"
 #include "netlicensing/validation_parameters.h"
@@ -73,6 +74,13 @@ public:
   static License update(Context& ctx, const std::string& number, const License&);
   static void del(Context& ctx, const std::string& number, bool forceCascade);
   static std::list<License> list(Context& ctx, const std::string& filter);
+};
+
+class PaymentMethodService {
+public:
+  static PaymentMethod get(Context& ctx, const std::string& number);
+  static PaymentMethod update(Context& ctx, const std::string& number, const PaymentMethod&);
+  static std::list<PaymentMethod> list(Context& ctx, const std::string& filter);
 };
 
 class UtilityService {

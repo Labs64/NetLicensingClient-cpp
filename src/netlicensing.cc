@@ -385,6 +385,41 @@ namespace netlicensing {
   }
 
   /**
+   * C++ representation of the Payment Method. See NetLicensingAPI JavaDoc for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Payment+Method+Services
+   */
+
+  /**
+   * Get payment method object with. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Payment+Method+Services#PaymentMethodServices-Getpaymentmethod
+   */
+  PaymentMethod PaymentMethodService::get(Context& ctx, const std::string& number) {
+    StandardMapper<PaymentMethod> paymentMethodMapper;
+    netlicensing::get(ctx, paymentMethodMapper, number);
+    return paymentMethodMapper.getItems().front();
+  }
+
+  /**
+   * Updates payment method. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Payment+Method+Services#PaymentMethodServices-Updatepaymentmethod
+   */
+  PaymentMethod PaymentMethodService::update(Context& ctx, const std::string& number, const PaymentMethod& paymentMethod) {
+    StandardMapper<PaymentMethod> paymentMethodMapper;
+    netlicensing::update(ctx, paymentMethodMapper, number, paymentMethod);
+    return paymentMethodMapper.getItems().front();
+  }
+
+  /**
+   * Returns all payment methods. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Payment+Method+Services#PaymentMethodServices-Paymentmethodslist
+   */
+  std::list<PaymentMethod> PaymentMethodService::list(Context& ctx, const std::string& filter) {
+    StandardMapper<PaymentMethod> paymentMethodMapper;
+    netlicensing::list(ctx, paymentMethodMapper, filter);
+    return paymentMethodMapper.getItems();
+  }
+
+  /**
    * C++ representation of the Utility Service. See NetLicensingAPI JavaDoc for details:
    * https://go.netlicensing.io/javadoc/v2/com/labs64/netlicensing/service/UtilityService.html
    */
