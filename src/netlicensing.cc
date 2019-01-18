@@ -463,6 +463,51 @@ namespace netlicensing {
   }
 
   /**
+   * C++ representation of the Transaction. See NetLicensingAPI JavaDoc for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Transaction+Services
+   */
+
+  /**
+   * Creates new transaction object with given properties. See NetLicensingAPI JavaDoc for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Transaction+Services#TransactionServices-Createtransaction
+   */
+  Transaction TransactionService::create(Context& ctx, const Transaction& transaction) {
+    StandardMapper<Transaction> transactionMapper;
+    netlicensing::create(ctx, transactionMapper, transaction);
+    return transactionMapper.getItems().front();
+  }
+
+  /**
+   * Updates transaction. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Transaction+Services#TransactionServices-Updatetransaction
+   */
+  Transaction TransactionService::update(Context& ctx, const std::string& number, const Transaction& transaction) {
+    StandardMapper<Transaction> transactionMapper;
+    netlicensing::update(ctx, transactionMapper, number, transaction);
+    return transactionMapper.getItems().front();
+  }
+
+  /**
+   * Get transaction object with. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Transaction+Services#TransactionServices-Gettransaction
+   */
+  Transaction TransactionService::get(Context& ctx, const std::string& number) {
+    StandardMapper<Transaction> transactionMapper;
+    netlicensing::get(ctx, transactionMapper, number);
+    return transactionMapper.getItems().front();
+  }
+
+  /**
+   * Returns all transaction. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Transaction+Services#TransactionServices-Transactionslist
+   */
+  std::list<Transaction> TransactionService::list(Context& ctx, const std::string& filter) {
+    StandardMapper<Transaction> transactionMapper;
+    netlicensing::list(ctx, transactionMapper, filter);
+    return transactionMapper.getItems();
+  }
+
+  /**
    * C++ representation of the Utility Service. See NetLicensingAPI JavaDoc for details:
    * https://go.netlicensing.io/javadoc/v2/com/labs64/netlicensing/service/UtilityService.html
    */

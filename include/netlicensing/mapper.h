@@ -14,6 +14,7 @@
 #include "netlicensing/validation_result.h"
 #include "netlicensing/payment_method.h"
 #include "netlicensing/token.h"
+#include "netlicensing/transaction.h"
 
 namespace netlicensing {
 
@@ -283,6 +284,37 @@ namespace netlicensing {
     }
   };
 
+  class TransactionWrapper : public ItemWrapper {
+    Transaction item_i;
+
+  public:
+    const Transaction& getItem() {
+      return item_i;
+    }
+
+    virtual void addProperty(const std::string& key, const std::string& value) {
+      if (key == "number") {
+        item_i.setNumber(value);
+      } else if (key == "active") {
+        item_i.setActive(value.c_str());
+      } else if (key == "status") {
+        item_i.setStatus(value);
+      } else if (key == "source") {
+        item_i.setSource(value);
+      } else if (key == "grandTotal") {
+        item_i.setGrandTotal(value);
+      } else if (key == "discount") {
+        item_i.setDiscount(value);
+      } else if (key == "currency") {
+        item_i.setCurrency(value);
+      } else if (key == "dateCreated") {
+        item_i.setDateCreated(value);
+      } else if (key == "dateClosed") {
+        item_i.setDateClosed(value);
+      }
+    }
+  };
+
   template<class T>
   struct ItemTraits;
 
@@ -334,6 +366,11 @@ namespace netlicensing {
     static std::string getType() { return "Token"; }
   };
 
+  template<>
+  struct ItemTraits<Transaction> {
+    typedef TransactionWrapper Wrapper_t;
+    static std::string getType() { return "Transaction"; }
+  };
 
   template<typename T>
   class StandardMapper : public MapperBase {

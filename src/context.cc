@@ -172,7 +172,7 @@ class Context::NetworkService {
     const std::string username,
     const std::string password,
     long& http_code) {
-    return send_request(DEL, url, params, username, password, http_code);
+    return send_request(DEL, url_with_parameters(url, params), parameters_type(), username, password, http_code);
   }
 
   std::string send_request(
@@ -209,7 +209,7 @@ class Context::NetworkService {
       request_body = std::accumulate(joined_params.begin(), joined_params.end(), request_body, join_sep());
       request_body_info = std::make_pair(request_body.c_str(), request_body.length());
 
-      curl_easy_setopt(handle_, CURLOPT_POST, 1L);      
+      curl_easy_setopt(handle_, CURLOPT_POST, 1L);
       curl_easy_setopt(handle_, CURLOPT_POSTFIELDSIZE, request_body.length());
         
       // Set read callback function and parameter for function

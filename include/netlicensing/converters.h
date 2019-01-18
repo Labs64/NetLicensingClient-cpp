@@ -11,6 +11,7 @@
 #include "netlicensing/license.h"
 #include "netlicensing/payment_method.h"
 #include "netlicensing/token.h"
+#include "netlicensing/transaction.h"
 
 namespace netlicensing {
 
@@ -108,6 +109,20 @@ namespace netlicensing {
     params.push_back(std::make_pair(VENDOR_NUMBER, value.getVendorNumber()));
     params.push_back(std::make_pair(EXPIRATION_TIME, value.getExpirationTime()));
     params.push_back(std::make_pair(TOKEN_TYPE, value.getTokenType()));
+    return params;
+  }
+
+  template<>
+  inline parameters_type toParametersList<Transaction>(Transaction value) {
+    parameters_type params = toParametersList<BaseEntity>(value);
+    params.push_back(std::make_pair(STATUS, value.getStatus()));
+    params.push_back(std::make_pair(SOURCE, value.getSource()));
+    params.push_back(std::make_pair(GRAND_TOTAL, value.getGrandTotal()));
+    params.push_back(std::make_pair(DISCOUNT, value.getDiscount()));
+    params.push_back(std::make_pair(CURRENCY, value.getCurrency()));
+    params.push_back(std::make_pair(DATE_CREATED, value.getDateCreated()));
+    params.push_back(std::make_pair(DATE_CLOSED, value.getDateClosed()));
+
     return params;
   }
 }  // namespace netlicensing

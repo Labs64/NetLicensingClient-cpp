@@ -40,6 +40,12 @@ namespace netlicensing {
   static const char* const VENDOR_NUMBER    = "vendorNumber";
   static const char* const EXPIRATION_TIME    = "expirationTime";
   static const char* const TOKEN_TYPE    = "tokenType";
+  static const char* const PROP_MARKED_FOR_TRANSFER    = "markedForTransfer";
+  static const char* const STATUS    = "status";
+  static const char* const SOURCE    = "cource";
+  static const char* const GRAND_TOTAL    = "grandTotal";
+  static const char* const DATE_CREATED    = "dateCreated";
+  static const char* const DATE_CLOSED    = "dateClosed";
 
 }  // namespace netlicensing
 

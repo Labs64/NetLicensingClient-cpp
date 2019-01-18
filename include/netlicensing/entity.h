@@ -36,7 +36,7 @@ inline void assign(int& target, const std::string& source) {
 class BaseEntity {
 private:
   String_t number_i;
-  Boolean_t active_i;
+  Boolean_t active_i = true;
   std::map<std::string, String_t> properties_i;
 
 public:

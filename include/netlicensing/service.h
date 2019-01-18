@@ -15,6 +15,7 @@ template<> inline std::string endpoint<Licensee>() { return std::string("license
 template<> inline std::string endpoint<License>() { return std::string("license"); }
 template<> inline std::string endpoint<PaymentMethod>() { return std::string("paymentmethod"); }
 template<> inline std::string endpoint<Token>() { return std::string("token"); }
+template<> inline std::string endpoint<Transaction>() { return std::string("transaction"); }
 template<> inline std::string endpoint<Country>() { return std::string("utility/countries"); }
 
 template<typename M>
@@ -71,7 +72,7 @@ template<typename M>
 void list(Context& ctx, M& mapper, const std::string& filter) {
   parameters_type params;
   if (!filter.empty()) {
-    params.push_back(std::make_pair(FILTER, escape_string(filter)));
+    params.push_back(std::make_pair(FILTER, filter));
   }
 
   long http_code;
