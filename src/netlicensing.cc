@@ -531,4 +531,14 @@ namespace netlicensing {
     netlicensing::list(ctx, licensingModelsMapper, "");
     return licensingModelsMapper.getItems();
   }
+
+  /**
+   * Returns all license types. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Utility+Services#UtilityServices-LicenseTypeslist
+   */
+  std::list<LicenseType> UtilityService::listLicenseTypes(Context& ctx) {
+    StandardMapper<LicenseType> licenseTypeMapper;
+    netlicensing::list(ctx, licenseTypeMapper, "");
+    return licenseTypeMapper.getItems();
+  }
 }

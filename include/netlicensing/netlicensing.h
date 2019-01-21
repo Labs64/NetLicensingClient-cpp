@@ -106,7 +106,7 @@ class UtilityService {
 public:
   static std::list<Country> listCountries(Context& ctx);
   static std::list<LicensingModel> listLicensingModels(Context& ctx);
-  //static std::list<Product> listLicenseTypes(Context& ctx);
+  static std::list<LicenseType> listLicenseTypes(Context& ctx);
 };
 
 

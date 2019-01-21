@@ -18,6 +18,7 @@ template<> inline std::string endpoint<Token>() { return std::string("token"); }
 template<> inline std::string endpoint<Transaction>() { return std::string("transaction"); }
 template<> inline std::string endpoint<Country>() { return std::string("utility/countries"); }
 template<> inline std::string endpoint<LicensingModel>() { return std::string("utility/licensingModels"); }
+template<> inline std::string endpoint<LicenseType>() { return std::string("utility/licenseTypes"); }
 
 template<typename M>
 void getEntity(Context& ctx, M& mapper, const std::string& number) {

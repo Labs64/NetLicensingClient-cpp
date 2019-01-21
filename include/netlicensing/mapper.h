@@ -260,6 +260,21 @@ namespace netlicensing {
     }
   };
 
+  class LicenseTypeWrapper : public ItemWrapper {
+    LicenseType item_i;
+
+  public:
+    const LicenseType& getItem() {
+      return item_i;
+    }
+
+    virtual void addProperty(const std::string& key, const std::string& value) {
+      if (key == "name") {
+        item_i.setName(value);
+      }
+    }
+  };
+
   class PaymentMethodWrapper : public ItemWrapper {
     PaymentMethod item_i;
 
@@ -374,6 +389,12 @@ namespace netlicensing {
   struct ItemTraits<LicensingModel> {
     typedef LicensingModelWrapper Wrapper_t;
     static std::string getType() { return "LicensingModelProperties"; }
+  };
+
+  template<>
+  struct ItemTraits<LicenseType> {
+    typedef LicenseTypeWrapper Wrapper_t;
+    static std::string getType() { return "LicenseType"; }
   };
 
   template<>

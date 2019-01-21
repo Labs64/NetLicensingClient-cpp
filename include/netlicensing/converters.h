@@ -13,6 +13,7 @@
 #include "netlicensing/token.h"
 #include "netlicensing/transaction.h"
 #include "netlicensing/licensing_model.h"
+#include "netlicensing/license_type.h"
 
 namespace netlicensing {
 
@@ -129,6 +130,13 @@ namespace netlicensing {
 
   template<>
   inline parameters_type toParametersList<LicensingModel>(LicensingModel value) {
+    parameters_type params;
+    params.push_back(std::make_pair(NAME, value.getName()));
+    return params;
+  }
+
+  template<>
+  inline parameters_type toParametersList<LicenseType>(LicenseType value) {
     parameters_type params;
     params.push_back(std::make_pair(NAME, value.getName()));
     return params;
