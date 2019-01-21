@@ -11,7 +11,7 @@
 void cleanUp (netlicensing::Context& ctx, const std::string& productNumber, bool forceCascade) {
   //clean up
   try {
-    netlicensing::ProductService::del(ctx, productNumber, true);
+    netlicensing::ProductService::del(ctx, productNumber, forceCascade);
   } catch (const netlicensing::RestException& e) {
     //do nothing
   }
@@ -364,7 +364,7 @@ int main(int argc, char* argv[]) {
     if (tokens.size()) {
       std::cout << "Got the following shop tokens: " << std::endl;
       for (auto const& i : tokens) {
-        std::string tokenString = i.toString();
+        tokenString = i.toString();
         std::cout << tokenString << std::endl;
       }
     }
@@ -376,7 +376,7 @@ int main(int argc, char* argv[]) {
     if (tokens.size()) {
       std::cout << "Got the following shop tokens after delete: " << std::endl;
       for (auto const& i : tokens) {
-        std::string tokenString = i.toString();
+        tokenString = i.toString();
         std::cout << tokenString << std::endl;
       }
     }

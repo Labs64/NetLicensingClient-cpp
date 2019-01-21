@@ -28,7 +28,7 @@ void getEntity(Context& ctx, M& mapper, const std::string& number) {
   if (http_code != 200) {
     throw RestException(mapper.getInfos(), http_code);
   }
-};
+}
 
 template<typename T>
 void del(Context& ctx, const std::string& number, bool force_cascade) {
@@ -42,7 +42,7 @@ void del(Context& ctx, const std::string& number, bool force_cascade) {
   if (http_code != 200 && http_code != 204) {
     throw RestException(std::list<Info>(), http_code);
   }
-};
+}
 
 template<typename M, typename T>
 void update_create(Context& ctx, M& mapper, const std::string& number, const T& value) {
@@ -53,7 +53,7 @@ void update_create(Context& ctx, M& mapper, const std::string& number, const T& 
   if (http_code != 200) {
     throw RestException(mapper.getInfos(), http_code);
   }
-};
+}
 
 template<typename M>
 void get(Context& ctx, M& mapper, const std::string& number) {
@@ -87,6 +87,6 @@ void list(Context& ctx, M& mapper, const std::string& filter) {
   }
 }
 
-};
+}
 
 #endif //__SERVICE_HPP__
