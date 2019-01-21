@@ -15,6 +15,7 @@
 #include "netlicensing/payment_method.h"
 #include "netlicensing/token.h"
 #include "netlicensing/transaction.h"
+#include "netlicensing/licensing_model.h"
 
 namespace netlicensing {
 
@@ -244,6 +245,21 @@ namespace netlicensing {
     }
   };
 
+  class LicensingModelWrapper : public ItemWrapper {
+    LicensingModel item_i;
+
+  public:
+    const LicensingModel& getItem() {
+      return item_i;
+    }
+
+    virtual void addProperty(const std::string& key, const std::string& value) {
+      if (key == "name") {
+        item_i.setName(value);
+      }
+    }
+  };
+
   class PaymentMethodWrapper : public ItemWrapper {
     PaymentMethod item_i;
 
@@ -352,6 +368,12 @@ namespace netlicensing {
   struct ItemTraits<Country> {
     typedef CountryWrapper Wrapper_t;
     static std::string getType() { return "Country"; }
+  };
+
+  template<>
+  struct ItemTraits<LicensingModel> {
+    typedef LicensingModelWrapper Wrapper_t;
+    static std::string getType() { return "LicensingModelProperties"; }
   };
 
   template<>

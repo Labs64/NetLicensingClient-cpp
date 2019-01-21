@@ -14,6 +14,7 @@
 #include "netlicensing/validation_parameters.h"
 #include "netlicensing/token.h"
 #include "netlicensing/transaction.h"
+#include "netlicensing/licensing_model.h"
 
 #ifdef __GNUC__
   #define DEPRECATED(decl) decl __attribute__ ((deprecated))
@@ -104,9 +105,8 @@ public:
 class UtilityService {
 public:
   static std::list<Country> listCountries(Context& ctx);
-  //TODO(AY): add utility lists
+  static std::list<LicensingModel> listLicensingModels(Context& ctx);
   //static std::list<Product> listLicenseTypes(Context& ctx);
-  //static std::list<Product> listLicensingModels(Context& ctx);
 };
 
 

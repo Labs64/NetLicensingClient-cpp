@@ -512,7 +512,6 @@ namespace netlicensing {
    * https://go.netlicensing.io/javadoc/v2/com/labs64/netlicensing/service/UtilityService.html
    */
 
-
   /**
    * Returns all countries. See NetLicensingAPI for details:
    * https://www.labs64.de/confluence/display/NLICPUB/Utility+Services
@@ -521,5 +520,15 @@ namespace netlicensing {
     StandardMapper<Country> countryMapper;
     netlicensing::list(ctx, countryMapper, "");
     return countryMapper.getItems();
+  }
+
+  /**
+   * Returns all licensing models. See NetLicensingAPI for details:
+   * https://www.labs64.de/confluence/display/NLICPUB/Utility+Services#UtilityServices-LicensingModelslist
+   */
+  std::list<LicensingModel> UtilityService::listLicensingModels(Context& ctx) {
+    StandardMapper<LicensingModel> licensingModelsMapper;
+    netlicensing::list(ctx, licensingModelsMapper, "");
+    return licensingModelsMapper.getItems();
   }
 }
