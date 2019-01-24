@@ -13,7 +13,14 @@ void cleanUp (netlicensing::Context& ctx, const std::string& productNumber, bool
   try {
     netlicensing::ProductService::del(ctx, productNumber, forceCascade);
   } catch (const netlicensing::RestException& e) {
-    //do nothing
+    std::cout << "Got NetLicensing exception during cleanup:" << std::endl;
+    std::cerr << e.what() << std::endl;
+    for (auto det : e.get_details()) {
+      std::cerr << det.to_string() << std::endl;
+    }
+  } catch (const std::runtime_error& err) {
+    std::cout << "Got exception during cleanup:" << std::endl;
+    std::cerr << err.what() << std::endl;
   }
 }
 
