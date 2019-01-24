@@ -5,6 +5,7 @@
 #include <list>
 #include <json/json.h>
 
+#include "netlicensing/constants.h"
 #include "netlicensing/info.h"
 #include "netlicensing/licensee.h"
 #include "netlicensing/product.h"
@@ -67,13 +68,13 @@ namespace netlicensing {
     }
 
     virtual void addProperty(const std::string& key, const std::string& value) {
-      if (key == "totalPrice") {
+      if (key == TOTAL_PRICE) {
         totalPrice_i = value;
-      } else if (key == "currency") {
+      } else if (key == CURRENCY) {
         currency_i = value;
-      } else if (key == "amountFix") {
+      } else if (key == AMOUNT_FIX) {
         amountFix_i = value;
-      } else if (key == "amountPercent") {
+      } else if (key == AMOUNT_PERCENT) {
         amountPercent_i = value;
       }
     }
@@ -88,19 +89,19 @@ namespace netlicensing {
     }
 
     virtual void addProperty(const std::string& key, const std::string& value) {
-      if (key == "number") {
+      if (key == NUMBER) {
         item_i.setNumber(value);
-      } else if (key == "active") {
+      } else if (key == ACTIVE) {
         item_i.setActive(value.c_str());
-      } else if (key == "name") {
+      } else if (key == NAME) {
         item_i.setName(value);
-      } else if (key == "version") {
+      } else if (key == VERSION) {
         item_i.setVersion(value);
-      } else if (key == "licenseeAutoCreate") {
+      } else if (key == LICENSEE_AUTO_CREATE) {
         item_i.setLicenseeAutoCreate(value.c_str());
-      } else if (key == "description") {
+      } else if (key == DESCRIPTION) {
         item_i.setDescription(value);
-      } else if (key == "licensingInfo") {
+      } else if (key == LICENSING_INFO) {
         item_i.setLicensingInfo(value);
       }
     }
@@ -110,7 +111,7 @@ namespace netlicensing {
     }
 
     virtual void addNested(const std::string& name, const Ptr_t& nested) {
-      if (name == "discount") {
+      if (name == DISCOUNT) {
         ProductDiscount productDiscount =
             std::dynamic_pointer_cast<ProductDiscountWrapper>(nested)->getProductDiscount();
         item_i.getDiscounts().push_back(productDiscount);
@@ -127,15 +128,15 @@ namespace netlicensing {
     }
 
     virtual void addProperty(const std::string& key, const std::string& value) {
-        if (key == "number") {
+        if (key == NUMBER) {
           item_i.setNumber(value);
-        } else if (key == "active") {
+        } else if (key == ACTIVE) {
           item_i.setActive(value.c_str());
-        } else if (key == "name") {
+        } else if (key == NAME) {
           item_i.setName(value);
-        } else if (key == "licensingModel") {
+        } else if (key == LICENSING_MODEL) {
           item_i.setLicensingModel(value);
-        } else if (key == "productNumber") {
+        } else if (key == PRODUCT_NUMBER) {
           item_i.setProductNumber(value);
         }
     }
@@ -150,25 +151,25 @@ namespace netlicensing {
     }
 
     virtual void addProperty(const std::string& key, const std::string& value) {
-      if (key == "number") {
+      if (key == NUMBER) {
         item_i.setNumber(value);
-      } else if (key == "active") {
+      } else if (key == ACTIVE) {
         item_i.setActive(value.c_str());
-      } else if (key == "name") {
+      } else if (key == NAME) {
         item_i.setName(value);
-      } else if (key == "licenseType") {
+      } else if (key == LICENSE_TYPE) {
         item_i.setLicenseType(value);
-      } else if (key == "productModuleNumber") {
+      } else if (key == PRODUCT_MODULE_NUMBER) {
         item_i.setProductModuleNumber(value);
-      } else if (key == "price") {
+      } else if (key == PRICE) {
         item_i.setPrice(value);
-      } else if (key == "currency") {
+      } else if (key == CURRENCY) {
         item_i.setCurrency(value);
-      } else if (key == "automatic") {
+      } else if (key == AUTOMATIC) {
         item_i.setAutomatic((value == "true"?true:false));
-      } else if (key == "hidden") {
+      } else if (key == HIDDEN) {
         item_i.setHidden((value == "true"?true:false));
-      } else if (key == "hideLicenses") {
+      } else if (key == HIDE_LICENSES) {
         item_i.setHideLicenses((value == "true"?true:false));
       }
     }
@@ -183,13 +184,13 @@ namespace netlicensing {
     }
 
     virtual void addProperty(const std::string& key, const std::string& value) {
-      if (key == "number") {
+      if (key == NUMBER) {
         item_i.setNumber(value);
-      } else if (key == "active") {
+      } else if (key == ACTIVE) {
         item_i.setActive(value.c_str());
-      } else if (key == "name") {
+      } else if (key == NAME) {
         item_i.setName(value);
-      } else if (key == "productNumber") {
+      } else if (key == PRODUCT_NUMBER) {
         item_i.setProductNumber(value);
       }
     }
@@ -204,21 +205,21 @@ namespace netlicensing {
     }
 
     virtual void addProperty(const std::string& key, const std::string& value) {
-      if (key == "number") {
+      if (key == NUMBER) {
         item_i.setNumber(value);
-      } else if (key == "active") {
+      } else if (key == ACTIVE) {
         item_i.setActive(value.c_str());
-      } else if (key == "name") {
+      } else if (key == NAME) {
         item_i.setName(value);
-      } else if (key == "price") {
+      } else if (key == PRICE) {
         item_i.setPrice(value);
-      } else if (key == "currency") {
+      } else if (key == CURRENCY) {
         item_i.setCurrency(value);
-      } else if (key == "hidden") {
+      } else if (key == HIDDEN) {
         item_i.setHidden((value == "true"?true:false));
-      } else if (key == "licenseeNumber") {
+      } else if (key == LICENSEE_NUMBER) {
         item_i.setLicenseeNumber(value);
-      } else if (key == "licenseTemplateNumber") {
+      } else if (key == LICENSE_TEMPLATE_NUMBER) {
         item_i.setLicenseTemplateNumber(value);
       }
     }
@@ -237,7 +238,7 @@ namespace netlicensing {
         item_i.setIsEu(value == "true");
       } else if (key == "code") {
         item_i.setCode(value);
-      } else if (key == "name") {
+      } else if (key == NAME) {
         item_i.setName(value);
       } else if (key == "vatPercent") {
         item_i.setVatPercent(value);
@@ -254,7 +255,7 @@ namespace netlicensing {
     }
 
     virtual void addProperty(const std::string& key, const std::string& value) {
-      if (key == "name") {
+      if (key == NAME) {
         item_i.setName(value);
       }
     }
@@ -269,7 +270,7 @@ namespace netlicensing {
     }
 
     virtual void addProperty(const std::string& key, const std::string& value) {
-      if (key == "name") {
+      if (key == NAME) {
         item_i.setName(value);
       }
     }
@@ -284,9 +285,9 @@ namespace netlicensing {
     }
 
     virtual void addProperty(const std::string& key, const std::string& value) {
-      if (key == "number") {
+      if (key == NUMBER) {
         item_i.setNumber(value);
-      } else if (key == "active") {
+      } else if (key == ACTIVE) {
         item_i.setActive(value.c_str());
       }
     }
@@ -301,15 +302,15 @@ namespace netlicensing {
     }
 
     virtual void addProperty(const std::string& key, const std::string& value) {
-      if (key == "number") {
+      if (key == NUMBER) {
         item_i.setNumber(value);
-      } else if (key == "active") {
+      } else if (key == ACTIVE) {
         item_i.setActive(value.c_str());
-      } else if (key == "vendorNumber") {
+      } else if (key == VENDOR_NUMBER) {
         item_i.setVendorNumber(value);
-      } else if (key == "expirationTime") {
+      } else if (key == EXPIRATION_TIME) {
         item_i.setExpirationTime(value);
-      } else if (key == "tokenType") {
+      } else if (key == TOKEN_TYPE) {
         item_i.setTokenType(value);
       }
     }
@@ -324,23 +325,23 @@ namespace netlicensing {
     }
 
     virtual void addProperty(const std::string& key, const std::string& value) {
-      if (key == "number") {
+      if (key == NUMBER) {
         item_i.setNumber(value);
-      } else if (key == "active") {
+      } else if (key == ACTIVE) {
         item_i.setActive(value.c_str());
-      } else if (key == "status") {
+      } else if (key == STATUS) {
         item_i.setStatus(value);
-      } else if (key == "source") {
+      } else if (key == SOURCE) {
         item_i.setSource(value);
-      } else if (key == "grandTotal") {
+      } else if (key == GRAND_TOTAL) {
         item_i.setGrandTotal(value);
-      } else if (key == "discount") {
+      } else if (key == DISCOUNT) {
         item_i.setDiscount(value);
-      } else if (key == "currency") {
+      } else if (key == CURRENCY) {
         item_i.setCurrency(value);
-      } else if (key == "dateCreated") {
+      } else if (key == DATE_CREATED) {
         item_i.setDateCreated(value);
-      } else if (key == "dateClosed") {
+      } else if (key == DATE_CLOSED) {
         item_i.setDateClosed(value);
       }
     }
@@ -481,7 +482,7 @@ namespace netlicensing {
     void addItem(const ItemWrapper::Ptr_t& item) {
       const Composition& comp =
           std::dynamic_pointer_cast<CompositionWrapper>(item)->getComposition();
-      auto productModuleNumber = comp.get("productModuleNumber");
+      auto productModuleNumber = comp.get(PRODUCT_MODULE_NUMBER);
       if (productModuleNumber) {
         validationResult_i.setProductModuleValidation(*productModuleNumber, comp);
       }

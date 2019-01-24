@@ -3,6 +3,7 @@
 
 #include <list>
 
+#include "netlicensing/constants.h"
 #include "netlicensing/entity.h"
 
 namespace netlicensing {
@@ -18,10 +19,12 @@ namespace netlicensing {
 
       std::stringstream ss;
       ss << "PaymentMethod [";
-      ss << "number: ";
+      ss << NUMBER;
+      ss << ": ";
       ss << number;
       ss << ", ";
-      ss << "active: ";
+      ss << ACTIVE;
+      ss << ": ";
       ss << active.toString();
       ss << "]";
       return ss.str();

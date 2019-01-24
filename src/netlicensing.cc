@@ -1,3 +1,4 @@
+#include "netlicensing/constants.h"
 #include "netlicensing/netlicensing.h"
 #include "netlicensing/service.h"
 #include "netlicensing/validation_parameters.h"
@@ -225,10 +226,11 @@ namespace netlicensing {
     const std::string& productNumber/* = std::string()*/,
     const std::string& licenseeName/* = std::string()*/,
     const parameters_type& validationParameters) {
-      std::string endpoint = "licensee/" + escape_string(licenseeNumber) + "/validate";
+
+      std::string endpoint = std::string(LICENSEE_ENDPOINT_PATH) + "/" + escape_string(licenseeNumber) + "/" + ENDPOINT_PATH_VALIDATE;
       parameters_type params;
-      if (!productNumber.empty()) params.push_back(std::make_pair("productNumber", escape_string(productNumber)));
-      if (!licenseeName.empty()) params.push_back(std::make_pair("licenseeName", escape_string(licenseeName)));
+      if (!productNumber.empty()) params.push_back(std::make_pair(PRODUCT_NUMBER, escape_string(productNumber)));
+      if (!licenseeName.empty()) params.push_back(std::make_pair(PROP_LICENSEE_NAME, escape_string(licenseeName)));
 
       // Add licensing model specific validation parameters
       for (parameters_type::const_iterator paramIt = validationParameters.begin();
@@ -256,24 +258,24 @@ namespace netlicensing {
   ValidationResult LicenseeService::validate(Context& ctx, 
     const std::string& licenseeNumber,
     const ValidationParameters& validationParameters) {
-      std::string endpoint = "licensee/" + escape_string(licenseeNumber) + "/validate";
+      std::string endpoint = std::string(LICENSEE_ENDPOINT_PATH) + "/" + escape_string(licenseeNumber) + "/" + ENDPOINT_PATH_VALIDATE;
       parameters_type params;
 
       if (!escape_string(validationParameters.getProductNumber()).empty()) {
-        params.push_back(std::make_pair("productNumber", escape_string(validationParameters.getProductNumber())));
+        params.push_back(std::make_pair(PRODUCT_NUMBER, escape_string(validationParameters.getProductNumber())));
       }
       if (!escape_string(validationParameters.getLicenseeName()).empty()) {
-        params.push_back(std::make_pair("licenseeName", escape_string(validationParameters.getLicenseeName())));
+        params.push_back(std::make_pair(PROP_LICENSEE_NAME, escape_string(validationParameters.getLicenseeName())));
       }
       if (!escape_string(validationParameters.getLicenseeSecret()).empty()) {
-        params.push_back(std::make_pair("licenseeSecret", escape_string(validationParameters.getLicenseeSecret())));
+        params.push_back(std::make_pair(PROP_LICENSEE_SECRET, escape_string(validationParameters.getLicenseeSecret())));
       }
 
       int paramIt = 0;
       for(auto const &ent1 : validationParameters.getParameters()) {
         auto const &productModuleNumber = ent1.first;
         auto const &productModuleParameters = ent1.second;
-        params.push_back(std::make_pair("productModuleNumber" + std::to_string(paramIt), escape_string(productModuleNumber)));
+        params.push_back(std::make_pair(PRODUCT_MODULE_NUMBER + std::to_string(paramIt), escape_string(productModuleNumber)));
 
         for(auto const &ent2 : productModuleParameters) {
           auto const &inner_key   = ent2.first;
@@ -323,9 +325,9 @@ namespace netlicensing {
   * https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services#LicenseeServices-Transferlicenses
   */
   void LicenseeService::transfer(Context& ctx, const std::string& licenseeNumber, const std::string& sourceLicenseeNumber) {
-    std::string endpoint = "licensee/" + escape_string(licenseeNumber) + "/transfer";
+    std::string endpoint = "licensee/" + escape_string(licenseeNumber) + "/" + ENDPOINT_PATH_TRANSFER;
     parameters_type params;
-    if (!sourceLicenseeNumber.empty()) params.push_back(std::make_pair("sourceLicenseeNumber", escape_string(sourceLicenseeNumber)));
+    if (!sourceLicenseeNumber.empty()) params.push_back(std::make_pair(SOURCE_LICENSEE_NUMBER, escape_string(sourceLicenseeNumber)));
 
     long http_code;
     std::string res = ctx.post(endpoint, params, http_code);

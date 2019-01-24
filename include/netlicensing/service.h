@@ -1,6 +1,7 @@
 #ifndef __SERVICE_HPP__
 #define __SERVICE_HPP__
 
+#include "netlicensing/constants.h"
 #include "netlicensing/context.h"
 #include "netlicensing/mapper.h"
 #include "netlicensing/traversal.h"
@@ -8,17 +9,17 @@
 namespace netlicensing {
 
 template<class T> std::string endpoint();
-template<> inline std::string endpoint<Product>() { return std::string("product"); }
-template<> inline std::string endpoint<ProductModule>() { return std::string("productmodule"); }
-template<> inline std::string endpoint<LicenseTemplate>() { return std::string("licensetemplate"); }
-template<> inline std::string endpoint<Licensee>() { return std::string("licensee"); }
-template<> inline std::string endpoint<License>() { return std::string("license"); }
-template<> inline std::string endpoint<PaymentMethod>() { return std::string("paymentmethod"); }
-template<> inline std::string endpoint<Token>() { return std::string("token"); }
-template<> inline std::string endpoint<Transaction>() { return std::string("transaction"); }
-template<> inline std::string endpoint<Country>() { return std::string("utility/countries"); }
-template<> inline std::string endpoint<LicensingModel>() { return std::string("utility/licensingModels"); }
-template<> inline std::string endpoint<LicenseType>() { return std::string("utility/licenseTypes"); }
+template<> inline std::string endpoint<Product>() { return std::string(PRODUCT_ENDPOINT_PATH); }
+template<> inline std::string endpoint<ProductModule>() { return std::string(PRODUCT_MODULE_ENDPOINT_PATH); }
+template<> inline std::string endpoint<LicenseTemplate>() { return std::string(LICENSE_TEMPLATE_ENDPOINT_PATH); }
+template<> inline std::string endpoint<Licensee>() { return std::string(LICENSEE_ENDPOINT_PATH); }
+template<> inline std::string endpoint<License>() { return std::string(LICENSE_ENDPOINT_PATH); }
+template<> inline std::string endpoint<PaymentMethod>() { return std::string(PAYMENT_METHOD_ENDPOINT_PATH); }
+template<> inline std::string endpoint<Token>() { return std::string(TOKEN_ENDPOINT_PATH); }
+template<> inline std::string endpoint<Transaction>() { return std::string(TRANSACTION_ENDPOINT_PATH); }
+template<> inline std::string endpoint<Country>() { return UTILITY_ENDPOINT_PATH + "/" +std::string(ENDPOINT_PATH_COUNTRIES); }
+template<> inline std::string endpoint<LicensingModel>() { return UTILITY_ENDPOINT_PATH + "/" + std::string(ENDPOINT_PATH_LICENSING_MODELS); }
+template<> inline std::string endpoint<LicenseType>() { return UTILITY_ENDPOINT_PATH + "/" + std::string(ENDPOINT_PATH_LICENSE_TYPES); }
 
 template<typename M>
 void getEntity(Context& ctx, M& mapper, const std::string& number) {

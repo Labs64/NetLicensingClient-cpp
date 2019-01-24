@@ -3,6 +3,7 @@
 
 #include <list>
 
+#include "netlicensing/constants.h"
 #include "netlicensing/entity.h"
 
 namespace netlicensing {
@@ -27,7 +28,8 @@ namespace netlicensing {
 
       std::stringstream ss;
       ss << "LicenseType [";
-      ss << "name: ";
+      ss << NAME;
+      ss << ": ";
       ss << name;
       ss << "]";
       return ss.str();

@@ -1,6 +1,7 @@
 #ifndef __LICENSEE_H__
 #define __LICENSEE_H__
 
+#include "netlicensing/constants.h"
 #include "netlicensing/entity.h"
 
 namespace netlicensing {
@@ -36,16 +37,20 @@ namespace netlicensing {
 
       std::stringstream ss;
       ss << "Licensee [";
-      ss << "name: ";
+      ss << NAME;
+      ss << ": ";
       ss << name;
       ss << ", ";
-      ss << "number: ";
+      ss << NUMBER;
+      ss << ": ";
       ss << number;
       ss << ", ";
-      ss << "active: ";
+      ss << ACTIVE;
+      ss << ": ";
       ss << active.toString();
       ss << ", ";
-      ss << "productNumber: ";
+      ss << PRODUCT_NUMBER;
+      ss << ": ";
       ss << productNumber;
       ss << "]";
       return ss.str();

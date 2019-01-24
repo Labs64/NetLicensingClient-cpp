@@ -9,30 +9,6 @@
 
 namespace netlicensing {
 
-/*
-template<typename S, typename T>
-void lexical_cast(T& t, const S& s) {
-  std::stringstream stream;
-  if (!(stream << s) || !(stream >> t) || !(stream >> std::ws).eof()) {
-    throw std::bad_cast();
-  }
-}
-
-inline void assign(std::string& target, const std::string& source) {
-  target = source;
-}
-
-inline void assign(bool& target, const std::string& source) {
-  if (source == "true") target = true;
-  else if (source == "false") target = false;
-  else throw std::logic_error("Value can not be interpret as logic");
-}
-
-inline void assign(int& target, const std::string& source) {
-  lexical_cast(target, source);
-}
-*/
-
 class BaseEntity {
 private:
   String_t number_i;
@@ -70,29 +46,6 @@ public:
     properties_i.erase(property);
   }
 };
-
-/*
-class BaseEntityConverter {
-  BaseEntity& baseEntity_i;
-public:
-  BaseEntityConverter(BaseEntity& baseEntity) : baseEntity_i(baseEntity) {}
-  bool convert(const std::string& property, const std::string value) {
-    if (property == "number") {
-      baseEntity_i.setNumber(value);
-      return true;
-    } else if (property == "active") {
-      baseEntity_i.setActive(value == "true");
-      return true;
-    }
-    return false;
-  }
-};
-
-template<typename E>
-class EntityConverter : public BaseEntityConverter {
-};
-*/
-
 }
 
 #endif //__ENTITY_H__

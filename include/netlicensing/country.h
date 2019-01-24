@@ -3,6 +3,7 @@
 
 #include <list>
 
+#include "netlicensing/constants.h"
 #include "netlicensing/entity.h"
 
 namespace netlicensing {
@@ -58,7 +59,8 @@ namespace netlicensing {
 
       std::stringstream ss;
       ss << "Country [";
-      ss << "name: ";
+      ss << NAME;
+      ss << ": ";
       ss << name;
       ss << ", ";
       ss << "isEu: ";

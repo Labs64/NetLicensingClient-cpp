@@ -3,6 +3,7 @@
 
 #include <list>
 
+#include "netlicensing/constants.h"
 #include "netlicensing/entity.h"
 
 namespace netlicensing {
@@ -10,7 +11,7 @@ namespace netlicensing {
   class License : public BaseEntity {
   private:
     String_t name_i;
-    String_t price_i;//TODO(AY): change type to Double ?
+    String_t price_i;//TODO(AY): change type to Double
     String_t currency_i;//TODO(AY): change type to Currency
     Boolean_t hidden_i = false;
     String_t licenseeNumber_i;
@@ -80,28 +81,36 @@ namespace netlicensing {
 
       std::stringstream ss;
       ss << "License [";
-      ss << "name: ";
+      ss << NAME;
+      ss << ": ";
       ss << name;
       ss << ", ";
-      ss << "number: ";
+      ss << NUMBER;
+      ss << ": ";
       ss << number;
       ss << ", ";
-      ss << "active: ";
+      ss << ACTIVE;
+      ss << ": ";
       ss << active.toString();
       ss << ", ";
-      ss << "price: ";
+      ss << PRICE;
+      ss << ": ";
       ss << price;
       ss << ", ";
-      ss << "currency: ";
+      ss << CURRENCY;
+      ss << ": ";
       ss << currency;
       ss << ", ";
-      ss << "hidden: ";
+      ss << HIDDEN;
+      ss << ": ";
       ss << hidden.toString();
       ss << ", ";
-      ss << "licenseeNumber: ";
+      ss << LICENSEE_NUMBER;
+      ss << ": ";
       ss << licenseeNumber;
       ss << ", ";
-      ss << "licenseTemplateNumber: ";
+      ss << LICENSE_TEMPLATE_NUMBER;
+      ss << ": ";
       ss << licenseTemplateNumber;
       ss << "]";
       return ss.str();

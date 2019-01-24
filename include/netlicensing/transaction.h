@@ -3,14 +3,15 @@
 
 #include <list>
 
+#include "netlicensing/constants.h"
 #include "netlicensing/entity.h"
 
 namespace netlicensing {
 
   class Transaction : public BaseEntity {
   private:
-    String_t status_i;//TODO(AY): change type to Status ?
-    String_t source_i;//TODO(AY): change type to Source ?
+    String_t status_i;//TODO(AY): change type to Status
+    String_t source_i;//TODO(AY): change type to Source
     String_t grandTotal_i;//TODO(AY): change type to Num
     String_t discount_i;//TODO(AY): change type to Num
     String_t currency_i;//TODO(AY): change type to Currency
@@ -90,31 +91,40 @@ namespace netlicensing {
 
       std::stringstream ss;
       ss << "Transaction [";
-      ss << "number: ";
+      ss << NUMBER;
+      ss << ": ";
       ss << number;
       ss << ", ";
-      ss << "active: ";
+      ss << ACTIVE;
+      ss << ": ";
       ss << active.toString();
       ss << ", ";
-      ss << "status: ";
+      ss << STATUS;
+      ss << ": ";
       ss << status;
       ss << ", ";
-      ss << "source: ";
+      ss << SOURCE;
+      ss << ": ";
       ss << source;
       ss << ", ";
-      ss << "grandTotal: ";
+      ss << GRAND_TOTAL;
+      ss << ": ";
       ss << grandTotal;
       ss << ", ";
-      ss << "discount: ";
+      ss << DISCOUNT;
+      ss << ": ";
       ss << discount;
       ss << ", ";
-      ss << "currency: ";
+      ss << CURRENCY;
+      ss << ": ";
       ss << currency;
       ss << ", ";
-      ss << "dateCreated: ";
+      ss << DATE_CREATED;
+      ss << ": ";
       ss << dateCreated;
       ss << ", ";
-      ss << "dateClosed: ";
+      ss << DATE_CLOSED;
+      ss << ": ";
       ss << dateClosed;
       ss << "]";
       return ss.str();

@@ -72,15 +72,6 @@ int main(int argc, char* argv[]) {
       }
     }
 
-    std::list<Country> countries = UtilityService::listCountries(ctx);
-    if (countries.size()) {
-      std::cout << "Countries:" << std::endl;
-      for (auto const& i : countries) {
-        std::string countryString = i.toString();
-        std::cout << countryString << std::endl;
-      }
-    }
-
     // endregion
 
     // region ********* Product

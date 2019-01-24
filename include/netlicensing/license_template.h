@@ -3,6 +3,7 @@
 
 #include <list>
 
+#include "netlicensing/constants.h"
 #include "netlicensing/entity.h"
 
 namespace netlicensing {
@@ -12,7 +13,7 @@ namespace netlicensing {
     String_t name_i;
     String_t licenseType_i;//TODO(AY): change type to LicenseType
     String_t productModuleNumber_i;
-    String_t price_i;//TODO(AY): change type to Double ?
+    String_t price_i;//TODO(AY): change type to Double
     String_t currency_i;//TODO(AY): change type to Currency
     Boolean_t automatic_i = false;
     Boolean_t hidden_i = false;
@@ -100,34 +101,44 @@ namespace netlicensing {
 
       std::stringstream ss;
       ss << "LicenseTemplate [";
-      ss << "name: ";
+      ss << NAME;
+      ss << ": ";
       ss << name;
       ss << ", ";
-      ss << "number: ";
+      ss << NUMBER;
+      ss << ": ";
       ss << number;
       ss << ", ";
-      ss << "active: ";
+      ss << ACTIVE;
+      ss << ": ";
       ss << active.toString();
       ss << ", ";
-      ss << "licenseType: ";
+      ss << LICENSE_TYPE;
+      ss << ": ";
       ss << licenseType;
       ss << ", ";
-      ss << "productModuleNumber: ";
+      ss << PRODUCT_MODULE_NUMBER;
+      ss << ": ";
       ss << productModuleNumber;
       ss << ", ";
-      ss << "price: ";
+      ss << PRICE;
+      ss << ": ";
       ss << price;
       ss << ", ";
-      ss << "currency: ";
+      ss << CURRENCY;
+      ss << ": ";
       ss << currency;
       ss << ", ";
-      ss << "automatic: ";
+      ss << AUTOMATIC;
+      ss << ": ";
       ss << automatic.toString();
       ss << ", ";
-      ss << "hidden: ";
+      ss << HIDDEN;
+      ss << ": ";
       ss << hidden.toString();
       ss << ", ";
-      ss << "hideLicenses: ";
+      ss << HIDE_LICENSES;
+      ss << ": ";
       ss << hideLicenses.toString();
       ss << "]";
       return ss.str();

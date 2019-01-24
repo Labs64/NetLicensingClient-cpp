@@ -3,6 +3,7 @@
 
 #include <list>
 
+#include "netlicensing/constants.h"
 #include "netlicensing/entity.h"
 
 namespace netlicensing {
@@ -49,19 +50,24 @@ namespace netlicensing {
 
       std::stringstream ss;
       ss << "ProductModule [";
-      ss << "name: ";
+      ss << NAME;
+      ss << ": ";
       ss << name;
       ss << ", ";
-      ss << "number: ";
+      ss << NUMBER;
+      ss << ": ";
       ss << number;
       ss << ", ";
-      ss << "active: ";
+      ss << ACTIVE;
+      ss << ": ";
       ss << active.toString();
       ss << ", ";
-      ss << "licensingModel: ";
+      ss << LICENSING_MODEL;
+      ss << ": ";
       ss << licensingModel;
       ss << ", ";
-      ss << "productNumber: ";
+      ss << PRODUCT_NUMBER;
+      ss << ": ";
       ss << productNumber;
       ss << "]";
       return ss.str();
