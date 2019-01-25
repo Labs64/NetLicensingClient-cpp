@@ -114,6 +114,19 @@ namespace netlicensing {
   static const char* const VALIDATION_RESULT_TYPE = "ProductModuleValidation";
   static const int DEFAULT_TTL_MINUTES = 60 * 24; // 1 day
 
+  //LicensingModel
+  static const char* const VALID = "valid";
+  static const char* const LICENSING_MODEL_TRY_AND_BUY_NAME = "TryAndBuy";
+  static const char* const LICENSING_MODEL_RENTAL_NAME = "Rental";
+  static const char* const LICENSING_MODEL_SUBSCRIPTION_NAME = "Subscription";
+  static const char* const LICENSING_MODEL_FLOATING_NAME = "Floating";
+  static const char* const LICENSING_MODEL_MULTI_FEATURE_NAME = "MultiFeature";
+  static const char* const LICENSING_MODEL_PAY_PER_USE_NAME = "PayPerUse";
+  static const char* const LICENSING_MODEL_PRICING_TABLE_NAME = "PricingTable";
+  static const char* const LICENSING_MODEL_PRICING_TABLE_PLAN = "plan";
+  static const char* const LICENSING_MODEL_PRICING_TABLE_SKU = "sku";
+  static const char* const LICENSING_MODEL_QUOTA_NAME = "Quota";
+
 }  // namespace netlicensing
 
 #endif  // __CONSTANTS_H__

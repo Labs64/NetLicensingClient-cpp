@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
     ProductModule newProductModule;
     newProductModule.setNumber(productModuleNumber);
     newProductModule.setName("Demo product module");
-    newProductModule.setLicensingModel("TryAndBuy");
+    newProductModule.setLicensingModel(LICENSING_MODEL_TRY_AND_BUY_NAME);
     newProductModule.setProductNumber(productNumber);
 
     ProductModule productModule = ProductModuleService::create(ctx, newProductModule);
@@ -350,7 +350,7 @@ int main(int argc, char* argv[]) {
     std::cout << "Created APIKey: " << apiKey.getNumber().toString() << std::endl;
 
     newToken.setTokenType("SHOP");
-    newToken.addProperty("licenseeNumber", licenseeNumber);
+    newToken.addProperty(LICENSEE_NUMBER, licenseeNumber);
     ctx.set_security_mode(netlicensing::Context::APIKEY_IDENTIFICATION);
     ctx.set_api_key(apiKey.getNumber().toString());
     Token shopToken = TokenService::create(ctx, newToken);
@@ -358,7 +358,7 @@ int main(int argc, char* argv[]) {
     std::string tokenString(shopToken.toString());
     std::cout << "Got the following shop token: " << tokenString << std::endl;
 
-    std::list<Token> tokens = TokenService::list(ctx, "tokenType=SHOP");
+    std::list<Token> tokens = TokenService::list(ctx, std::string(TOKEN_TYPE)+"=SHOP");
     if (tokens.size()) {
       std::cout << "Got the following shop tokens: " << std::endl;
       for (auto const& i : tokens) {
@@ -370,7 +370,7 @@ int main(int argc, char* argv[]) {
     TokenService::del(ctx, shopToken.getNumber(), true);
     std::cout << "Deleted shop token!" << std::endl;
 
-    tokens = TokenService::list(ctx, "tokenType=SHOP");
+    tokens = TokenService::list(ctx, std::string(TOKEN_TYPE)+"=SHOP");
     if (tokens.size()) {
       std::cout << "Got the following shop tokens after delete: " << std::endl;
       for (auto const& i : tokens) {
@@ -411,7 +411,7 @@ int main(int argc, char* argv[]) {
 
     LicenseeService::transfer(ctx, licensee.getNumber(), transferLicensee.getNumber());
 
-    licenses = LicenseService::list(ctx, "licenseeNumber="+licensee.getNumber().toString());
+    licenses = LicenseService::list(ctx, std::string(LICENSEE_NUMBER)+"="+licensee.getNumber().toString());
     if (licenses.size()) {
       std::cout << "Got the following licenses after transfer:" << std::endl;
       for (auto const& i : licenses) {
@@ -437,7 +437,7 @@ int main(int argc, char* argv[]) {
     LicenseeService::transfer(ctx, licensee.getNumber(), transferLicenseeWithApiKey.getNumber());
     ctx.set_security_mode(netlicensing::Context::BASIC_AUTHENTICATION);
 
-    licenses = LicenseService::list(ctx, "licenseeNumber="+licensee.getNumber().toString());
+    licenses = LicenseService::list(ctx, std::string(LICENSEE_NUMBER)+"="+licensee.getNumber().toString());
     if (licenses.size()) {
       std::cout << "Got the following licenses after transfer: " << std::endl;
       for (auto const& i : licenses) {
@@ -449,7 +449,7 @@ int main(int argc, char* argv[]) {
     // endregion
 
     // region ********* Transactions
-    std::list<Transaction> transactions = TransactionService::list(ctx, "shopOnly=true");
+    std::list<Transaction> transactions = TransactionService::list(ctx, std::string(SOURCE_SHOP_ONLY)+"=true");
     if (transactions.size()) {
       std::cout << "Got the following transactions shop only: " << std::endl;
       for (auto const& i : transactions) {
