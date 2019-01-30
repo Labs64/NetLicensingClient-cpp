@@ -58,7 +58,7 @@ namespace netlicensing {
       return amountPercent_i;
     }
 
-    String_t toString() {
+    std::string toString() {
       std::string totalPrice(this->getTotalPrice());
       std::string currency(this->getCurrency());
       std::string amountFix(this->getAmountFix());
@@ -153,44 +153,24 @@ namespace netlicensing {
       return productDiscountsToched;
     }
 
-    String_t toString() const {
-      std::string name(this->getName());
-      std::string number(this->getNumber());
-      Boolean_t active(this->getActive());
-      std::string version(this->getVersion());
-      std::string licenseeAutoCreate(this->getLicenseeAutoCreate() == true?"true":"false");
-      std::string description(this->getDescription());
-      std::string licensingInfo(this->getLicensingInfo());
+    std::string toString() const {
+      std::string name(getName());
+      std::string number(getNumber());
+      Boolean_t active(getActive());
+      std::string version(getVersion());
+      std::string licenseeAutoCreate(getLicenseeAutoCreate() == true?"true":"false");
+      std::string description(getDescription());
+      std::string licensingInfo(getLicensingInfo());
 
       std::stringstream ss;
         ss << "Product [";
-        ss << NAME;
-        ss << ": ";
-        ss << name;
-        ss << ", ";
-        ss << NUMBER;
-        ss << ": ";
-        ss << number;
-        ss << ", ";
-        ss << ACTIVE;
-        ss << ": ";
-        ss << active.toString();
-        ss << ", ";
-        ss << VERSION;
-        ss << ": ";
-        ss << version;
-        ss << ", ";
-        ss << LICENSEE_AUTO_CREATE;
-        ss << ": ";
-        ss << licenseeAutoCreate;
-        ss << ", ";
-        ss << DESCRIPTION;
-        ss << ": ";
-        ss << description;
-        ss << ", ";
-        ss << LICENSING_INFO;
-        ss << ": ";
-        ss << licensingInfo;
+        ss << NAME  << ": " << name << ", ";
+        ss << NUMBER << ": " << number << ", ";
+        ss << ACTIVE << ": " << active.toString() << ", ";
+        ss << VERSION << ": " << version << ", ";
+        ss << LICENSEE_AUTO_CREATE << ": " << licenseeAutoCreate << ", ";
+        ss << DESCRIPTION << ": " << description << ", ";
+        ss << LICENSING_INFO << ": " << licensingInfo;
         ss << "]";
       return ss.str();
     }

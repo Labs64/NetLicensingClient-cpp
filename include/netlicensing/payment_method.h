@@ -13,19 +13,14 @@ namespace netlicensing {
 
   public:
 
-    String_t toString() const {
-      std::string number(this->getNumber());
-      Boolean_t active(this->getActive());
+    std::string toString() const {
+      std::string number(getNumber());
+      Boolean_t active(getActive());
 
       std::stringstream ss;
       ss << "PaymentMethod [";
-      ss << NUMBER;
-      ss << ": ";
-      ss << number;
-      ss << ", ";
-      ss << ACTIVE;
-      ss << ": ";
-      ss << active.toString();
+      ss << NUMBER << ": " << number << ", ";
+      ss << ACTIVE << ": " << active.toString();
       ss << "]";
       return ss.str();
     }

@@ -17,7 +17,7 @@ template<> inline std::string endpoint<License>() { return std::string(LICENSE_E
 template<> inline std::string endpoint<PaymentMethod>() { return std::string(PAYMENT_METHOD_ENDPOINT_PATH); }
 template<> inline std::string endpoint<Token>() { return std::string(TOKEN_ENDPOINT_PATH); }
 template<> inline std::string endpoint<Transaction>() { return std::string(TRANSACTION_ENDPOINT_PATH); }
-template<> inline std::string endpoint<Country>() { return UTILITY_ENDPOINT_PATH + "/" +std::string(ENDPOINT_PATH_COUNTRIES); }
+template<> inline std::string endpoint<Country>() { return std::string(UTILITY_ENDPOINT_PATH) + "/" +std::string(ENDPOINT_PATH_COUNTRIES); }
 template<> inline std::string endpoint<LicensingModel>() { return UTILITY_ENDPOINT_PATH + "/" + std::string(ENDPOINT_PATH_LICENSING_MODELS); }
 template<> inline std::string endpoint<LicenseType>() { return UTILITY_ENDPOINT_PATH + "/" + std::string(ENDPOINT_PATH_LICENSE_TYPES); }
 

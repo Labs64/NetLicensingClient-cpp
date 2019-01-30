@@ -51,26 +51,18 @@ namespace netlicensing {
       return vatPercent_i;
     }
 
-    String_t toString() const {
-      std::string name(this->getName());
-      std::string isEu(this->getIsEu() == true?"true":"false");
-      std::string code(this->getCode());
-      std::string vatPercent(this->getVatPercent());
+    std::string toString() const {
+      std::string name(getName());
+      std::string isEu(getIsEu() == true?"true":"false");
+      std::string code(getCode());
+      std::string vatPercent(getVatPercent());
 
       std::stringstream ss;
       ss << "Country [";
-      ss << NAME;
-      ss << ": ";
-      ss << name;
-      ss << ", ";
-      ss << "isEu: ";
-      ss << isEu;
-      ss << ", ";
-      ss << "code: ";
-      ss << code;
-      ss << ", ";
-      ss << "vatPercent: ";
-      ss << vatPercent;
+      ss << NAME << ": " << name << ", ";
+      ss << "isEu: " << isEu << ", ";
+      ss << "code: " << code << ", ";
+      ss << "vatPercent: " << vatPercent;
       ss << "]";
       return ss.str();
     }

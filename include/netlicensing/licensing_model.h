@@ -23,14 +23,12 @@ namespace netlicensing {
       return name_i;
     }
 
-    String_t toString() const {
-      std::string name(this->getName());
+    std::string toString() const {
+      std::string name(getName());
 
       std::stringstream ss;
       ss << "LicensingModel [";
-      ss << NAME;
-      ss << ": ";
-      ss << name;
+      ss << NAME << ": " << name;
       ss << "]";
       return ss.str();
     }

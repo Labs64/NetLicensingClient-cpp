@@ -36,7 +36,7 @@ namespace netlicensing {
     parameters_type params = toParametersList<BaseEntity>(value);
     params.push_back(std::make_pair(NAME, value.getName()));
     params.push_back(std::make_pair(VERSION, value.getVersion()));
-    params.push_back(std::make_pair(LICENSEE_AUTOCREATE, value.getLicenseeAutoCreate().toString()));
+    params.push_back(std::make_pair(LICENSEE_AUTO_CREATE, value.getLicenseeAutoCreate().toString()));
     params.push_back(std::make_pair(DESCRIPTION, value.getDescription()));
     params.push_back(std::make_pair(LICENSING_INFO, value.getLicensingInfo()));
 
@@ -69,9 +69,9 @@ namespace netlicensing {
     parameters_type params = toParametersList<BaseEntity>(value);
     params.push_back(std::make_pair(NAME, value.getName()));
     params.push_back(std::make_pair(PRODUCT_MODULE_NUMBER, value.getProductModuleNumber()));
-    params.push_back(std::make_pair(LICENSE_TYPE, value.getLicenseType()));
-    params.push_back(std::make_pair(PRICE, value.getPrice()));
-    params.push_back(std::make_pair(CURRENCY, value.getCurrency()));
+    params.push_back(std::make_pair(LICENSE_TYPE, licenseTypeToString(value.getLicenseType())));
+    params.push_back(std::make_pair(PRICE, value.getPrice().toString()));
+    params.push_back(std::make_pair(CURRENCY, currencyToString(value.getCurrency())));
     params.push_back(std::make_pair(AUTOMATIC, value.getAutomatic().toString()));
     params.push_back(std::make_pair(HIDDEN, value.getHidden().toString()));
     params.push_back(std::make_pair(HIDE_LICENSES, value.getHideLicenses().toString()));
@@ -97,8 +97,8 @@ namespace netlicensing {
   inline parameters_type toParametersList<License>(License value) {
     parameters_type params = toParametersList<BaseEntity>(value);
     params.push_back(std::make_pair(NAME, value.getName()));
-    params.push_back(std::make_pair(PRICE, value.getPrice()));
-    params.push_back(std::make_pair(CURRENCY, value.getCurrency()));
+    params.push_back(std::make_pair(PRICE, value.getPrice().toString()));
+    params.push_back(std::make_pair(CURRENCY, currencyToString(value.getCurrency())));
     params.push_back(std::make_pair(HIDDEN, value.getHidden().toString()));
     params.push_back(std::make_pair(LICENSEE_NUMBER, value.getLicenseeNumber()));
     params.push_back(std::make_pair(LICENSE_TEMPLATE_NUMBER, value.getLicenseTemplateNumber()));
@@ -109,21 +109,21 @@ namespace netlicensing {
   inline parameters_type toParametersList<Token>(Token value) {
     parameters_type params = toParametersList<BaseEntity>(value);
     params.push_back(std::make_pair(VENDOR_NUMBER, value.getVendorNumber()));
-    params.push_back(std::make_pair(EXPIRATION_TIME, value.getExpirationTime()));
-    params.push_back(std::make_pair(TOKEN_TYPE, value.getTokenType()));
+    params.push_back(std::make_pair(EXPIRATION_TIME, value.getExpirationTime().toString()));
+    params.push_back(std::make_pair(TOKEN_TYPE, tokenTypeToString(value.getTokenType())));
     return params;
   }
 
   template<>
   inline parameters_type toParametersList<Transaction>(Transaction value) {
     parameters_type params = toParametersList<BaseEntity>(value);
-    params.push_back(std::make_pair(STATUS, value.getStatus()));
-    params.push_back(std::make_pair(SOURCE, value.getSource()));
-    params.push_back(std::make_pair(GRAND_TOTAL, value.getGrandTotal()));
-    params.push_back(std::make_pair(DISCOUNT, value.getDiscount()));
-    params.push_back(std::make_pair(CURRENCY, value.getCurrency()));
-    params.push_back(std::make_pair(DATE_CREATED, value.getDateCreated()));
-    params.push_back(std::make_pair(DATE_CLOSED, value.getDateClosed()));
+    params.push_back(std::make_pair(STATUS, transactionStatusToString(value.getStatus())));
+    params.push_back(std::make_pair(SOURCE, transactionSourceToString(value.getSource())));
+    params.push_back(std::make_pair(GRAND_TOTAL, value.getGrandTotal().toString()));
+    params.push_back(std::make_pair(DISCOUNT, value.getDiscount().toString()));
+    params.push_back(std::make_pair(CURRENCY, currencyToString(value.getCurrency())));
+    params.push_back(std::make_pair(DATE_CREATED, value.getDateCreated().toString()));
+    params.push_back(std::make_pair(DATE_CLOSED, value.getDateClosed().toString()));
 
     return params;
   }

@@ -3,6 +3,7 @@
 
 #include <list>
 #include <string>
+#include "netlicensing/datatypes.h"
 
 namespace netlicensing {
 
@@ -12,7 +13,7 @@ namespace netlicensing {
   static const char* const NUMBER  = "number";
   static const char* const NAME    = "name";
   static const char* const VERSION = "version";
-  static const char* const LICENSEE_AUTOCREATE = "licenseeAutoCreate";
+  static const char* const DEPRECATED(LICENSEE_AUTOCREATE) = "licenseeAutoCreate";
   static const char* const DELETED = "deleted";
   static const char* const CASCADE = "forceCascade";
   static const char* const PRICE   = "price";

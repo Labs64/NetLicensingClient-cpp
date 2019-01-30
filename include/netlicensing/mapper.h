@@ -158,13 +158,13 @@ namespace netlicensing {
       } else if (key == NAME) {
         item_i.setName(value);
       } else if (key == LICENSE_TYPE) {
-        item_i.setLicenseType(value);
+        item_i.setLicenseType(stringToLicenseType(value));
       } else if (key == PRODUCT_MODULE_NUMBER) {
         item_i.setProductModuleNumber(value);
       } else if (key == PRICE) {
-        item_i.setPrice(value);
+        item_i.setPrice(FixedPoint(value));
       } else if (key == CURRENCY) {
-        item_i.setCurrency(value);
+        item_i.setCurrency(stringToCurrency(value));
       } else if (key == AUTOMATIC) {
         item_i.setAutomatic((value == "true"?true:false));
       } else if (key == HIDDEN) {
@@ -212,9 +212,9 @@ namespace netlicensing {
       } else if (key == NAME) {
         item_i.setName(value);
       } else if (key == PRICE) {
-        item_i.setPrice(value);
+        item_i.setPrice(FixedPoint(value));
       } else if (key == CURRENCY) {
-        item_i.setCurrency(value);
+        item_i.setCurrency(stringToCurrency(value));
       } else if (key == HIDDEN) {
         item_i.setHidden((value == "true"?true:false));
       } else if (key == LICENSEE_NUMBER) {
@@ -311,7 +311,7 @@ namespace netlicensing {
       } else if (key == EXPIRATION_TIME) {
         item_i.setExpirationTime(value);
       } else if (key == TOKEN_TYPE) {
-        item_i.setTokenType(value);
+        item_i.setTokenType(stringToTokenType(value));
       }
     }
   };
@@ -330,15 +330,15 @@ namespace netlicensing {
       } else if (key == ACTIVE) {
         item_i.setActive(value.c_str());
       } else if (key == STATUS) {
-        item_i.setStatus(value);
+        item_i.setStatus(stringToTransactionStatus(value));
       } else if (key == SOURCE) {
-        item_i.setSource(value);
+        item_i.setSource(stringToTransactionSource(value));
       } else if (key == GRAND_TOTAL) {
-        item_i.setGrandTotal(value);
+        item_i.setGrandTotal(FixedPoint(value));
       } else if (key == DISCOUNT) {
-        item_i.setDiscount(value);
+        item_i.setDiscount(FixedPoint(value));
       } else if (key == CURRENCY) {
-        item_i.setCurrency(value);
+        item_i.setCurrency(stringToCurrency(value));
       } else if (key == DATE_CREATED) {
         item_i.setDateCreated(value);
       } else if (key == DATE_CLOSED) {

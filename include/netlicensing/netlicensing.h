@@ -16,15 +16,6 @@
 #include "netlicensing/transaction.h"
 #include "netlicensing/licensing_model.h"
 
-#ifdef __GNUC__
-  #define DEPRECATED(decl) decl __attribute__ ((deprecated))
-#elif defined(_MSC_VER)
-  #define DEPRECATED(decl) __declspec(deprecated) decl
-#else
-  #pragma message("WARNING: DEPRECATED declaration for this compiler is not defined")
-  #define DEPRECATED(decl) decl
-#endif
-
 namespace netlicensing {
 
 class ProductService {

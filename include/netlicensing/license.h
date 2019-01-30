@@ -5,14 +5,15 @@
 
 #include "netlicensing/constants.h"
 #include "netlicensing/entity.h"
+#include "netlicensing/datatypes.h"
 
 namespace netlicensing {
 
   class License : public BaseEntity {
   private:
     String_t name_i;
-    String_t price_i;//TODO(AY): change type to Double
-    String_t currency_i;//TODO(AY): change type to Currency
+    FixedPoint price_i = FixedPoint(0);
+    Currency currency_i;
     Boolean_t hidden_i = false;
     String_t licenseeNumber_i;
     String_t licenseTemplateNumber_i;
@@ -29,19 +30,19 @@ namespace netlicensing {
       return name_i;
     }
 
-    void setPrice(const String_t& price) {
+    void setPrice(const FixedPoint& price) {
       price_i = price;
     }
 
-    const String_t& getPrice() const {
+    const FixedPoint& getPrice() const {
       return price_i;
     }
 
-    void setCurrency(const String_t& currency) {
+    void setCurrency(const Currency currency) {
       currency_i = currency;
     }
 
-    const String_t& getCurrency() const {
+    const Currency getCurrency() const {
       return currency_i;
     }
 
@@ -69,49 +70,26 @@ namespace netlicensing {
       return licenseTemplateNumber_i;
     }
 
-    String_t toString() const {
-      std::string name(this->getName());
-      std::string number(this->getNumber());
-      Boolean_t active(this->getActive());
-      std::string price(this->getPrice());
-      std::string currency(this->getCurrency());
-      Boolean_t hidden(this->getHidden());
-      std::string licenseeNumber(this->getLicenseeNumber());
-      std::string licenseTemplateNumber(this->getLicenseTemplateNumber());
+    std::string toString() const {
+      std::string name(getName());
+      std::string number(getNumber());
+      Boolean_t active(getActive());
+      std::string price(getPrice().toString());
+      std::string currency(currencyToString(getCurrency()));
+      Boolean_t hidden(getHidden());
+      std::string licenseeNumber(getLicenseeNumber());
+      std::string licenseTemplateNumber(getLicenseTemplateNumber());
 
       std::stringstream ss;
       ss << "License [";
-      ss << NAME;
-      ss << ": ";
-      ss << name;
-      ss << ", ";
-      ss << NUMBER;
-      ss << ": ";
-      ss << number;
-      ss << ", ";
-      ss << ACTIVE;
-      ss << ": ";
-      ss << active.toString();
-      ss << ", ";
-      ss << PRICE;
-      ss << ": ";
-      ss << price;
-      ss << ", ";
-      ss << CURRENCY;
-      ss << ": ";
-      ss << currency;
-      ss << ", ";
-      ss << HIDDEN;
-      ss << ": ";
-      ss << hidden.toString();
-      ss << ", ";
-      ss << LICENSEE_NUMBER;
-      ss << ": ";
-      ss << licenseeNumber;
-      ss << ", ";
-      ss << LICENSE_TEMPLATE_NUMBER;
-      ss << ": ";
-      ss << licenseTemplateNumber;
+      ss << NAME << ": " << name << ", ";
+      ss << NUMBER << ": " << number << ", ";
+      ss << ACTIVE << ": " << active.toString() << ", ";
+      ss << PRICE << ": " << price << ", ";
+      ss << CURRENCY << ": " << currency << ", ";
+      ss << HIDDEN << ": " << hidden.toString() << ", ";
+      ss << LICENSEE_NUMBER << ": " << licenseeNumber << ", ";
+      ss << LICENSE_TEMPLATE_NUMBER << ": " << licenseTemplateNumber;
       ss << "]";
       return ss.str();
     }

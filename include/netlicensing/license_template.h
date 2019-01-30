@@ -11,10 +11,10 @@ namespace netlicensing {
   class LicenseTemplate : public BaseEntity {
   private:
     String_t name_i;
-    String_t licenseType_i;//TODO(AY): change type to LicenseType
+    LicenseTypeEnum licenseType_i;
     String_t productModuleNumber_i;
-    String_t price_i;//TODO(AY): change type to Double
-    String_t currency_i;//TODO(AY): change type to Currency
+    FixedPoint price_i = FixedPoint(0);
+    Currency currency_i;
     Boolean_t automatic_i = false;
     Boolean_t hidden_i = false;
     Boolean_t hideLicenses_i = false;
@@ -31,11 +31,11 @@ namespace netlicensing {
       return name_i;
     }
 
-    void setLicenseType(const String_t& licenseType) {
+    void setLicenseType(const LicenseTypeEnum licenseType) {
       licenseType_i = licenseType;
     }
 
-    const String_t& getLicenseType() const {
+    const LicenseTypeEnum getLicenseType() const {
       return licenseType_i;
     }
 
@@ -47,19 +47,19 @@ namespace netlicensing {
       return productModuleNumber_i;
     }
 
-    void setPrice(const String_t& price) {
+    void setPrice(const FixedPoint& price) {
       price_i = price;
     }
 
-    const String_t& getPrice() const {
+    const FixedPoint& getPrice() const {
       return price_i;
     }
 
-    void setCurrency(const String_t& currency) {
+    void setCurrency(const Currency currency) {
       currency_i = currency;
     }
 
-    const String_t& getCurrency() const {
+    const Currency getCurrency() const {
       return currency_i;
     }
 
@@ -87,59 +87,30 @@ namespace netlicensing {
       return hideLicenses_i;
     }
 
-    String_t toString() const {
-      std::string name(this->getName());
-      std::string number(this->getNumber());
-      Boolean_t active(this->getActive());
-      std::string licenseType(this->getLicenseType());
-      std::string productModuleNumber(this->getProductModuleNumber());
-      std::string price(this->getPrice());
-      std::string currency(this->getCurrency());
-      Boolean_t automatic(this->getAutomatic());
-      Boolean_t hidden(this->getHidden());
-      Boolean_t hideLicenses(this->getHideLicenses());
+    std::string toString() const {
+      std::string name(getName());
+      std::string number(getNumber());
+      Boolean_t active(getActive());
+      std::string licenseType(licenseTypeToString(getLicenseType()));
+      std::string productModuleNumber(getProductModuleNumber());
+      std::string price(getPrice().toString());
+      std::string currency(currencyToString(getCurrency()));
+      Boolean_t automatic(getAutomatic());
+      Boolean_t hidden(getHidden());
+      Boolean_t hideLicenses(getHideLicenses());
 
       std::stringstream ss;
       ss << "LicenseTemplate [";
-      ss << NAME;
-      ss << ": ";
-      ss << name;
-      ss << ", ";
-      ss << NUMBER;
-      ss << ": ";
-      ss << number;
-      ss << ", ";
-      ss << ACTIVE;
-      ss << ": ";
-      ss << active.toString();
-      ss << ", ";
-      ss << LICENSE_TYPE;
-      ss << ": ";
-      ss << licenseType;
-      ss << ", ";
-      ss << PRODUCT_MODULE_NUMBER;
-      ss << ": ";
-      ss << productModuleNumber;
-      ss << ", ";
-      ss << PRICE;
-      ss << ": ";
-      ss << price;
-      ss << ", ";
-      ss << CURRENCY;
-      ss << ": ";
-      ss << currency;
-      ss << ", ";
-      ss << AUTOMATIC;
-      ss << ": ";
-      ss << automatic.toString();
-      ss << ", ";
-      ss << HIDDEN;
-      ss << ": ";
-      ss << hidden.toString();
-      ss << ", ";
-      ss << HIDE_LICENSES;
-      ss << ": ";
-      ss << hideLicenses.toString();
+      ss << NAME << ": " << name << ", ";
+      ss << NUMBER << ": " << number << ", ";
+      ss << ACTIVE << ": " << active.toString() << ", ";
+      ss << LICENSE_TYPE << ": " << licenseType << ", ";
+      ss << PRODUCT_MODULE_NUMBER << ": " << productModuleNumber << ", ";
+      ss << PRICE << ": " << price << ", ";
+      ss << CURRENCY << ": " << currency << ", ";
+      ss << AUTOMATIC << ": " << automatic.toString() << ", ";
+      ss << HIDDEN << ": " << hidden.toString() << ", ";
+      ss << HIDE_LICENSES << ": " << hideLicenses.toString();
       ss << "]";
       return ss.str();
     }

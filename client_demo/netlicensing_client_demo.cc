@@ -7,6 +7,8 @@
 #include "netlicensing/validation_parameters.h"
 #include "netlicensing/context.h"
 #include "netlicensing/constants.h"
+#include "netlicensing/datatypes.h"
+#include "netlicensing/entity.h"
 
 void cleanUp (netlicensing::Context& ctx, const std::string& productNumber, bool forceCascade) {
   //clean up
@@ -58,8 +60,7 @@ int main(int argc, char* argv[]) {
     if (licenseTypes.size()) {
       std::cout << "License Types:" << std::endl;
       for (auto const& i : licenseTypes) {
-        std::string licenseTypesString = i.toString();
-        std::cout << licenseTypesString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -67,8 +68,7 @@ int main(int argc, char* argv[]) {
     if (licensingModels.size()) {
       std::cout << "LicensingModel:" << std::endl;
       for (auto const& i : licensingModels) {
-        std::string licensingModelString = i.toString();
-        std::cout << licensingModelString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -91,8 +91,7 @@ int main(int argc, char* argv[]) {
     if (products.size()) {
       std::cout << "Got the following products:" << std::endl;
       for (auto const& i : products) {
-        productString = i.toString();
-        std::cout << productString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -110,8 +109,7 @@ int main(int argc, char* argv[]) {
     if (products.size()) {
       std::cout << "Got the following products:" << std::endl;
       for (auto const& i : products) {
-        productString = i.toString();
-        std::cout << productString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -124,8 +122,7 @@ int main(int argc, char* argv[]) {
     if (products.size()) {
       std::cout << "Got the following products:" << std::endl;
       for (auto const& i : products) {
-        productString = i.toString();
-        std::cout << productString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -150,8 +147,7 @@ int main(int argc, char* argv[]) {
     if (productModules.size()) {
       std::cout << "Got the following product modules: " << std::endl;
       for (auto const& i : productModules) {
-        productModuleString = i.toString();
-        std::cout << productModuleString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -167,8 +163,7 @@ int main(int argc, char* argv[]) {
     if (productModules.size()) {
       std::cout << "Got the following product modules: " << std::endl;
       for (auto const& i : productModules) {
-        productModuleString = i.toString();
-        std::cout << productModuleString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -180,8 +175,7 @@ int main(int argc, char* argv[]) {
     if (productModules.size()) {
       std::cout << "Got the following product modules: " << std::endl;
       for (auto const& i : productModules) {
-        productModuleString = i.toString();
-        std::cout << productModuleString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -192,9 +186,9 @@ int main(int argc, char* argv[]) {
     LicenseTemplate newLicenseTemplate;
     newLicenseTemplate.setNumber(licenseTemplateNumber);
     newLicenseTemplate.setName("Demo Evaluation Period");
-    newLicenseTemplate.setLicenseType("FEATURE");
-    newLicenseTemplate.setPrice("12.5");
-    newLicenseTemplate.setCurrency("EUR");
+    newLicenseTemplate.setLicenseType(LicenseTypeEnum::FEATURE);
+    newLicenseTemplate.setPrice(FixedPoint("12.50"));
+    newLicenseTemplate.setCurrency(Currency::EUR);
     newLicenseTemplate.setAutomatic(false);
     newLicenseTemplate.setHidden(false);
     newLicenseTemplate.setProductModuleNumber(productModuleNumber);
@@ -209,8 +203,7 @@ int main(int argc, char* argv[]) {
     if (licenseTemplates.size()) {
       std::cout << "Got the following license templates: " << std::endl;
       for (auto const& i : licenseTemplates) {
-        licenseTemplateString = i.toString();
-        std::cout << licenseTemplateString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -226,8 +219,7 @@ int main(int argc, char* argv[]) {
     if (licenseTemplates.size()) {
       std::cout << "Got the following license templates: " << std::endl;
       for (auto const& i : licenseTemplates) {
-        licenseTemplateString = i.toString();
-        std::cout << licenseTemplateString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -239,8 +231,7 @@ int main(int argc, char* argv[]) {
     if (licenseTemplates.size()) {
       std::cout << "Got the following license templates: " << std::endl;
       for (auto const& i : licenseTemplates) {
-        licenseTemplateString = i.toString();
-        std::cout << licenseTemplateString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -261,8 +252,7 @@ int main(int argc, char* argv[]) {
     if (licensees.size()) {
       std::cout << "Got the following licensees:" << std::endl;
       for (auto const& i : licensees) {
-        licenseeString = i.toString();
-        std::cout << licenseeString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -273,8 +263,7 @@ int main(int argc, char* argv[]) {
     if (licensees.size()) {
       std::cout << "Got the following licensees after delete: " << std::endl;
       for (auto const& i : licensees) {
-        licenseeString = i.toString();
-        std::cout << licenseeString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -294,6 +283,7 @@ int main(int argc, char* argv[]) {
     newLicense.setNumber(licenseNumber);
     newLicense.setLicenseTemplateNumber(licenseTemplateNumber);
     newLicense.setLicenseeNumber(licenseeNumber);
+    newLicense.setPrice(FixedPoint("1.00"));
     License license = LicenseService::create(ctx, newLicense);
     std::cout << "Added license: " << license.getName().toString() << std::endl;
 
@@ -303,8 +293,7 @@ int main(int argc, char* argv[]) {
     if (licenses.size()) {
       std::cout << "Got the following licenses:" << std::endl;
       for (auto const& i : licenses) {
-        licenseString = i.toString();
-        std::cout << licenseString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -315,8 +304,7 @@ int main(int argc, char* argv[]) {
     if (licenses.size()) {
       std::cout << "Got the following licenses: " << std::endl;
       for (auto const& i : licenses) {
-        licenseString = i.toString();
-        std::cout << licenseString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -335,8 +323,7 @@ int main(int argc, char* argv[]) {
     if (paymentMethods.size()) {
       std::cout << "Got the payment methods:" << std::endl;
       for (auto const& i : paymentMethods) {
-        std::string paymentMethodString = i.toString();
-        std::cout << paymentMethodString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -345,11 +332,11 @@ int main(int argc, char* argv[]) {
     // region ********* Token
 
     Token newToken;
-    newToken.setTokenType("APIKEY");
+    newToken.setTokenType(TokenType::APIKEY);
     Token apiKey = TokenService::create(ctx, newToken);
     std::cout << "Created APIKey: " << apiKey.getNumber().toString() << std::endl;
 
-    newToken.setTokenType("SHOP");
+    newToken.setTokenType(TokenType::SHOP);
     newToken.addProperty(LICENSEE_NUMBER, licenseeNumber);
     ctx.set_security_mode(netlicensing::Context::APIKEY_IDENTIFICATION);
     ctx.set_api_key(apiKey.getNumber().toString());
@@ -358,29 +345,26 @@ int main(int argc, char* argv[]) {
     std::string tokenString(shopToken.toString());
     std::cout << "Got the following shop token: " << tokenString << std::endl;
 
-    std::list<Token> tokens = TokenService::list(ctx, std::string(TOKEN_TYPE)+"=SHOP");
+    std::list<Token> tokens = TokenService::list(ctx, std::string(TOKEN_TYPE)+"="+tokenTypeToString(TokenType::SHOP));
     if (tokens.size()) {
       std::cout << "Got the following shop tokens: " << std::endl;
       for (auto const& i : tokens) {
-        tokenString = i.toString();
-        std::cout << tokenString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
     TokenService::del(ctx, shopToken.getNumber(), true);
     std::cout << "Deleted shop token!" << std::endl;
 
-    tokens = TokenService::list(ctx, std::string(TOKEN_TYPE)+"=SHOP");
+    tokens = TokenService::list(ctx, std::string(TOKEN_TYPE)+"="+tokenTypeToString(TokenType::SHOP));
     if (tokens.size()) {
       std::cout << "Got the following shop tokens after delete: " << std::endl;
       for (auto const& i : tokens) {
-        tokenString = i.toString();
-        std::cout << tokenString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
     // endregion
-
 
     // region ********* Validate
 
@@ -415,8 +399,7 @@ int main(int argc, char* argv[]) {
     if (licenses.size()) {
       std::cout << "Got the following licenses after transfer:" << std::endl;
       for (auto const& i : licenses) {
-        licenseString = i.toString();
-        std::cout << licenseString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -441,8 +424,7 @@ int main(int argc, char* argv[]) {
     if (licenses.size()) {
       std::cout << "Got the following licenses after transfer: " << std::endl;
       for (auto const& i : licenses) {
-        licenseString = i.toString();
-        std::cout << licenseString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -453,8 +435,7 @@ int main(int argc, char* argv[]) {
     if (transactions.size()) {
       std::cout << "Got the following transactions shop only: " << std::endl;
       for (auto const& i : transactions) {
-        std::string transactionString(i.toString());
-        std::cout << transactionString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 
@@ -462,8 +443,7 @@ int main(int argc, char* argv[]) {
     if (transactions.size()) {
       std::cout << "Got the following transactions after transfer: " << std::endl;
       for (auto const& i : transactions) {
-        std::string transactionString(i.toString());
-        std::cout << transactionString << std::endl;
+        std::cout << i.toString() << std::endl;
       }
     }
 

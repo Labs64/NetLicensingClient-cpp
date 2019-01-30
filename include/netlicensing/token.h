@@ -11,8 +11,8 @@ namespace netlicensing {
   class Token : public BaseEntity {
   private:
     String_t vendorNumber_i;
-    String_t expirationTime_i;//TODO(AY):change to Date
-    String_t tokenType_i;//TODO(AY):change to TokenType
+    Date expirationTime_i;
+    TokenType tokenType_i;
 
   public:
     Token() : vendorNumber_i(), expirationTime_i(), tokenType_i() { }
@@ -25,50 +25,36 @@ namespace netlicensing {
       return vendorNumber_i;
     }
 
-    void setExpirationTime(const String_t& expirationTime) {
+    void setExpirationTime(const Date& expirationTime) {
       expirationTime_i = expirationTime;
     }
 
-    const String_t& getExpirationTime() const {
+    const Date& getExpirationTime() const {
       return expirationTime_i;
     }
 
-    void setTokenType(const String_t& tokenType) {
+    void setTokenType(const TokenType tokenType) {
       tokenType_i = tokenType;
     }
 
-    const String_t& getTokenType() const {
+    const TokenType getTokenType() const {
       return tokenType_i;
     }
 
-    String_t toString() const {
-      std::string number(this->getNumber());
-      Boolean_t active(this->getActive());
-      std::string vendorNumber(this->getVendorNumber());
-      std::string expirationTime(this->getExpirationTime());
-      std::string tokenType(this->getTokenType());
+    std::string toString() const {
+      std::string number(getNumber());
+      Boolean_t active(getActive());
+      std::string vendorNumber(getVendorNumber());
+      std::string expirationTime(getExpirationTime().toString());
+      std::string tokenType(tokenTypeToString(getTokenType()));
 
       std::stringstream ss;
       ss << "Token [";
-      ss << NUMBER;
-      ss << ": ";
-      ss << number;
-      ss << ", ";
-      ss << ACTIVE;
-      ss << ": ";
-      ss << active.toString();
-      ss << ", ";
-      ss << VENDOR_NUMBER;
-      ss << ": ";
-      ss << vendorNumber;
-      ss << ", ";
-      ss << EXPIRATION_TIME;
-      ss << ": ";
-      ss << expirationTime;
-      ss << ", ";
-      ss << TOKEN_TYPE;
-      ss << ": ";
-      ss << tokenType;
+      ss << NUMBER << ": " << number << ", ";
+      ss << ACTIVE << ": " << active.toString() << ", ";
+      ss << VENDOR_NUMBER << ": " << vendorNumber << ", ";
+      ss << EXPIRATION_TIME << ": " << expirationTime << ", ";
+      ss << TOKEN_TYPE << ": " << tokenType;
       ss << "]";
       return ss.str();
     }

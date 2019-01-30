@@ -10,122 +10,96 @@ namespace netlicensing {
 
   class Transaction : public BaseEntity {
   private:
-    String_t status_i;//TODO(AY): change type to Status
-    String_t source_i;//TODO(AY): change type to Source
-    String_t grandTotal_i;//TODO(AY): change type to Num
-    String_t discount_i;//TODO(AY): change type to Num
-    String_t currency_i;//TODO(AY): change type to Currency
-    String_t dateCreated_i;//TODO(AY): change type to Date
-    String_t dateClosed_i;//TODO(AY): change type to Date
+    TransactionStatus status_i;
+    TransactionSource source_i;
+    FixedPoint grandTotal_i = FixedPoint(0);
+    FixedPoint discount_i = FixedPoint(0);
+    Currency currency_i;
+    Date dateCreated_i;
+    Date dateClosed_i;
 
   public:
     Transaction() : status_i(), source_i(), grandTotal_i(),
     discount_i(), currency_i(), dateCreated_i(), dateClosed_i() { }
 
-    void setStatus(const String_t& status) {
+    void setStatus(const TransactionStatus status) {
       status_i = status;
     }
 
-    const String_t& getStatus() const {
+    const TransactionStatus getStatus() const {
       return status_i;
     }
 
-    void setSource(const String_t& source) {
+    void setSource(const TransactionSource source) {
       source_i = source;
     }
 
-    const String_t& getSource() const {
+    const TransactionSource getSource() const {
       return source_i;
     }
 
-    void setGrandTotal(const String_t& grandTotal) {
+    void setGrandTotal(const FixedPoint& grandTotal) {
       grandTotal_i = grandTotal;
     }
 
-    const String_t& getGrandTotal() const {
+    const FixedPoint& getGrandTotal() const {
       return grandTotal_i;
     }
 
-    void setDiscount(const String_t& discount) {
+    void setDiscount(const FixedPoint& discount) {
       discount_i = discount;
     }
 
-    const String_t& getDiscount() const {
+    const FixedPoint& getDiscount() const {
       return discount_i;
     }
 
-    void setCurrency(const String_t& currency) {
+    void setCurrency(const Currency currency) {
       currency_i = currency;
     }
 
-    const String_t& getCurrency() const {
+    const Currency getCurrency() const {
       return currency_i;
     }
 
-    void setDateCreated(const String_t& dateCreated) {
+    void setDateCreated(const Date& dateCreated) {
       dateCreated_i = dateCreated;
     }
 
-    const String_t& getDateCreated() const {
+    const Date& getDateCreated() const {
       return dateCreated_i;
     }
 
-    void setDateClosed(const String_t& dateClosed) {
+    void setDateClosed(const Date& dateClosed) {
       dateClosed_i = dateClosed;
     }
 
-    const String_t& getDateClosed() const {
+    const Date& getDateClosed() const {
       return dateClosed_i;
     }
 
-    String_t toString() const {
-      std::string number(this->getNumber());
-      Boolean_t active(this->getActive());
-      std::string status(this->getStatus());
-      std::string source(this->getSource());
-      std::string grandTotal(this->getGrandTotal());
-      std::string discount(this->getDiscount());
-      std::string currency(this->getCurrency());
-      std::string dateCreated(this->getDateCreated());
-      std::string dateClosed(this->getDateClosed());
+    std::string toString() const {
+      std::string number(getNumber());
+      Boolean_t active(getActive());
+      std::string status(transactionStatusToString(getStatus()));
+      std::string source(transactionSourceToString(getSource()));
+      std::string grandTotal(getGrandTotal().toString());
+      std::string discount(getDiscount().toString());
+      std::string currency(currencyToString(getCurrency()));
+      std::string dateCreated(getDateCreated().toString());
+      std::string dateClosed(getDateClosed().toString());
 
       std::stringstream ss;
       ss << "Transaction [";
-      ss << NUMBER;
-      ss << ": ";
-      ss << number;
-      ss << ", ";
-      ss << ACTIVE;
-      ss << ": ";
-      ss << active.toString();
-      ss << ", ";
-      ss << STATUS;
-      ss << ": ";
-      ss << status;
-      ss << ", ";
-      ss << SOURCE;
-      ss << ": ";
-      ss << source;
-      ss << ", ";
-      ss << GRAND_TOTAL;
-      ss << ": ";
-      ss << grandTotal;
-      ss << ", ";
-      ss << DISCOUNT;
-      ss << ": ";
-      ss << discount;
-      ss << ", ";
-      ss << CURRENCY;
-      ss << ": ";
-      ss << currency;
-      ss << ", ";
-      ss << DATE_CREATED;
-      ss << ": ";
-      ss << dateCreated;
-      ss << ", ";
-      ss << DATE_CLOSED;
-      ss << ": ";
-      ss << dateClosed;
+      ss << NUMBER << ": " << number << ", ";
+      ss << ACTIVE << ": " << active.toString() << ", ";
+      ss << STATUS << ": " << status << ", ";
+      ss << SOURCE << ": " << source << ", ";
+      ss << GRAND_TOTAL << ": " << grandTotal << ", ";
+      ss << DISCOUNT << ": " << discount << ", ";
+      ss << CURRENCY << ": " << currency << ", ";
+      ss << DATE_CREATED << ": " << dateCreated << ", ";
+      ss << DATE_CLOSED << ": " << dateClosed;
       ss << "]";
       return ss.str();
     }

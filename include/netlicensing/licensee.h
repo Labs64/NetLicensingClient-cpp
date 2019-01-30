@@ -29,29 +29,18 @@ namespace netlicensing {
       return productNumber_i;
     }
     
-    String_t toString() const {
-      std::string name(this->getName());
-      std::string number(this->getNumber());
-      Boolean_t active(this->getActive());
-      std::string productNumber(this->getProductNumber());
+    std::string toString() const {
+      std::string name(getName());
+      std::string number(getNumber());
+      Boolean_t active(getActive());
+      std::string productNumber(getProductNumber());
 
       std::stringstream ss;
       ss << "Licensee [";
-      ss << NAME;
-      ss << ": ";
-      ss << name;
-      ss << ", ";
-      ss << NUMBER;
-      ss << ": ";
-      ss << number;
-      ss << ", ";
-      ss << ACTIVE;
-      ss << ": ";
-      ss << active.toString();
-      ss << ", ";
-      ss << PRODUCT_NUMBER;
-      ss << ": ";
-      ss << productNumber;
+      ss << NAME << ": " << name << ", ";
+      ss << NUMBER << ": " << number << ", ";
+      ss << ACTIVE << ": " << active.toString() << ", ";
+      ss << PRODUCT_NUMBER << ": " << productNumber;
       ss << "]";
       return ss.str();
     }
