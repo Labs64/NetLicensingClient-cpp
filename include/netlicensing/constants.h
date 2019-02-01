@@ -31,7 +31,7 @@ namespace netlicensing {
   static const char* const HIDDEN = "hidden";
 
   //Utility
-  static const std::string UTILITY_ENDPOINT_PATH = "utility";
+  static const char* const UTILITY_ENDPOINT_PATH = "utility";
   static const char* const ENDPOINT_PATH_LICENSE_TYPES = "licenseTypes";
   static const char* const ENDPOINT_PATH_LICENSING_MODELS = "licensingModels";
   static const char* const ENDPOINT_PATH_COUNTRIES = "countries";
