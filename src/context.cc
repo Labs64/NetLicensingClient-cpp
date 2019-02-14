@@ -337,6 +337,7 @@ const std::string& Context::user() const {
   switch (mode_) {
     case BASIC_AUTHENTICATION: return username_;
     case APIKEY_IDENTIFICATION: return apiKey;
+    case ANONYMOUS_IDENTIFICATION: return NULL;
   }
 
   throw MalformedArgumentsException("Unknown authentication mode");
@@ -346,6 +347,7 @@ const std::string& Context::pass() const {
   switch (mode_) {
     case BASIC_AUTHENTICATION: return password_;
     case APIKEY_IDENTIFICATION: return api_key_;
+    case ANONYMOUS_IDENTIFICATION: return NULL;
   }
 
   throw MalformedArgumentsException("Unknown authentication mode");

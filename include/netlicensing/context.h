@@ -13,7 +13,8 @@ class Context {
  public:
   enum SecurityMode {
     BASIC_AUTHENTICATION,
-    APIKEY_IDENTIFICATION
+    APIKEY_IDENTIFICATION,
+    ANONYMOUS_IDENTIFICATION
   };
   
   Context();
