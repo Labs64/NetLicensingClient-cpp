@@ -16,20 +16,18 @@ Visit Labs64 NetLicensing at https://netlicensing.io
 ## Compatibility
 
 ### Notes:
-
 - Building **NetLicensing C++ client library** with static linking is currently not supported, feel free to contribute.
-
-- **libcurl** version 7.64.0 was used for verified builds.
+- Builds verified with **libcurl** version 7.64.0 and **cmake** version 3.13.4.
 
 ### Verified builds:
 
-Platform | Build toolset | Supported
------------- | ------------- | -------------
-Windows 7 | Visual studio 14 2015 x86 - x64 | :heavy_check_mark:
-Windows 7 | Visual studio 15 2017 x86 - x64 | :heavy_check_mark:
-Windows 10 | Visual studio 14 2015 x86 - x64 | :heavy_check_mark:
-Windows 10 | Visual studio 15 2017 x86 - x64| :heavy_check_mark:
-macOS Mojave | Xcode 10.1 | :heavy_check_mark:
+Platform | Build toolset
+------------ | -------------
+Windows 7 | Visual studio 14 2015 x86 - x64
+Windows 7 | Visual studio 15 2017 x86 - x64
+Windows 10 | Visual studio 14 2015 x86 - x64
+Windows 10 | Visual studio 15 2017 x86 - x64
+macOS Mojave | Xcode 10.1
 
 ## Windows build
 
@@ -38,9 +36,8 @@ macOS Mojave | Xcode 10.1 | :heavy_check_mark:
 2. `cd curl_directory\winbuild`
 3. Read `BUILD_WINDOWS.txt` for building instructions
 4. In **VC command prompt**:
-   ```
-   nmake /f Makefile.vc VC=&#60;VC versions&#62; MACHINE=&#60;x86 or x64&#62; ENABLE_WINSSL=<b>yes</b> MODE=<b>dll</b>
-   ```
+   ```nmake /f Makefile.vc VC=15 MACHINE=x64 ENABLE_WINSSL=yes MODE=dll```
+   (replace `VC` and `MACHINE` with your actual version / platform)
 5. If you get the error `U1073` or `U1077` - execute `curl_directory\buildconf.bat` first and repeat the `nmake` command
 6. Your `curl` build directory will be in sub directory `builds\`
 
@@ -51,8 +48,9 @@ macOS Mojave | Xcode 10.1 | :heavy_check_mark:
 4. In **VC command prompt** execute:
    ```
     cd NetLicensingClient-cpp\build
-    cmake .. -G "Visual Studio <VC versions> Win&#60;86 or 64&#62;" -DCMAKE_PREFIX_PATH=your_curl_build_directory
+    cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_PREFIX_PATH=your_curl_build_directory
    ```
+   (replace `-G` argument with your actual version / platform, see `cmake` documentation)
 5. Open solution created in `NetLicensingClient-cpp\build` directory in Visual Studio and build the library and demo client.
 
 ## Linux build
