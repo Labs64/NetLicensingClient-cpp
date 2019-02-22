@@ -19,11 +19,11 @@ Building <b>NetLicensing C++ client library</b> with static linking is not suppo
 
 Platform | Build toolset | Supported
 ------------ | ------------- | -------------
-Windows 7 | Visual studio 14 2015 x86 - x64 | [x]
-Windows 7 | Visual studio 15 2017 x86 - x64 | [x]
-Windows 10 | Visual studio 14 2015 x86 - x64 | [x] 
-Windows 10 | Visual studio 15 2017 x86 - x64| [x]
-macOS Mojave | Xcode 10.1 | [x]
+Windows 7 | Visual studio 14 2015 x86 - x64 | :heavy_check_mark:
+Windows 7 | Visual studio 15 2017 x86 - x64 | :heavy_check_mark:
+Windows 10 | Visual studio 14 2015 x86 - x64 | :heavy_check_mark:
+Windows 10 | Visual studio 15 2017 x86 - x64| :heavy_check_mark:
+macOS Mojave | Xcode 10.1 | :heavy_check_mark:
 
 ## Windows build
 
