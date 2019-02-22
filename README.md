@@ -35,8 +35,10 @@ macOS Mojave | Xcode 10.1
 1. Download <b>curl</b> from https://github.com/curl/curl/releases
 2. `cd curl_directory\winbuild`
 3. Read `BUILD_WINDOWS.txt` for building instructions
-4. In **VC command prompt**:
-   ```nmake /f Makefile.vc VC=15 MACHINE=x64 ENABLE_WINSSL=yes MODE=dll```
+4. In **VC command prompt** execute:
+   ```
+   nmake /f Makefile.vc VC=15 MACHINE=x64 ENABLE_WINSSL=yes MODE=dll
+   ```
    (replace `VC` and `MACHINE` with your actual version / platform)
 5. If you get the error `U1073` or `U1077` - execute `curl_directory\buildconf.bat` first and repeat the `nmake` command
 6. Your `curl` build directory will be in sub directory `builds\`
@@ -50,7 +52,7 @@ macOS Mojave | Xcode 10.1
     cd NetLicensingClient-cpp\build
     cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_PREFIX_PATH=your_curl_build_directory
    ```
-   (replace `-G` argument with your actual version / platform, see `cmake` documentation)
+   (replace `-G` argument with your actual version / platform, see [`cmake` documentation](https://cmake.org/cmake/help/latest/))
 5. Open solution created in `NetLicensingClient-cpp\build` directory in Visual Studio and build the library and demo client.
 
 ## Linux build
