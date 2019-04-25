@@ -54,10 +54,12 @@ namespace netlicensing {
     * @param licenseeSecret
     *            licensee secret stored on the client side. Refer to Licensee Secret documentation for details.
     */
+    [[deprecated("use NodeLocked licensing model instead")]]
     void setLicenseeSecret(const String_t& licenseeSecret) {
       licenseeSecret_i = licenseeSecret;
     }
 
+    [[deprecated("use NodeLocked licensing model instead")]]
     const String_t& getLicenseeSecret() const {
       return licenseeSecret_i;
     }

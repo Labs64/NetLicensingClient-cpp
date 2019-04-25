@@ -57,7 +57,6 @@ namespace netlicensing {
   static const char* const DESCRIPTION = "description";
   static const char* const LICENSING_INFO = "licensingInfo";
   static const char* const DISCOUNTS = "discounts";
-  static const char* const PROP_LICENSEE_SECRET_MODE = "licenseeSecretMode";
   static const char* const PROP_VAT_MODE = "vatMode";
 
   //Discount
@@ -70,6 +69,7 @@ namespace netlicensing {
   static const char* const PRODUCT_MODULE_NUMBER = "productModuleNumber";
   static const char* const PRODUCT_MODULE_NAME = "productModuleName";
   static const char* const LICENSING_MODEL = "licensingModel";
+  static const char* const PROP_LICENSEE_SECRET_MODE = "licenseeSecretMode";
 
   //LicenseTemplate
   static const char* const LICENSE_TEMPLATE_ENDPOINT_PATH = "licensetemplate";
@@ -84,12 +84,12 @@ namespace netlicensing {
   static const char* const LICENSEE_NUMBER = "licenseeNumber";
   static const char* const SOURCE_LICENSEE_NUMBER = "sourceLicenseeNumber";
   static const char* const PROP_LICENSEE_NAME = "licenseeName";
-  static const char* const PROP_LICENSEE_SECRET = "licenseeSecret";
   static const char* const PROP_MARKED_FOR_TRANSFER = "markedForTransfer";
 
   //License
   static const char* const LICENSE_ENDPOINT_PATH = "license";
   static const char* const LICENSE_NUMBER = "licenseNumber";
+  static const char* const PROP_LICENSEE_SECRET = "licenseeSecret";
 
   //Transaction
   static const char* const TRANSACTION_ENDPOINT_PATH = "transaction";
@@ -127,6 +127,7 @@ namespace netlicensing {
   static const char* const LICENSING_MODEL_PRICING_TABLE_PLAN = "plan";
   static const char* const LICENSING_MODEL_PRICING_TABLE_SKU = "sku";
   static const char* const LICENSING_MODEL_QUOTA_NAME = "Quota";
+  static const char* const LICENSING_MODEL_NODE_LOCKED_NAME = "NodeLocked";
 
 }  // namespace netlicensing
 

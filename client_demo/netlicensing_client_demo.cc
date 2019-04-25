@@ -370,7 +370,6 @@ int main(int argc, char* argv[]) {
 
     ValidationParameters vParams = ValidationParameters();
     vParams.setProductModuleValidationParameters(productModuleNumber, "paramKey", "paramValue");
-    vParams.setLicenseeSecret(randomNumber);
     vParams.setLicenseeName(licenseeName);
     vParams.setProductNumber(productNumber);
     ValidationResult vres = LicenseeService::validate(ctx, licenseeNumber, vParams);
