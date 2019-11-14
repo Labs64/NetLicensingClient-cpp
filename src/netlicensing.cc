@@ -7,12 +7,12 @@
 namespace netlicensing {
   /**
   * C++ representation of the Product Service. See NetLicensingAPI for details:
-  * https://www.labs64.de/confluence/display/NLICPUB/Product+Services
+  * https://netlicensing.io/wiki/product-services
   */
 
   /**
   * Creates new product object with given properties. See NetLicensingAPI for details:
-  * https://www.labs64.de/confluence/display/NLICPUB/Product+Services#ProductServices-Createproduct
+  * https://netlicensing.io/wiki/product-services#create-product
   */
   Product ProductService::create(Context& ctx, const Product& product) {
     StandardMapper<Product> productMapper;
