@@ -219,7 +219,7 @@ namespace netlicensing {
 
   /**
    * Validates active licenses of the licensee. See NetLicensingAPI for details:
-   * https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services#LicenseeServices-Validatelicensee
+   * https://netlicensing.io/wiki/licensee-services#validate-licensee
    */
   ValidationResult LicenseeService::validate(Context& ctx,
     const std::string& licenseeNumber,
@@ -252,8 +252,9 @@ namespace netlicensing {
   }
 
   /**
-  * Validates active licenses of the licensee. See NetLicensingAPI for details:
-  * https://www.labs64.de/confluence/display/NLICPUB/Licensee+Services#LicenseeServices-Validatelicensee
+  * Validates active licenses of the licensee.
+  * In the case of multiple product modules validation, required parameters indexes will be added automatically.
+  * See NetLicensingAPI for details: https://netlicensing.io/wiki/licensee-services#validate-licensee
   */
   ValidationResult LicenseeService::validate(Context& ctx, 
     const std::string& licenseeNumber,
