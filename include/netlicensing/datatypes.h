@@ -117,7 +117,8 @@ namespace netlicensing {
 
   enum class Currency {
     NONE,
-    EUR
+    EUR,
+    USD
   };
   inline const char* currencyToString(Currency v)
   {
@@ -125,6 +126,7 @@ namespace netlicensing {
     {
       case Currency::NONE:  return "";
       case Currency::EUR:   return "EUR";
+      case Currency::USD:   return "USD";
       default:    return "[Unknown Currency]";
     }
   }
@@ -132,6 +134,7 @@ namespace netlicensing {
   {
     if (std::string(v) == "") return Currency::NONE;
     else if (std::string(v) == "EUR") return Currency::EUR;
+    else if (std::string(v) == "USD") return Currency::USD;
     else return Currency::NONE;
   }
 
