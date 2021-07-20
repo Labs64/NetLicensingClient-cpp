@@ -38,3 +38,4 @@
 # Generated and working files and directories
 tests/run_tests
 build
+.vscode
