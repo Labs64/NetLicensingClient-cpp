@@ -54,7 +54,7 @@ namespace netlicensing {
     }
 
     const String_t& getLicenseeName() const {
-      return licenseeParameters_i[PROP_LICENSEE_NAME];
+      return licenseeParameters_i.find(PROP_LICENSEE_NAME)->second;
     }
 
     /**
@@ -70,7 +70,7 @@ namespace netlicensing {
 
     [[deprecated("use NodeLocked licensing model instead")]]
     const String_t& getLicenseeSecret() const {
-      return licenseeParameters_i[PROP_LICENSEE_SECRET];
+      return licenseeParameters_i.find(PROP_LICENSEE_SECRET)->second;
     }
 
     const std::map<std::string, std::map<std::string, std::string>>& getParameters() const {

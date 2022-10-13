@@ -3,6 +3,7 @@
 #include "netlicensing/service.h"
 #include "netlicensing/validation_parameters.h"
 #include <time.h>
+#include <iostream>
 
 namespace netlicensing {
   /**
@@ -227,10 +228,18 @@ namespace netlicensing {
     const std::string& licenseeName/* = std::string()*/,
     const parameters_type& validationParameters) {
 
-      validationParameters.setProductNumber(productNumber);
-      validationParameters.setLicenseeName(licenseeName);
+      ValidationParameters vp;
 
-      return LicenseeService::validate(ctx, licenseeNumber, validationParameters);
+      vp.setProductNumber(productNumber);
+      vp.setLicenseeName(licenseeName);
+
+      // Add licensing model specific validation parameters
+      for (parameters_type::const_iterator paramIt = validationParameters.begin();
+          paramIt != validationParameters.end(); ++paramIt) {
+          vp.setLicenseeProperty(escape_string(paramIt->first), escape_string(paramIt->second));
+      }
+
+      return LicenseeService::validate(ctx, licenseeNumber, vp);
   }
 
   /**
@@ -253,20 +262,6 @@ namespace netlicensing {
           auto const& value = ent1.second;
           params.push_back(std::make_pair(key, escape_string(value)));
       }
-
-      if (!escape_string(validationParameters.getLicenseeName()).empty()) {
-        params.push_back(std::make_pair(PROP_LICENSEE_NAME, escape_string(validationParameters.getLicenseeName())));
-      }
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#endif
-      if (!escape_string(validationParameters.getLicenseeSecret()).empty()) {
-        params.push_back(std::make_pair(PROP_LICENSEE_SECRET, escape_string(validationParameters.getLicenseeSecret())));
-      }
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
 
       int paramIt = 0;
       for(auto const &ent1 : validationParameters.getParameters()) {
