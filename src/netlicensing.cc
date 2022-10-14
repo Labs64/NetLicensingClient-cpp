@@ -3,7 +3,6 @@
 #include "netlicensing/service.h"
 #include "netlicensing/validation_parameters.h"
 #include <time.h>
-#include <iostream>
 
 namespace netlicensing {
   /**
