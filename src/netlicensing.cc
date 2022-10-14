@@ -222,6 +222,7 @@ namespace netlicensing {
    * Validates active licenses of the licensee. See NetLicensingAPI for details:
    * https://netlicensing.io/wiki/licensee-services#validate-licensee
    */
+  [[deprecated]]
   ValidationResult LicenseeService::validate(Context& ctx,
     const std::string& licenseeNumber,
     const std::string& productNumber/* = std::string()*/,

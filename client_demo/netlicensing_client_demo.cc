@@ -376,11 +376,6 @@ int main(int argc, char* argv[]) {
     ValidationResult vres = LicenseeService::validate(ctx, licenseeNumber, vParams);
     std::cout << "Validation result for created licensee:\n" << vres.toString() << std::endl;
 
-    parameters_type params;
-    params.push_back(std::make_pair("some-licensee-property-key", escape_string("some-licensee-property-value")));
-    ValidationResult vres2 = LicenseeService::validate(ctx, licenseeNumber, productNumber, licenseeName, params);
-    std::cout << "Validation result for created licensee:\n" << vres2.toString() << std::endl;
-
     // endregion
 
     // region ********* Transfer
