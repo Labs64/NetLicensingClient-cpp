@@ -1,0 +1,34 @@
+# This workflow will build a C++ project with CMake, currently only on Ubuntu 22.04 / default GNU C++
+
+name: NetLicensing Client - CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: [self-hosted]
+    container: ubuntu:22.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Upgrade default packages
+      run: |
+        apt-get update
+        apt-get upgrade -y
+    - name: Install required dependencies
+      run: apt-get install -y git g++ cmake libcurl4-openssl-dev
+    - name: Build with CMake
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make
+    - name: Run Demo App
+      run: |
+        cd build
+        ./netlicensing-client-demo
