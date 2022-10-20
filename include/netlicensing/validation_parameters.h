@@ -75,7 +75,7 @@ namespace netlicensing {
     }
 
     [[deprecated("use NodeLocked licensing model instead")]]
-    const String_t& getLicenseeSecret() const {
+    const String_t getLicenseeSecret() const {
         String_t licenseeSecret;
 
         auto it = licenseeParameters_i.find(PROP_LICENSEE_SECRET);
