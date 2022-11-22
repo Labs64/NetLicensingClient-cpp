@@ -372,6 +372,7 @@ int main(int argc, char* argv[]) {
     vParams.setProductModuleValidationParameters(productModuleNumber, "paramKey", "paramValue");
     vParams.setLicenseeName(licenseeName);
     vParams.setProductNumber(productNumber);
+    vParams.setLicenseeProperty("some-licensee-property-key","some-licensee-property-value");
     ValidationResult vres = LicenseeService::validate(ctx, licenseeNumber, vParams);
     std::cout << "Validation result for created licensee:\n" << vres.toString() << std::endl;
 

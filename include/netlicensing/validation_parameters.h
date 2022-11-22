@@ -13,8 +13,7 @@ namespace netlicensing {
 
   private:
     String_t productNumber_i;
-    String_t licenseeName_i;
-    String_t licenseeSecret_i;
+    std::map<std::string, std::string> licenseeParameters_i;
     std::map<std::string, std::map<std::string, std::string>> parameters_i;
 
   public:
@@ -32,6 +31,14 @@ namespace netlicensing {
       return productNumber_i;
     }
 
+    const std::map<std::string, std::string>& getLicenseeProperties() const {
+        return licenseeParameters_i;
+    }
+
+    void setLicenseeProperty(const String_t& key, const String_t& value) {
+        licenseeParameters_i[key] = value;
+    }
+
     /**
     * Sets the name for the new licensee
     *
@@ -41,11 +48,19 @@ namespace netlicensing {
     *            1000 characters.
     */
     void setLicenseeName(const String_t& licenseeName) {
-      licenseeName_i = licenseeName;
+        licenseeParameters_i[PROP_LICENSEE_NAME] = licenseeName.toString();
     }
 
-    const String_t& getLicenseeName() const {
-      return licenseeName_i;
+    const String_t getLicenseeName() const {
+        String_t licenseeName;
+
+        auto it = licenseeParameters_i.find(PROP_LICENSEE_NAME);
+
+        if (it != licenseeParameters_i.end()) {
+            licenseeName = (String_t)it->second;
+        }
+
+        return licenseeName;
     }
 
     /**
@@ -56,12 +71,20 @@ namespace netlicensing {
     */
     [[deprecated("use NodeLocked licensing model instead")]]
     void setLicenseeSecret(const String_t& licenseeSecret) {
-      licenseeSecret_i = licenseeSecret;
+        licenseeParameters_i[PROP_LICENSEE_SECRET] = licenseeSecret.toString();
     }
 
     [[deprecated("use NodeLocked licensing model instead")]]
-    const String_t& getLicenseeSecret() const {
-      return licenseeSecret_i;
+    const String_t getLicenseeSecret() const {
+        String_t licenseeSecret;
+
+        auto it = licenseeParameters_i.find(PROP_LICENSEE_SECRET);
+
+        if (it != licenseeParameters_i.end()) {
+            licenseeSecret = (String_t)it->second;
+        }
+
+        return licenseeSecret;
     }
 
     const std::map<std::string, std::map<std::string, std::string>>& getParameters() const {

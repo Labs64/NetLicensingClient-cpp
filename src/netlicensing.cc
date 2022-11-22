@@ -221,34 +221,25 @@ namespace netlicensing {
    * Validates active licenses of the licensee. See NetLicensingAPI for details:
    * https://netlicensing.io/wiki/licensee-services#validate-licensee
    */
+  [[deprecated("Use LicenseeService::validate(Context, std::string, ValidationParameters) instead")]]
   ValidationResult LicenseeService::validate(Context& ctx,
     const std::string& licenseeNumber,
     const std::string& productNumber/* = std::string()*/,
     const std::string& licenseeName/* = std::string()*/,
     const parameters_type& validationParameters) {
 
-      std::string endpoint = std::string(LICENSEE_ENDPOINT_PATH) + "/" + escape_string(licenseeNumber) + "/" + ENDPOINT_PATH_VALIDATE;
-      parameters_type params;
-      if (!productNumber.empty()) params.push_back(std::make_pair(PRODUCT_NUMBER, escape_string(productNumber)));
-      if (!licenseeName.empty()) params.push_back(std::make_pair(PROP_LICENSEE_NAME, escape_string(licenseeName)));
+      ValidationParameters vp;
+
+      vp.setProductNumber(productNumber);
+      vp.setLicenseeName(licenseeName);
 
       // Add licensing model specific validation parameters
       for (parameters_type::const_iterator paramIt = validationParameters.begin();
-           paramIt != validationParameters.end(); ++paramIt) {
-        params.push_back(std::make_pair(escape_string(paramIt->first), escape_string(paramIt->second)));
+          paramIt != validationParameters.end(); ++paramIt) {
+          vp.setLicenseeProperty(escape_string(paramIt->first), escape_string(paramIt->second));
       }
 
-      long http_code;
-      std::string res = ctx.post(endpoint, params, http_code);
-      ValidationResult validationResult;
-      ValidationResultMapper vrm(validationResult);
-      traverse(vrm, res);
-
-      if (http_code != 200) {
-        throw RestException(vrm.getInfos(), http_code);
-      }
-
-      return validationResult;
+      return LicenseeService::validate(ctx, licenseeNumber, vp);
   }
 
   /**
@@ -265,19 +256,12 @@ namespace netlicensing {
       if (!escape_string(validationParameters.getProductNumber()).empty()) {
         params.push_back(std::make_pair(PRODUCT_NUMBER, escape_string(validationParameters.getProductNumber())));
       }
-      if (!escape_string(validationParameters.getLicenseeName()).empty()) {
-        params.push_back(std::make_pair(PROP_LICENSEE_NAME, escape_string(validationParameters.getLicenseeName())));
+
+      for (auto const& ent1 : validationParameters.getLicenseeProperties()) {
+          auto const &key = ent1.first;
+          auto const& value = ent1.second;
+          params.push_back(std::make_pair(key, escape_string(value)));
       }
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#endif
-      if (!escape_string(validationParameters.getLicenseeSecret()).empty()) {
-        params.push_back(std::make_pair(PROP_LICENSEE_SECRET, escape_string(validationParameters.getLicenseeSecret())));
-      }
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
 
       int paramIt = 0;
       for(auto const &ent1 : validationParameters.getParameters()) {
