@@ -79,6 +79,7 @@ int main(int argc, char* argv[]) {
     Product newProduct;
     newProduct.setName("Demo product");
     newProduct.setNumber(productNumber);
+    newProduct.addProperty("CustomKey", "CustomValue");
     Product product = ProductService::create(ctx, newProduct);
     std::cout << "Added product: " << product.getName().toString() << std::endl;
 
@@ -135,6 +136,7 @@ int main(int argc, char* argv[]) {
     newProductModule.setName("Demo product module");
     newProductModule.setLicensingModel(LICENSING_MODEL_TRY_AND_BUY_NAME);
     newProductModule.setProductNumber(productNumber);
+    newProductModule.addProperty("CustomKey", "CustomValue");
 
     ProductModule productModule = ProductModuleService::create(ctx, newProductModule);
     std::cout << "Added product module: " << productModule.getName().toString() << std::endl;
@@ -192,6 +194,7 @@ int main(int argc, char* argv[]) {
     newLicenseTemplate.setAutomatic(false);
     newLicenseTemplate.setHidden(false);
     newLicenseTemplate.setProductModuleNumber(productModuleNumber);
+    newLicenseTemplate.addProperty("CustomKey", "CustomValue");
     LicenseTemplate licenseTemplate = LicenseTemplateService::create(ctx, newLicenseTemplate);
     std::cout << "Added license template: " << licenseTemplate.getName().toString() << std::endl;
 
@@ -243,6 +246,7 @@ int main(int argc, char* argv[]) {
     newLicensee.setName("Demo licensee");
     newLicensee.setNumber(licenseeNumber);
     newLicensee.setProductNumber(productNumber);
+    newLicensee.addProperty("CustomKey", "CustomValue");
     Licensee licensee = LicenseeService::create(ctx, newLicensee);
     std::cout << "Added licensee: " << licensee.getName().toString() << std::endl;
 
@@ -284,6 +288,7 @@ int main(int argc, char* argv[]) {
     newLicense.setLicenseTemplateNumber(licenseTemplateNumber);
     newLicense.setLicenseeNumber(licenseeNumber);
     newLicense.setPrice(FixedPoint("1.00"));
+    newLicense.addProperty("CustomKey", "CustomValue");
     License license = LicenseService::create(ctx, newLicense);
     std::cout << "Added license: " << license.getName().toString() << std::endl;
 
