@@ -103,6 +103,8 @@ namespace netlicensing {
         item_i.setDescription(value);
       } else if (key == LICENSING_INFO) {
         item_i.setLicensingInfo(value);
+      } else {
+        item_i.addProperty(key, value);
       }
     }
 
@@ -138,6 +140,8 @@ namespace netlicensing {
           item_i.setLicensingModel(value);
         } else if (key == PRODUCT_NUMBER) {
           item_i.setProductNumber(value);
+        } else {
+          item_i.addProperty(key, value);
         }
     }
   };
@@ -171,6 +175,8 @@ namespace netlicensing {
         item_i.setHidden((value == "true"?true:false));
       } else if (key == HIDE_LICENSES) {
         item_i.setHideLicenses((value == "true"?true:false));
+      } else {
+        item_i.addProperty(key, value);
       }
     }
   };
@@ -192,6 +198,8 @@ namespace netlicensing {
         item_i.setName(value);
       } else if (key == PRODUCT_NUMBER) {
         item_i.setProductNumber(value);
+      } else {
+        item_i.addProperty(key, value);
       }
     }
   };
@@ -221,6 +229,8 @@ namespace netlicensing {
         item_i.setLicenseeNumber(value);
       } else if (key == LICENSE_TEMPLATE_NUMBER) {
         item_i.setLicenseTemplateNumber(value);
+      } else {
+        item_i.addProperty(key, value);
       }
     }
   };
@@ -242,6 +252,8 @@ namespace netlicensing {
         item_i.setName(value);
       } else if (key == "vatPercent") {
         item_i.setVatPercent(value);
+      } else {
+        item_i.addProperty(key, value);
       }
     }
   };
@@ -312,6 +324,8 @@ namespace netlicensing {
         item_i.setExpirationTime(value);
       } else if (key == TOKEN_TYPE) {
         item_i.setTokenType(stringToTokenType(value));
+      } else {
+        item_i.addProperty(key, value);
       }
     }
   };
@@ -343,6 +357,8 @@ namespace netlicensing {
         item_i.setDateCreated(value);
       } else if (key == DATE_CLOSED) {
         item_i.setDateClosed(value);
+      } else {
+        item_i.addProperty(key, value);
       }
     }
   };

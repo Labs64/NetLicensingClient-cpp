@@ -111,6 +111,11 @@ namespace netlicensing {
       ss << AUTOMATIC << ": " << automatic.toString() << ", ";
       ss << HIDDEN << ": " << hidden.toString() << ", ";
       ss << HIDE_LICENSES << ": " << hideLicenses.toString();
+
+      for (const auto& pair : getProperties()) {
+          ss << ", " << pair.first << ": " << pair.second.toString();
+      }
+
       ss << "]";
       return ss.str();
     }

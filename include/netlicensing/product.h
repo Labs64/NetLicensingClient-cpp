@@ -171,6 +171,11 @@ namespace netlicensing {
         ss << LICENSEE_AUTO_CREATE << ": " << licenseeAutoCreate << ", ";
         ss << DESCRIPTION << ": " << description << ", ";
         ss << LICENSING_INFO << ": " << licensingInfo;
+
+        for (const auto& pair : getProperties()) {
+            ss << ", " << pair.first << ": " << pair.second.toString();
+        }
+
         ss << "]";
       return ss.str();
     }

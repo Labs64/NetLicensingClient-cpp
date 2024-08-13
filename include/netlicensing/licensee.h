@@ -41,6 +41,11 @@ namespace netlicensing {
       ss << NUMBER << ": " << number << ", ";
       ss << ACTIVE << ": " << active.toString() << ", ";
       ss << PRODUCT_NUMBER << ": " << productNumber;
+
+      for (const auto& pair : getProperties()) {
+          ss << ", " << pair.first << ": " << pair.second.toString();
+      }
+
       ss << "]";
       return ss.str();
     }

@@ -55,6 +55,11 @@ namespace netlicensing {
       ss << VENDOR_NUMBER << ": " << vendorNumber << ", ";
       ss << EXPIRATION_TIME << ": " << expirationTime << ", ";
       ss << TOKEN_TYPE << ": " << tokenType;
+
+      for (const auto& pair : getProperties()) {
+          ss << ", " << pair.first << ": " << pair.second.toString();
+      }
+
       ss << "]";
       return ss.str();
     }

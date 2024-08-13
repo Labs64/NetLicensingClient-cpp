@@ -90,6 +90,11 @@ namespace netlicensing {
       ss << HIDDEN << ": " << hidden.toString() << ", ";
       ss << LICENSEE_NUMBER << ": " << licenseeNumber << ", ";
       ss << LICENSE_TEMPLATE_NUMBER << ": " << licenseTemplateNumber;
+
+      for (const auto& pair : getProperties()) {
+          ss << ", " << pair.first << ": " << pair.second.toString();
+      }
+
       ss << "]";
       return ss.str();
     }
