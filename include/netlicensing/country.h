@@ -63,6 +63,11 @@ namespace netlicensing {
       ss << "isEu: " << isEu << ", ";
       ss << "code: " << code << ", ";
       ss << "vatPercent: " << vatPercent;
+
+      for (const auto& pair : getProperties()) {
+          ss << ", " << pair.first << ": " << pair.second.toString();
+      }
+
       ss << "]";
       return ss.str();
     }

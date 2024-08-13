@@ -100,6 +100,11 @@ namespace netlicensing {
       ss << CURRENCY << ": " << currency << ", ";
       ss << DATE_CREATED << ": " << dateCreated << ", ";
       ss << DATE_CLOSED << ": " << dateClosed;
+
+      for (const auto& pair : getProperties()) {
+          ss << ", " << pair.first << ": " << pair.second.toString();
+      }
+
       ss << "]";
       return ss.str();
     }
