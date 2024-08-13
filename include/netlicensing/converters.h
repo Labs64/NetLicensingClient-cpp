@@ -109,7 +109,12 @@ namespace netlicensing {
   inline parameters_type toParametersList<Token>(Token value) {
     parameters_type params = toParametersList<BaseEntity>(value);
     params.push_back(std::make_pair(VENDOR_NUMBER, value.getVendorNumber()));
-    params.push_back(std::make_pair(EXPIRATION_TIME, value.getExpirationTime().toString()));
+
+    const std::string expirationTime = value.getExpirationTime().toString();
+    if (!expirationTime.empty()) {
+        params.push_back(std::make_pair(EXPIRATION_TIME, expirationTime));
+    }
+
     params.push_back(std::make_pair(TOKEN_TYPE, tokenTypeToString(value.getTokenType())));
     return params;
   }
