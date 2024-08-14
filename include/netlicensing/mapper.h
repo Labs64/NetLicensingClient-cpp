@@ -17,6 +17,8 @@
 #include "netlicensing/token.h"
 #include "netlicensing/transaction.h"
 #include "netlicensing/licensing_model.h"
+#include "netlicensing/license_type.h"
+#include "netlicensing/license_template.h"
 
 namespace netlicensing {
 
