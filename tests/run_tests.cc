@@ -75,7 +75,7 @@ class TestObserver {
 BOOST_AUTO_TEST_SUITE(test_mapper)
 
 BOOST_AUTO_TEST_CASE(initial_test) {
-  std::string str = read_whole_file("../json/product.json");
+  std::string str = read_whole_file("product.json");
   BOOST_REQUIRE(!str.empty());
   Json::Value root;
   Json::Reader reader;

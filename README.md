@@ -12,9 +12,12 @@ C++ wrapper for Labs64 NetLicensing [RESTful API](https://netlicensing.io/wiki/r
 Visit Labs64 NetLicensing at https://netlicensing.io
 
 ## Dependencies
-1. C++11 STL
-2. [libcurl](https://github.com/curl/curl) (with libcurl's transitive dependencies)
-3. [jsoncpp](https://github.com/open-source-parsers/jsoncpp) (included)
+1. C++11 toolset + STL
+2. cmake
+3. [libcurl](https://github.com/curl/curl) (with libcurl's transitive dependencies)
+4. [jsoncpp](https://github.com/open-source-parsers/jsoncpp) (included)
+5. [boost](https://www.boost.org/) (optional, needed for unit tests)
+
 
 ## Compatibility
 
@@ -31,6 +34,7 @@ Windows 7 | Visual studio 15 2017 x86 - x64
 Windows 10 | Visual studio 14 2015 x86 - x64
 Windows 10 | Visual studio 15 2017 x86 - x64
 macOS Mojave | Xcode 10.1
+
 
 ## Windows build
 
@@ -58,12 +62,14 @@ macOS Mojave | Xcode 10.1
    (replace `-G` argument with your actual version / platform, see [`cmake` documentation](https://cmake.org/cmake/help/latest/))
 5. Open solution created in `NetLicensingClient-cpp\build` directory in Visual Studio and build the library and demo client.
 
+
 ## Linux build
 
 ### Build NetLincesing-cpp
 1. Download the latest release and unpack to `NetLicensingClient-cpp` (or checkout [master](https://github.com/Labs64/NetLicensingClient-cpp.git) to build the latest development version)
-2. Install **curl** (for development, including C headers and libraries). E.g. in **Ubuntu**:
-    ```sudo apt-get install libcurl4-openssl```
+2. Install **libcurl** (for development, including C headers and libraries). E.g. in **Ubuntu**:
+    ```sudo apt-get install libcurl4-openssl-dev```
+3. Install **boost**: ```sudo apt-get install libboost-all-dev```
 3. In the `NetLicensingClient-cpp` directory create `build/` subdirectory
 4. Execute:
    ```
@@ -75,6 +81,33 @@ macOS Mojave | Xcode 10.1
 ### Unit tests
 
 Unit tests require [**Boost**](https://www.boost.org) Unit Test Framework. To build project with the unit tests activated add cmake option `-DBUILD_TESTS=yes`. The tests must be executed from `tests/` subdirectory on Linux or `tests\Debug\` on Windows in order to properly locate the JSON files with test data.
+
+
+## Linux build using docker
+
+_TODO: full description_
+
+1. Prepare container
+   - Image: ubuntu:22.04
+   - apt-get update
+   - apt-get install cmake g++ libcurl4-openssl-dev libboost-all-dev
+
+2. Map `NetLicensingClient-cpp` or clone it inside the container
+
+3. Build as described in [Linux Build](#linux-build)
+
+
+## MacOS build
+
+_TODO: full description_
+
+1. Prepare environment:
+   - Install XCode 10.1+
+   - Install `homebrew`
+   - `libcurl` is provided
+   - `brew install cmake boost`
+
+2. Build as described in [Linux Build](#linux-build)
 
 
 ## Execution environment
