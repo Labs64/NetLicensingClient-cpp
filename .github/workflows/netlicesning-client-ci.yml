@@ -21,13 +21,17 @@ jobs:
         apt-get update
         apt-get upgrade -y
     - name: Install required dependencies
-      run: apt-get install -y git g++ cmake libcurl4-openssl-dev
+      run: apt-get install -y git g++ cmake libcurl4-openssl-dev libboost-all-dev
     - name: Build with CMake
       run: |
         mkdir build
         cd build
-        cmake ..
+        cmake .. -DBUILD_TESTS=yes
         make
+    - name: Run tests
+      run: |
+        cd tests
+        ./run_tests
     - name: Run Demo App
       run: |
         cd build
