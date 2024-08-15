@@ -9,8 +9,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 find_package(CURL REQUIRED)
 
 if (BUILD_TESTS)
-	set(Boost_USE_STATIC_LIBS ON)
-    find_package(Boost 1.40 REQUIRED unit_test_framework)    
+    set(Boost_USE_STATIC_LIBS ON)
+    find_package(Boost 1.40 REQUIRED unit_test_framework)
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -22,7 +22,7 @@ set(LIBS ${LIBS} ${CURL_LIBRARIES} ${JSONCPP_LIBRARIES})
 set(BUILD_SHARED_LIBS OFF)
 
 add_definitions(-DCURL_STATICLIB)
-if(UNIX)
+if (UNIX)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
 endif()
 
@@ -37,7 +37,7 @@ target_link_libraries(netlicensing ${LIBS})
 # demo client 
 file(GLOB client_demo_headers client_demo/${db2lp_component}/*h)
 file(GLOB client_demo_sources client_demo/${db2lp_component}/*cc)
-add_executable(netlicensing-client-demo ${client_demo_headers} ${client_demo_sources} )
+add_executable(netlicensing-client-demo ${client_demo_headers} ${client_demo_sources})
 target_link_libraries(netlicensing-client-demo netlicensing ${LIBS})
 
 if (BUILD_TESTS)
