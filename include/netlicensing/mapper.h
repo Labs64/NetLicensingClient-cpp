@@ -19,6 +19,7 @@
 #include "netlicensing/licensing_model.h"
 #include "netlicensing/license_type.h"
 #include "netlicensing/license_template.h"
+#include "netlicensing/bundle.h"
 
 namespace netlicensing {
 
@@ -365,6 +366,42 @@ namespace netlicensing {
     }
   };
 
+  class BundleWrapper : public ItemWrapper {
+      Bundle item_i;
+
+  public:
+      const Bundle& getItem() {
+          return item_i;
+      }
+
+      virtual void addProperty(const std::string& key, const std::string& value) {
+          if (key == NUMBER) {
+              item_i.setNumber(value);
+          }
+          else if (key == ACTIVE) {
+              item_i.setActive(value.c_str());
+          }
+          else if (key == NAME) {
+              item_i.setName(value);
+          }
+          else if (key == DESCRIPTION) {
+              item_i.setDescription(value);
+          }
+          else if (key == PRICE) {
+              item_i.setPrice(FixedPoint(value));
+          }
+          else if (key == CURRENCY) {
+              item_i.setCurrency(stringToCurrency(value));
+          }
+          else if (key == LICENSE_TEMPLATE_NUMBERS) {
+              item_i.setLicenseTemplateNumbers(split(value, ","));
+          }
+          else {
+              item_i.addProperty(key, value);
+          }
+      }
+  };
+
   template<class T>
   struct ItemTraits;
 
@@ -432,6 +469,12 @@ namespace netlicensing {
   struct ItemTraits<Transaction> {
     typedef TransactionWrapper Wrapper_t;
     static std::string getType() { return "Transaction"; }
+  };
+
+  template<>
+  struct ItemTraits<Bundle> {
+      typedef BundleWrapper Wrapper_t;
+      static std::string getType() { return "Bundle"; }
   };
 
   template<typename T>

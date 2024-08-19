@@ -42,6 +42,8 @@ int main(int argc, char* argv[]) {
   std::string licenseeNumber = "L"+randomNumber;
   std::string licenseNumber = "LC"+randomNumber;
   std::string licenseeName = "Licensee "+randomNumber;
+  std::string bundleNumber = "B"+randomNumber;
+  std::string bundleName = "Bundle "+randomNumber;
 
   std::cout << "Hello, this is NetLicensing demo client\n";
   std::cout << "Product endpoint " << endpoint<Product>() << std::endl;
@@ -452,6 +454,87 @@ int main(int argc, char* argv[]) {
       }
     }
 
+    // endregion
+
+    // region ********* Bundle
+    std::list<String_t> licenseTemplateNumbers;
+    licenseTemplateNumbers.push_back(licenseTemplateNumber);
+
+    Bundle newBundle;
+    newBundle.setNumber(bundleNumber);
+    newBundle.setName(bundleName);
+    newBundle.setDescription("Demo bundle");
+    newBundle.setLicenseTemplateNumbers(licenseTemplateNumbers);
+    newBundle.setPrice(FixedPoint("12.50"));
+    newBundle.setCurrency(Currency::EUR);
+    newBundle.addProperty("CustomKey", "CustomValue");
+
+    Bundle bundle = BundleService::create(ctx, newBundle);
+    std::cout << "Added bundle: " << bundle.getName().toString() << std::endl;
+
+    bundle = BundleService::get(ctx, bundleNumber);
+    std::string bundleString(bundle.toString());
+    std::cout << "Got bundle: " << bundleString << std::endl;
+
+    std::list<Bundle> bundles = BundleService::list(ctx, "");
+    if (bundles.size()) {
+        std::cout << "Got the following bundles: " << std::endl;
+        for (auto const& i : bundles) {
+            std::cout << i.toString() << std::endl;
+        }
+    }
+
+    std::string bProductModuleNumber = "BP" + randomNumber;
+    ProductModule bProductModule;
+    bProductModule.setNumber(bProductModuleNumber);
+    bProductModule.setName("Demo product module");
+    bProductModule.setLicensingModel(LICENSING_MODEL_SUBSCRIPTION_NAME);
+    bProductModule.setProductNumber(productNumber);
+
+    std::string bLicenseTemplateNumber = "BP" + randomNumber;
+    LicenseTemplate bLicenseTemplate;
+    bLicenseTemplate.setNumber("BLT" + randomNumber);
+    bLicenseTemplate.setLicenseType(LicenseTypeEnum::TIMEVOLUME);
+    bLicenseTemplate.setPrice(FixedPoint("5"));
+    bLicenseTemplate.setCurrency(Currency::EUR);
+    bLicenseTemplate.setAutomatic(false);
+    bLicenseTemplate.setHidden(false);
+    bLicenseTemplate.setProductModuleNumber(bProductModuleNumber);
+
+    bProductModule = ProductModuleService::create(ctx, bProductModule);
+    bLicenseTemplate = LicenseTemplateService::create(ctx, bLicenseTemplate);
+
+    bundle.addLicenseTemplateNumber(bLicenseTemplateNumber);
+    bundle.addLicenseTemplateNumber(bLicenseTemplateNumber);
+    bundle.addLicenseTemplateNumber(bLicenseTemplateNumber);
+
+    bundle.setName("Updated name");
+    bundle = BundleService::update(ctx, newLicenseTemplate.getNumber(), bundle);
+    bundleString = newLicenseTemplate.toString();
+    std::cout << "Updated bundle: " << bundleString << std::endl;
+
+    std::list<License> obtainedLicenses = BundleService::obtain(ctx, bundleNumber, licenseeNumber, "");
+    std::cout << "Obtained licenses: " << std::endl;
+    for (auto const& i : obtainedLicenses) {
+        std::cout << i.toString() << std::endl;
+    }
+
+    // bundle shop token
+    Token bundleShopToken;
+    bundleShopToken.setTokenType(TokenType::SHOP);
+    bundleShopToken.addProperty(LICENSEE_NUMBER, licenseeNumber);
+    bundleShopToken.addProperty(BUNDLE_NUMBER, bundleNumber);
+
+    bundleShopToken = TokenService::create(ctx, bundleShopToken);
+    std::string bundleShopTokenString = bundleShopToken.toString();
+    std::cout << "Bundle shop token: " << bundleShopTokenString << std::endl;
+
+    // cleanup
+    LicenseTemplateService::del(ctx, bLicenseTemplateNumber, true);
+    ProductModuleService::del(ctx, bProductModuleNumber, true);
+    BundleService::del(ctx, bundleNumber, true);
+    std::cout << "Deleted bundle!" << std::endl;
+    
     // endregion
 
     std::cout << "All done." << std::endl;

@@ -15,6 +15,7 @@
 #include "netlicensing/token.h"
 #include "netlicensing/transaction.h"
 #include "netlicensing/licensing_model.h"
+#include "netlicensing/bundle.h"
 
 namespace netlicensing {
 
@@ -100,6 +101,15 @@ public:
   static std::list<LicenseType> listLicenseTypes(Context& ctx);
 };
 
+class BundleService {
+public:
+    static Bundle get(Context& ctx, const std::string& number);
+    static Bundle create(Context& ctx, const Bundle&);
+    static Bundle update(Context& ctx, const std::string& number, const Bundle&);
+    static void del(Context& ctx, const std::string& number, bool forceCascade);
+    static std::list<Bundle> list(Context& ctx, const std::string& filter);
+    static std::list<License> obtain(Context& ctx, const std::string& bundleNumber, const std::string& licenseeNumber, const std::string& transactionNumber);
+};
 
 }
 

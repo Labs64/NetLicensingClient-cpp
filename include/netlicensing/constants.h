@@ -129,6 +129,12 @@ namespace netlicensing {
   static const char* const LICENSING_MODEL_QUOTA_NAME = "Quota";
   static const char* const LICENSING_MODEL_NODE_LOCKED_NAME = "NodeLocked";
 
+  //Bundle
+  static const char* const BUNDLE_ENDPOINT_PATH = "bundle";
+  static const char* const ENDPOINT_PATH_OBTAIN = "obtain";
+  static const char* const BUNDLE_NUMBER = "bundleNumber";
+  static const char* const LICENSE_TEMPLATE_NUMBERS = "licenseTemplateNumbers";
+
 }  // namespace netlicensing
 
 #endif  // __CONSTANTS_H__
