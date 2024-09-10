@@ -53,7 +53,7 @@ namespace netlicensing {
             return currency_i;
         }
 
-        void setLicenseTemplateNumbers(std::list<String_t>& licenseTemplateNumbers) {
+        void setLicenseTemplateNumbers(const std::list<String_t>& licenseTemplateNumbers) {
             licenseTemplateNumbers_i = licenseTemplateNumbers;
         }
 
