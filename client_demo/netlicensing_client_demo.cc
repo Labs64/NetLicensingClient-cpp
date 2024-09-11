@@ -491,11 +491,13 @@ int main(int argc, char* argv[]) {
     bProductModule.setLicensingModel(LICENSING_MODEL_SUBSCRIPTION_NAME);
     bProductModule.setProductNumber(productNumber);
 
-    std::string bLicenseTemplateNumber = "BP" + randomNumber;
+    std::string bLicenseTemplateNumber = "BLT" + randomNumber;
     LicenseTemplate bLicenseTemplate;
-    bLicenseTemplate.setNumber("BLT" + randomNumber);
+    bLicenseTemplate.setNumber(bLicenseTemplateNumber);
+    bLicenseTemplate.setName("Template for Bundle");
     bLicenseTemplate.setLicenseType(LicenseTypeEnum::TIMEVOLUME);
-    bLicenseTemplate.setPrice(FixedPoint("5"));
+    bLicenseTemplate.addProperty("timeVolume", "3");
+    bLicenseTemplate.setPrice(FixedPoint("5.00"));
     bLicenseTemplate.setCurrency(Currency::EUR);
     bLicenseTemplate.setAutomatic(false);
     bLicenseTemplate.setHidden(false);
@@ -509,7 +511,7 @@ int main(int argc, char* argv[]) {
     bundle.addLicenseTemplateNumber(bLicenseTemplateNumber);
 
     bundle.setName("Updated name");
-    bundle = BundleService::update(ctx, newLicenseTemplate.getNumber(), bundle);
+    bundle = BundleService::update(ctx, bundleNumber, bundle);
     bundleString = newLicenseTemplate.toString();
     std::cout << "Updated bundle: " << bundleString << std::endl;
 

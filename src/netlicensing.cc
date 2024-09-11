@@ -576,7 +576,7 @@ namespace netlicensing {
   * https://netlicensing.io/wiki/bundle-services#delete-bundle
   */
   void BundleService::del(Context& ctx, const std::string& bundleNumber, bool forceCascade) {
-      netlicensing::del<Product>(ctx, bundleNumber, forceCascade);
+      netlicensing::del<Bundle>(ctx, bundleNumber, forceCascade);
   }
 
   /**

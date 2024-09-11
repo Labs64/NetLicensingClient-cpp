@@ -67,7 +67,7 @@ namespace netlicensing {
         std::istringstream is(rawValue);
         is >> value_i;
       } else {
-        throw MalformedArgumentsException("Not supported formatting for fixed point value");
+        throw MalformedArgumentsException("Not supported formatting for fixed point value: '" + value + "', expected format: '123.45'");
       }
     }
     FixedPoint() {
