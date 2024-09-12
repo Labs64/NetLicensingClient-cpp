@@ -14,6 +14,7 @@
 #include "netlicensing/transaction.h"
 #include "netlicensing/licensing_model.h"
 #include "netlicensing/license_type.h"
+#include "netlicensing/bundle.h"
 
 namespace netlicensing {
 
@@ -144,6 +145,17 @@ namespace netlicensing {
   inline parameters_type toParametersList<LicenseType>(LicenseType value) {
     parameters_type params;
     params.push_back(std::make_pair(NAME, value.getName()));
+    return params;
+  }
+
+  template<>
+  inline parameters_type toParametersList<Bundle>(Bundle value) {
+    parameters_type params = toParametersList<BaseEntity>(value);
+    params.push_back(std::make_pair(NAME, value.getName()));
+    params.push_back(std::make_pair(DESCRIPTION, value.getDescription()));
+    params.push_back(std::make_pair(PRICE, value.getPrice().toString()));
+    params.push_back(std::make_pair(CURRENCY, currencyToString(value.getCurrency())));
+    params.push_back(std::make_pair(LICENSE_TEMPLATE_NUMBERS, join(value.getLicenseTemplateNumbers(), ",")));
     return params;
   }
 

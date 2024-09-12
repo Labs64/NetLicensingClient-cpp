@@ -535,4 +535,80 @@ namespace netlicensing {
     netlicensing::list(ctx, licenseTypeMapper, "");
     return licenseTypeMapper.getItems();
   }
+
+  /**
+ * C++ representation of the Bundle Service. See NetLicensingAPI for details:
+ * https://netlicensing.io/wiki/bundle-services
+ */
+
+ /**
+ * Creates new bundle object with given properties. See NetLicensingAPI for details:
+ * https://netlicensing.io/wiki/bundle-services#create-bundle
+ */
+  Bundle BundleService::create(Context& ctx, const Bundle& bundle) {
+      StandardMapper<Bundle> bundleMapper;
+      netlicensing::create(ctx, bundleMapper, bundle);
+      return bundleMapper.getItems().front();
+  }
+
+  /**
+   * Get bundle object with. See NetLicensingAPI for details:
+   * https://netlicensing.io/wiki/bundle-services#get-bundle
+   */
+  Bundle BundleService::get(Context& ctx, const std::string& bundleNumber) {
+      StandardMapper<Bundle> bundleMapper;
+      netlicensing::get(ctx, bundleMapper, bundleNumber);
+      return bundleMapper.getItems().front();
+  }
+
+  /**
+  * Updates bundle properties. See NetLicensingAPI for details:
+  * https://netlicensing.io/wiki/bundle-services#update-bundle
+  */
+  Bundle BundleService::update(Context& ctx, const std::string& bundleNumber, const Bundle& bundle) {
+      StandardMapper<Bundle> bundleMapper;
+      netlicensing::update(ctx, bundleMapper, bundleNumber, bundle);
+      return bundleMapper.getItems().front();
+  }
+
+  /**
+  * Deletes bundle. See NetLicensingAPI for details:
+  * https://netlicensing.io/wiki/bundle-services#delete-bundle
+  */
+  void BundleService::del(Context& ctx, const std::string& bundleNumber, bool forceCascade) {
+      netlicensing::del<Bundle>(ctx, bundleNumber, forceCascade);
+  }
+
+  /**
+  * Returns all bundles of a vendor. See NetLicensingAPI for details:
+  * https://netlicensing.io/wiki/bundle-services#bundles-list
+  */
+  std::list<Bundle> BundleService::list(Context& ctx, const std::string& filter) {
+      StandardMapper<Bundle> bundleMapper;
+      netlicensing::list(ctx, bundleMapper, filter);
+      return bundleMapper.getItems();
+  }
+
+  std::list<License> BundleService::obtain(Context& ctx, const std::string& bundleNumber, const std::string& licenseeNumber, const std::string& transactionNumber) {
+      std::string endpoint = std::string(BUNDLE_ENDPOINT_PATH) + "/" + escape_string(bundleNumber) + "/" + ENDPOINT_PATH_OBTAIN;
+      parameters_type params;
+
+      params.push_back(std::make_pair(LICENSEE_NUMBER, escape_string(licenseeNumber)));
+
+      if (!escape_string(transactionNumber).empty()) {
+          params.push_back(std::make_pair(TRANSACTION_NUMBER, escape_string(transactionNumber)));
+      }
+
+      long http_code;
+      std::string res = ctx.post(endpoint, params, http_code);
+
+      StandardMapper<License> licenseMapper;
+      traverse(licenseMapper, res);
+
+      if (http_code != 200) {
+          throw RestException(licenseMapper.getInfos(), http_code);
+      }
+
+      return licenseMapper.getItems();
+  }
 }

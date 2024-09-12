@@ -20,6 +20,7 @@ template<> inline std::string endpoint<Transaction>() { return std::string(TRANS
 template<> inline std::string endpoint<Country>() { return std::string(UTILITY_ENDPOINT_PATH) + "/" +std::string(ENDPOINT_PATH_COUNTRIES); }
 template<> inline std::string endpoint<LicensingModel>() { return std::string(UTILITY_ENDPOINT_PATH) + "/" + std::string(ENDPOINT_PATH_LICENSING_MODELS); }
 template<> inline std::string endpoint<LicenseType>() { return std::string(UTILITY_ENDPOINT_PATH) + "/" + std::string(ENDPOINT_PATH_LICENSE_TYPES); }
+template<> inline std::string endpoint<Bundle>() { return std::string(BUNDLE_ENDPOINT_PATH); }
 
 template<typename M>
 void getEntity(Context& ctx, M& mapper, const std::string& number) {

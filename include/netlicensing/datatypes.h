@@ -67,7 +67,7 @@ namespace netlicensing {
         std::istringstream is(rawValue);
         is >> value_i;
       } else {
-        throw MalformedArgumentsException("Not supported formatting for fixed point value");
+        throw MalformedArgumentsException("Not supported formatting for fixed point value: '" + value + "', expected format: '123.45'");
       }
     }
     FixedPoint() {
@@ -333,6 +333,38 @@ namespace netlicensing {
     else if (std::string(v) == "FLOATING")    return LicenseTypeEnum::FLOATING;
     else if (std::string(v) == "QUANTITY")    return LicenseTypeEnum::QUANTITY;
     else return LicenseTypeEnum::FEATURE;
+  }
+
+  inline const std::string join(const std::list<String_t>& list, const std::string delimiter) {
+      std::ostringstream oss;
+      if (!list.empty()) {
+          for (auto it = list.begin(); it != list.end(); ++it) {
+              oss << it->toString();
+
+              if (std::next(it) != list.end()) {
+                  oss << delimiter;
+              }
+          }
+      }
+
+      return oss.str();
+  }
+
+  inline std::list<String_t> split(const String_t& str, const std::string& delimiter) {
+      std::list<String_t> result;
+      if (str.toString().length() > 0) {
+          std::istringstream stream(str.toString());
+          std::string item;
+
+          while (std::getline(stream, item, delimiter[0])) {
+              item.erase(item.find_last_not_of(" \t\r\n") + 1);
+              item.erase(0, item.find_first_not_of(" \t\r\n"));
+
+              result.push_back(item);
+          }
+      }
+
+      return result;
   }
 }  // namespace netlicensing
 
