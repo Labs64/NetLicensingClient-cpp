@@ -82,7 +82,7 @@ void list(Context& ctx, M& mapper, const std::string& filter) {
   long http_code;
   std::string res = ctx.get(endpoint<typename M::Item_t>(), params, http_code);
   traverse(mapper, res);
-  
+
   // TODO(a-pavlov) fix code checking
   if (http_code != 200) {
     throw RestException(mapper.getInfos(), http_code);

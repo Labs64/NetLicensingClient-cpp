@@ -6,9 +6,9 @@
 namespace netlicensing {
 
 /**
-* @brief Configure your connection to rest server using this Context class
-*
-*/
+ * @brief Configure your connection to rest server using this Context class
+ *
+ */
 class Context {
  public:
   enum SecurityMode {
@@ -16,7 +16,7 @@ class Context {
     APIKEY_IDENTIFICATION,
     ANONYMOUS_IDENTIFICATION
   };
-  
+
   Context();
   ~Context();
 
@@ -58,7 +58,7 @@ extern std::string url_with_parameters(const std::string& url, const parameters_
 
 /**
  * @brief returns url encoded string
-*/
+ */
 extern std::string escape_string(const std::string& s);
 }
 

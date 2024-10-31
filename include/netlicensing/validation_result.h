@@ -17,7 +17,7 @@ class Composition {
 public:
   Composition() : value_i() { }
   Composition(const std::string& value) : value_i(std::make_shared<std::string>(value)) { }
-  
+
   std::shared_ptr<std::string> getValue() const { return value_i; }
 
   const std::map<std::string, Composition>& getProperties() {
@@ -31,7 +31,7 @@ public:
   void put(const std::string& name, const Composition& value) {
     properties_i.insert(std::make_pair(name, value));
   }
-  
+
   std::shared_ptr<std::string> get(const std::string& name) const {
     auto prop = properties_i.find(name);
     if (prop == properties_i.end()) {
@@ -53,7 +53,7 @@ class ValidationResult {
 
 public:
   ValidationResult() { }
-  
+
 
   const std::map<std::string, Composition>& getValidations() {
     return validations_i;
@@ -75,7 +75,7 @@ public:
     }
     return validation->second;
   }
-  
+
   void setProductModuleValidation(const std::string& productModuleNumber,
                                   const Composition& productModuleValidation) {
     validations_i.insert(std::make_pair(productModuleNumber, productModuleValidation));
